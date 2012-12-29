@@ -1,0 +1,8 @@
+#names-list li .destroy::after {
+    content: '✖';
+}
+
+#names-list li .destroy {
+    font-size: 22px;
+    color: #A88A8A;
+}
