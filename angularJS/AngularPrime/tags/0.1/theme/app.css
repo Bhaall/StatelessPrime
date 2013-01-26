@@ -1,0 +1,8 @@
+.pui-inputtext, .ui-widget-content .pui-inputtext, .ui-widget-header .pui-inputtext {
+    -moz-box-shadow: 0 2px 2px #8F8F8F inset;
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #313131;
+}
+.pui-inputtext.ui-state-focus, .ui-widget-content .pui-inputtext.ui-state-focus, .ui-widget-header .pui-inputtext.ui-state-focus {
+    -moz-box-shadow: 0 0 5px #85B2CB, 0 2px 2px #8F8F8F inset;
+}

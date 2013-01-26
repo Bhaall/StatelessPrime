@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demomvc">
+<!--
+ * Copyright 2013 Rudy De Busscher (http://statelessprime.blogspot.be/).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>AngularJS - PrimeUI integration</title>
+    <link rel="stylesheet" href="theme/theme.css">
+    <link rel="stylesheet" href="js/libs/primeUI/prime-ui-0.7.css">
+    <link rel="stylesheet" href="theme/app.css">
+
+    <script src="js/libs/primeUI/jquery.js"></script>
+    <script src="js/libs/primeUI/jquery-ui.js"></script>
+
+    <script src="js/libs/angular/angular.js"></script>
+    <script src="js/app.js"></script>
+	<script src="js/angularPrime/angularPrime.js"></script>
+    <script src="js/controllers/ctrl.js"></script>
+
+    <script src="js/libs/primeUI/prime-ui-0.7.js"></script>
+</head>
+<body>
+
+<section id="demoApp">
+    <header id="header">
+		<h1>Input</h1>
+		<a href="index.html">Index</a>
+		<hr style="border: 2px double" />
+
+        <form id="frm">
+            <div ng-controller="Ctrl" id="ctrl">
+				<input id="default" type="text" pui-input ng-model="value1"/>
+				<span style="color: rgb(0, 112, 0);">&lt;input</span>
+				<span style="color: rgb(0, 0, 192);">id=</span><span style="background-color: rgb(255, 240, 240);">"default"</span>
+				<span style="color: rgb(0, 0, 192);">type=</span><span style="background-color: rgb(255, 240, 240);">"text"</span>
+				<span style="color: rgb(0, 0, 192);">pui-input</span>
+				<span style="color: rgb(0, 0, 192);">ng-model=</span><span style="background-color: rgb(255, 240, 240);">"value1"</span>
+				<span style="color: rgb(0, 112, 0);">/&gt;</span>
+				<hr/>
+				<textarea id="basic" rows="5" cols="30" pui-input ng-model="value2"></textarea>
+				<span style="color: rgb(0, 112, 0);">&lt;textarea</span>
+				<span style="color: rgb(0, 0, 192);">id=</span><span style="background-color: rgb(255, 240, 240);">"basic"</span>
+				<span style="color: rgb(0, 0, 192);">rows=</span><span style="background-color: rgb(255, 240, 240);">"5"</span>
+				<span style="color: rgb(0, 0, 192);">cols=</span><span style="background-color: rgb(255, 240, 240);">"30"</span>
+				<span style="color: rgb(0, 0, 192);">pui-input</span>
+				<span style="color: rgb(0, 0, 192);">ng-model=</span><span style="background-color: rgb(255, 240, 240);">"value2"</span>
+				<span style="color: rgb(0, 112, 0);">&gt;&lt;/textarea&gt;</span>
+				<hr/>
+				<textarea id="autoresize" rows="5" cols="30" pui-input pui-auto-resize ng-model="value3"></textarea>
+				<span style="color: rgb(0, 112, 0);">&lt;textarea</span>
+				<span style="color: rgb(0, 0, 192);">id=</span><span style="background-color: rgb(255, 240, 240);">"autoresize"</span>
+				<span style="color: rgb(0, 0, 192);">rows=</span><span style="background-color: rgb(255, 240, 240);">"5"</span>
+				<span style="color: rgb(0, 0, 192);">cols=</span><span style="background-color: rgb(255, 240, 240);">"30"</span>
+				<span style="color: rgb(0, 0, 192);">pui-input</span>
+				<span style="color: rgb(0, 0, 192);">pui-auto-resize</span>
+				<span style="color: rgb(0, 0, 192);">ng-model=</span><span style="background-color: rgb(255, 240, 240);">"value3"</span>
+				<span style="color: rgb(0, 112, 0);">&gt;&lt;/textarea&gt;</span>
+				<hr/>
+				<textarea id="autocomplete" rows="5" cols="30" pui-input ng-model="value4"
+						  pui-counter="{{ {'display': '#display', 'template' : '{0} chars remaining.', 'maxLength' : 20} }}"></textarea>
+				<span id="display" ></span>
+				<br/>
+				<span style="color: rgb(0, 112, 0);">&lt;textarea</span>
+				<span style="color: rgb(0, 0, 192);">id=</span><span style="background-color: rgb(255, 240, 240);">"autocomplete"</span>
+				<span style="color: rgb(0, 0, 192);">rows=</span><span style="background-color: rgb(255, 240, 240);">"5"</span>
+				<span style="color: rgb(0, 0, 192);">cols=</span><span style="background-color: rgb(255, 240, 240);">"30"</span>
+				<span style="color: rgb(0, 0, 192);">pui-input</span>
+				<span style="color: rgb(0, 0, 192);">ng-model=</span><span style="background-color: rgb(255, 240, 240);">"value4"</span>
+				<span style="color: rgb(0, 0, 192);">pui-counter=</span><span style="background-color: rgb(255, 240, 240);">"{{ {'display': '#display', 'template' : '{0} chars remaining.', 'maxLength' : 20} }}"</span>
+				<span style="color: rgb(0, 112, 0);">&gt;&lt;/textarea&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;span</span>
+				<span style="color: rgb(0, 0, 192);">id=</span>
+				<span style="background-color: rgb(255, 240, 240);">"display"</span>
+				<span style="color: rgb(0, 112, 0);">&gt;&lt;/span&gt;</span>
+				<hr/>
+				<input id="pw" type="password" pui-input ng-model="value5"/>
+				<span style="color: rgb(0, 112, 0);">&lt;input</span>
+				<span style="color: rgb(0, 0, 192);">id=</span><span style="background-color: rgb(255, 240, 240);">"pw"</span>
+				<span style="color: rgb(0, 0, 192);">type=</span><span style="background-color: rgb(255, 240, 240);">"password"</span>
+				<span style="color: rgb(0, 0, 192);">pui-input</span>
+				<span style="color: rgb(0, 0, 192);">ng-model=</span><span style="background-color: rgb(255, 240, 240);">"value5"</span>
+				<span style="color: rgb(0, 112, 0);">/&gt;</span>
+				<hr/>
+				<input id="pwInline" type="password" pui-input="{'inline': true}" ng-model="value6" />
+				<span style="color: rgb(0, 112, 0);">&lt;input</span>
+				<span style="color: rgb(0, 0, 192);">id=</span>
+				<span style="background-color: rgb(255, 240, 240);">"pwInline"</span>
+				<span style="color: rgb(0, 0, 192);">type=</span>
+				<span style="background-color: rgb(255, 240, 240);">"password"</span>
+				<span style="color: rgb(0, 0, 192);">pui-input=</span>
+				<span style="background-color: rgb(255, 240, 240);">"{'inline': true}"</span>
+				<span style="color: rgb(0, 0, 192);">ng-model=</span>
+				<span style="background-color: rgb(255, 240, 240);">"value6"</span>
+				<span style="color: rgb(0, 112, 0);">/&gt;</span>
+				<hr/>
+				<h2>TODO</h2>
+				pui-disabled<br/>
+				text area with autocomplete<br/>
+				Align usage directive with other directives (remove pui-auto-resize, pui-counter, ... )?
+            </div>
+        </form>
+    </header>
+</section>
+
+</body>
+</html>

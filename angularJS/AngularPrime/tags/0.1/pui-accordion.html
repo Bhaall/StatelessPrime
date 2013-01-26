@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+ * Copyright 2013 Rudy De Busscher (http://statelessprime.blogspot.be/).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<html lang="en" ng-app="demomvc">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>AngularJS - PrimeUI integration</title>
+	<link rel="stylesheet" href="theme/theme.css">
+	<link rel="stylesheet" href="js/libs/primeUI/prime-ui-0.7.css">
+	<link rel="stylesheet" href="theme/app.css">
+
+	<script src="js/libs/primeUI/jquery.js"></script>
+	<script src="js/libs/primeUI/jquery-ui.js"></script>
+
+	<script src="js/libs/angular/angular.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/angularPrime/angularPrime.js"></script>
+	<script src="js/controllers/ctrl.js"></script>
+
+	<script src="js/libs/primeUI/prime-ui-0.7.js"></script>
+</head>
+<body>
+
+<section id="demoApp">
+	<header id="header">
+		<h1>Accordion</h1>
+		<a href="index.html">Index</a>
+		<hr style="border: 2px double" />
+
+		<form id="frm">
+			<div ng-controller="Ctrl" id="ctrl">
+				<div id="default" pui-accordion>
+					<h3>Godfather 1</h3>
+
+					<div>
+						The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. His beloved son Michael has
+						just come home from the war, but does not intend to become part of his father's business. Through Michael's life the nature of the
+						family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give
+						respect, but given to ruthless violence whenever anything stands against the good of the family.
+					</div>
+
+					<h3>Godfather 2</h3>
+
+					<div>
+						Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's
+						rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. In the early
+						1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living,
+						legally or illegally, for his wife and growing brood in Little Italy, killing the local Black Hand Fanucci after he demands his
+						customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows.
+					</div>
+
+					<h3>Godfather 3</h3>
+
+					<div>
+						After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final
+						story of the fictional Corleone crime family. Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife
+						Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate.
+					</div>
+				</div>
+				<br/>
+				<span style="color: rgb(0, 112, 0);">&lt;div</span>
+				<span style="color: rgb(0, 0, 192);">id=</span>
+				<span style="background-color: rgb(255, 240, 240);">"default"</span>
+				<span style="color: rgb(0, 0, 192);">pui-accordion</span>
+				<span style="color: rgb(0, 112, 0);">&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;h3&gt;</span>
+				Godfather 1
+				<span style="color: rgb(0, 112, 0);">&lt;/h3&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;div&gt;</span>
+				The story begins ...
+				<span style="color: rgb(0, 112, 0);">&lt;/div&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;h3&gt;</span>
+				Godfather 2
+				<span style="color: rgb(0, 112, 0);">&lt;/h3&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;div&gt;</span>
+				Francis Ford Coppola's legendary continuation ...
+				<span style="color: rgb(0, 112, 0);">&lt;/div&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;/div&gt;</span>
+				<br/>
+				<hr/>
+				<div id="multiple" pui-accordion="multiple">
+					<h3>Godfather 1</h3>
+
+					<div>
+						The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. His beloved son Michael has
+						just come home from the war, but does not intend to become part of his father's business. Through Michael's life the nature of the
+						family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give
+						respect, but given to ruthless violence whenever anything stands against the good of the family.
+					</div>
+
+					<h3>Godfather 2</h3>
+
+					<div>
+						Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's
+						rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. In the early
+						1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living,
+						legally or illegally, for his wife and growing brood in Little Italy, killing the local Black Hand Fanucci after he demands his
+						customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows.
+					</div>
+
+					<h3>Godfather 3</h3>
+
+					<div>
+						After a break of more than 15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final
+						story of the fictional Corleone crime family. Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife
+						Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate.
+					</div>
+				</div>
+				<br/>
+				<span style="color: rgb(0, 112, 0);">&lt;div</span>
+				<span style="color: rgb(0, 0, 192);">id=</span>
+				<span style="background-color: rgb(255, 240, 240);">"default"</span>
+				<span style="color: rgb(0, 0, 192);">pui-accordion=</span><span style="background-color: rgb(255, 240, 240);">"multiple"</span>
+				<span style="color: rgb(0, 112, 0);">&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;h3&gt;</span>
+				Godfather 1
+				<span style="color: rgb(0, 112, 0);">&lt;/h3&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;div&gt;</span>
+				The story begins ...
+				<span style="color: rgb(0, 112, 0);">&lt;/div&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;h3&gt;</span>
+				Godfather 2
+				<span style="color: rgb(0, 112, 0);">&lt;/h3&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;div&gt;</span>
+				Francis Ford Coppola's legendary continuation ...
+				<span style="color: rgb(0, 112, 0);">&lt;/div&gt;</span>
+				<span style="color: rgb(0, 112, 0);">&lt;/div&gt;</span>
+				<br/>
+
+			</div>
+		</form>
+		<hr style="border: 2px double" />
+	</header>
+</section>
+
+</body>
+</html>

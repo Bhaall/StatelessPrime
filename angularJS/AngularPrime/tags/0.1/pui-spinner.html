@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+ * Copyright 2013 Rudy De Busscher (http://statelessprime.blogspot.be/).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<html lang="en" ng-app="demomvc">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>AngularJS - PrimeUI integration</title>
+    <link rel="stylesheet" href="theme/theme.css">
+    <link rel="stylesheet" href="js/libs/primeUI/prime-ui-0.7.css">
+    <link rel="stylesheet" href="theme/app.css">
+
+    <script src="js/libs/primeUI/jquery.js"></script>
+    <script src="js/libs/primeUI/jquery-ui.js"></script>
+
+    <script src="js/libs/angular/angular.js"></script>
+    <script src="js/app.js"></script>
+	<script src="js/angularPrime/angularPrime.js"></script>
+    <script src="js/controllers/ctrl.js"></script>
+
+    <script src="js/libs/primeUI/prime-ui-0.7.js"></script>
+</head>
+<body>
+
+<section id="demoApp">
+    <header id="header">
+        <h1>Spinner</h1>
+        <a href="index.html">Index</a>
+        <hr style="border: 2px double" />
+
+        <form id="frm">
+            <div ng-controller="Ctrl" id="ctrl">
+				<input id="basic" type="text" pui-spinner ng-model="spinner1"/>
+                <span style="color: rgb(0, 112, 0);">&lt;input</span>
+                <span style="color: rgb(0, 0, 192);">id=</span><span style="background-color: rgb(255, 240, 240);">"basic"</span>
+                <span style="color: rgb(0, 0, 192);">type=</span><span style="background-color: rgb(255, 240, 240);">"text"</span>
+                <span style="color: rgb(0, 0, 192);">pui-spinner</span>
+                <span style="color: rgb(0, 0, 192);">ng-model=</span><span style="background-color: rgb(255, 240, 240);">"spinner1"</span>
+                <span style="color: rgb(0, 112, 0);">/&gt;</span>
+				<hr/>
+				<input id="step" type="text" pui-spinner="{'step': 0.25 }" ng-model="spinner2" />
+                <span style="color: rgb(0, 112, 0);">&lt;input</span>
+                <span style="color: rgb(0, 0, 192);">id=</span><span style="background-color: rgb(255, 240, 240);">"step"</span>
+                <span style="color: rgb(0, 0, 192);">type=</span><span style="background-color: rgb(255, 240, 240);">"text"</span>
+                <span style="color: rgb(0, 0, 192);">pui-spinner=</span><span style="background-color: rgb(255, 240, 240);">"{'step': 0.25 }"</span>
+                <span style="color: rgb(0, 0, 192);">ng-model=</span><span style="background-color: rgb(255, 240, 240);">"spinner2"</span>
+                <span style="color: rgb(0, 112, 0);">/&gt;</span>
+				<hr/>
+				<input id="suffix" type="text" pui-spinner="{'suffix': 'EUR' }" ng-model="spinner3" />
+                <span style="color: rgb(0, 112, 0);">&lt;input</span>
+                <span style="color: rgb(0, 0, 192);">id=</span><span style="background-color: rgb(255, 240, 240);">"suffix"</span>
+                <span style="color: rgb(0, 0, 192);">type=</span><span style="background-color: rgb(255, 240, 240);">"text"</span>
+                <span style="color: rgb(0, 0, 192);">pui-spinner=</span><span style="background-color: rgb(255, 240, 240);">"{'suffix': 'EUR' }"</span>
+                <span style="color: rgb(0, 0, 192);">ng-model=</span><span style="background-color: rgb(255, 240, 240);">"spinner3"</span>
+                <span style="color: rgb(0, 112, 0);">/&gt;</span>
+				<hr/>
+				<input id="test" type="text" pui-spinner ng-model="spinner4" disabled/>
+                <span style="color: rgb(0, 112, 0);">&lt;input</span>
+                <span style="color: rgb(0, 0, 192);">id=</span><span style="background-color: rgb(255, 240, 240);">"disabled"</span>
+                <span style="color: rgb(0, 0, 192);">type=</span><span style="background-color: rgb(255, 240, 240);">"text"</span>
+                <span style="color: rgb(0, 0, 192);">pui-spinner</span>
+                <span style="color: rgb(0, 0, 192);">ng-model=</span><span style="background-color: rgb(255, 240, 240);">"spinner4"</span>
+                <span style="color: rgb(0, 0, 192);">disabled</span>
+                <span style="color: rgb(0, 112, 0);">/&gt;</span>
+                <hr style="border: 2px double" />
+                <h2>TODO</h2>
+                pui-disabled
+            </div>
+        </form>
+    </header>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+ * Copyright 2013 Rudy De Busscher (http://statelessprime.blogspot.be/).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<html lang="en" ng-app="demomvc">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>AngularJS - PrimeUI integration</title>
+	<link rel="stylesheet" href="theme/theme.css">
+	<link rel="stylesheet" href="js/libs/primeUI/prime-ui-0.7.css">
+	<link rel="stylesheet" href="theme/app.css">
+
+	<script src="js/libs/primeUI/jquery.js"></script>
+	<script src="js/libs/primeUI/jquery-ui.js"></script>
+
+	<script src="js/libs/angular/angular.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/angularPrime/angularPrime.js"></script>
+	<script src="js/controllers/ctrl.js"></script>
+
+	<script src="js/libs/primeUI/prime-ui-0.7.js"></script>
+</head>
+<body>
+
+<section id="demoApp">
+	<header id="header">
+		<h1>Galleria</h1>
+		<a href="index.html">Index</a>
+		<hr style="border: 2px double" />
+
+		<form id="frm">
+			<div ng-controller="Ctrl" id="ctrl">
+				<div id="images" pui-galleria="{'panelWidth': 500, 'panelHeight': 313}">
+				    <ul>
+				        <li><img src="demo/images/galleria/galleria1.jpg" alt="Galleria 1 Description" title="Galleria 1"/></li>
+				        <li><img src="demo/images/galleria/galleria2.jpg" alt="Galleria 2 Description" title="Galleria 2"/></li>
+				        <li><img src="demo/images/galleria/galleria3.jpg" alt="Galleria 3 Description" title="Galleria 3"/></li>
+				        <li><img src="demo/images/galleria/galleria4.jpg" alt="Galleria 4 Description" title="Galleria 4"/></li>
+				        <li><img src="demo/images/galleria/galleria5.jpg" alt="Galleria 5 Description" title="Galleria 5"/></li>
+				        <li><img src="demo/images/galleria/galleria6.jpg" alt="Galleria 6 Description" title="Galleria 6"/></li>
+				        <li><img src="demo/images/galleria/galleria7.jpg" alt="Galleria 7 Description" title="Galleria 7"/></li>
+				        <li><img src="demo/images/galleria/galleria8.jpg" alt="Galleria 8 Description" title="Galleria 8"/></li>
+				        <li><img src="demo/images/galleria/galleria9.jpg" alt="Galleria 9 Description" title="Galleria 9"/></li>
+				        <li><img src="demo/images/galleria/galleria10.jpg" alt="Galleria 10 Description" title="Galleria 10"/></li>
+				        <li><img src="demo/images/galleria/galleria11.jpg" alt="Galleria 11 Description" title="Galleria 11"/></li>
+				        <li><img src="demo/images/galleria/galleria12.jpg" alt="Galleria 12 Description" title="Galleria 12"/></li>
+				    </ul>
+				</div>
+
+
+			</div>
+			<hr style="border: 2px double" />
+			<h2>TODO</h2>
+			Custom content and most of the options.
+
+		</form>
+	</header>
+</section>
+
+</body>
+</html>
