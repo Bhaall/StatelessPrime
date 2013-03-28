@@ -10,7 +10,7 @@
 
 var demo = angular.module('demo', ['angular.prime', 'demo.services']);
 
-demo.value('version', "v0.2-SNAPSHOT");
+demo.value('version', "v0.3-SNAPSHOT");
 
 demo.config(['$routeProvider', 'ConfigurationProvider', function($routeProvider, ConfigurationProvider) {
     ConfigurationProvider.loadData();
@@ -58,6 +58,15 @@ demo.directive('prettyPrint', function () {
             var content = element.html();
             var encoded = content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             element.html(prettyPrintOne(encoded, attrs.prettyPrint));
+        }
+    }
+});
+
+demo.directive('version', function () {
+    return {
+        restrict: 'A',
+        compile: function (element, attrs) {
+            element.html('<img src="demo/'+attrs.version+'.png" style="margin-left:10px"/>');
         }
     }
 });

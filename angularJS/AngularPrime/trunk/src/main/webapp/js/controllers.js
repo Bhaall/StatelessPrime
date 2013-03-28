@@ -295,7 +295,7 @@ function GalleriaController($scope, Widgets) {
 
 }
 
-function GrowlController($scope, Widgets) {
+function GrowlController($scope, Widgets, puiGrowl) {
 
     $scope.widgets = Widgets;
 
@@ -309,8 +309,16 @@ function GrowlController($scope, Widgets) {
 
     $scope.showWarnGrowl = function() {
         $scope.showWarnMessage('Warn message title', "Warn detail message");
-    }
+    };
 
+    $scope.showStickyMessage = function() {
+        puiGrowl.setSticky(true);
+        $scope.showInfoMessage('Message', "Message remains until close icon clicked or other message requested");
+    };
+
+    $scope.resetGrowlOptions = function() {
+            puiGrowl.setSticky(false);
+    }
 }
 
 function TooltipController($scope, Widgets) {

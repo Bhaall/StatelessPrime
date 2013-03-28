@@ -67,7 +67,7 @@ section {
 }
 
 .pui-growl-image {
-    background: url("../demo/images/messages.png") no-repeat !important;
+    background: url("../demo/images/messages.png") no-repeat;
 }
 
 pre {

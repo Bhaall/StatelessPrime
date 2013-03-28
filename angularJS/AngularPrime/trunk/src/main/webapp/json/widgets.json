@@ -248,6 +248,16 @@
             {
                 "label": "default",
                 "path": "puiGrowl/default"
+            },
+            {
+                "label": "noDiv",
+                "path": "puiGrowl/noDiv",
+                "tooltip": "new in 0.3"
+            },
+            {
+                "label": "sticky",
+                "path": "puiGrowl/sticky",
+                "tooltip": "new in 0.3"
             }
         ]
     },

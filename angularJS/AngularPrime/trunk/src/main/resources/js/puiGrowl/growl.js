@@ -21,7 +21,7 @@ $(function() {
         
             //this.jq.css('z-index', ++PrimeFaces.zindex);
 
-            this.clear();
+            //this.clear();  Changed for AngularPrime
 
             $.each(msgs, function(i, msg) {
                 $this._renderMessage(msg);
@@ -93,6 +93,11 @@ $(function() {
             }, this.options.life);
 
             message.data('timeout', timeout);
+        },
+
+        // Added for AngularPrime
+        setOptions: function(newOptions) {
+          this.options = newOptions;
         }
     });
 });
