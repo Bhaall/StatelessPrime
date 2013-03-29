@@ -4,3 +4,8 @@
 *.jar
 *.war
 *.ear
+
+#development directories
+target/
+.idea/
+*.iml

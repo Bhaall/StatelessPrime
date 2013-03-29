@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demoDirectives" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Learning directives</title>
+    <link rel="stylesheet" href="css/theme.css">
+
+    <script src="js/libs/angular/angular.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers/ctrl.js"></script>
+    <script src="js/directives/directives.js"></script>
+</head>
+<body>
+
+<div ng-controller="Ctrl">
+	<h1>Step 3</h1>
+	<a href="index.html">index</a><br/>
+    Change the panel title on the fly : <input type="text" ng-model="panelTitle"> <br/>
+    Angular expression field : <input type="text" ng-model="contentField"> <br/>
+    <br/>
+    <div my-dir3 title="title : {{panelTitle}}" class="originalElement">Contents of the div. Angular Expression result : {{contentField}}</div>
+
+	<h2>Light version</h2>
+
+
+	 <div my-dir3-l title="title : {{panelTitle}}" class="originalElement">Contents of the div. Angular Expression result : {{contentField}}</div>
+
+</div>
+</body>
+</html>
