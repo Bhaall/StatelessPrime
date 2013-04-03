@@ -145,5 +145,22 @@ demo.directive('myDir1', function version1() {
                 myPanel.create(element, options);
             }
         };
+    }).directive('myDir5', function version5 () {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var options = scope.$eval(attrs.myDir5) || {};
+                if (angular.isObject(options)) {
+                    options.collapse = true;
+                } else {
+                    options = {
+                        collapse: 'collapsable' === attrs.myDir5
+                    };
+                }
+
+                myPanel.create(element, options);
+
+            }
+        };
     });
 
