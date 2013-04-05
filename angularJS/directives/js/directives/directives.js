@@ -44,8 +44,32 @@ var myPanel = {
             this.titleSpan.after(this.toggler);
 
         }
+
     }
-};
+    , show: function(element) {
+        var content = Helper.findChild(element, 'pui-panel-content');
+        var header = angular.element(Helper.findChild(element, 'pui-panel-titlebar'));
+        var titlebar = angular.element(Helper.findChild(header, 'pui-panel-titlebar-icon'));
+        var icon = Helper.findChild(titlebar, 'ui-icon');
+        if (content.style.display === 'none') {
+            content.style.display = '';
+            icon.className = 'ui-icon ui-icon-minusthick';
+        }
+    }
+    , hide: function(element) {
+        var content = Helper.findChild(element, 'pui-panel-content');
+        var header = angular.element(Helper.findChild(element, 'pui-panel-titlebar'));
+        var titlebar = angular.element(Helper.findChild(header, 'pui-panel-titlebar-icon'));
+        var icon = Helper.findChild(titlebar, 'ui-icon');
+        if (content.style.display !== 'none') {
+            content.style.display = 'none';
+            icon.className = 'ui-icon ui-icon-plusthick';
+        }
+
+    }
+    , setTitle: function(titleValue) {
+        this.titleSpan.html(titleValue);
+    }};
 
 var myPanelLight = {
     create: function (element, options) {
@@ -159,6 +183,39 @@ demo.directive('myDir1', function version1() {
                 }
 
                 myPanel.create(element, options);
+
+            }
+        };
+    }).directive('myDir6', function version6 () {
+        return {
+            restrict: 'A'
+            , link: function (scope, element, attrs) {
+                var options = scope.$eval(attrs.myDir6) || {};
+                if (angular.isObject(options)) {
+                    options.collapse = true;
+                } else {
+                    options = {
+                        collapse: 'collapsable' === attrs.myDir6
+                    };
+                }
+
+                myPanel.create(element, options);
+
+                if (angular.isDefined(options.collapsed)) {
+                    scope.$watch(attrs.myDir6 + '.collapsed', function (value) {
+                        if (value === false) {
+                            myPanel.show(element);
+                        } else {
+                            myPanel.hide(element);
+                        }
+                    });
+                }
+
+
+                scope.$watch(attrs.title, function (title) {
+                    myPanel.setTitle(title);
+                })
+
 
             }
         };
