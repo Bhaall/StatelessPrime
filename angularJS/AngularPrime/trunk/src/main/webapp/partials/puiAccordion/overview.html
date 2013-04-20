@@ -14,6 +14,8 @@
 				<li>Single panel or multiple panels can be expanded</li>
 				<li>Programmatic setting the expanded panel, not supported in case of multiple expandable panels</li>
 				<li>Callback function available when user has changed the expanded panel</li>
+                <li>Panel can be in an included file.</li>
+                <li>Support for changing number of panels dynamically</li>
 			</ul>
 		</fieldset>
 		<fieldset id="issues" pui-fieldset style="margin-bottom:20px">
@@ -22,12 +24,41 @@
 				<li>Title of panel cannot contain an AngularJS expression (see dynamic example)</li>
 			</ul>
 		</fieldset>
+        <fieldset id="fixes" pui-fieldset style="margin-bottom:20px">
+            <legend>History</legend>
+            <ul>
+                <li>0.3</li>
+                <li style="list-style-type:none">
+                    <ul>
+                        <li>Support for accordion panels from included files</li>
+                        <li>Number of panels can be changed dynamically</li>
+                    </ul>
+                </li>
+            </ul>
+        </fieldset>
 		<fieldset id="planned" pui-fieldset style="margin-bottom:20px">
 			<legend>Planned</legend>
 		</fieldset>
 
 		<fieldset id="Configuration" pui-fieldset style="margin-bottom:20px">
 			<legend>Configuration</legend>
+            <table class="doc-table">
+                <thead>
+                <tr>
+                    <th class="ui-state-default">Type</th>
+                    <th class="ui-state-default">Default</th>
+                    <th class="ui-state-default">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="ui-widget-content">
+                    <td>Array of String</td>
+                    <td>null</td>
+                    <td>URL's of the included files as panel</td>
+                </tr>
+                </tbody>
+            </table>
+            When directive points to an object
 			<table class="doc-table">
 				<thead>
 				<tr>
@@ -55,6 +86,12 @@
 					<td>function (index)</td>
 					<td>null</td>
 					<td>Callback called when the user selects a panel (becomes expanded).</td>
+                <tr class="ui-widget-content">
+                    <td>urls</td>
+                    <td>Array of String</td>
+                    <td>null</td>
+                    <td>URL's of the included files as panel</td>
+                </tr>
 				</tr>
 				</tbody>
 			</table>

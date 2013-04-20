@@ -36,6 +36,19 @@ function AccordionController($scope, Widgets) {
 
     $scope.setFirstActive = function() {
         $scope.programmaticOptions.activeIndex = 0;
+    };
+
+    $scope.includeList = ["partials/puiAccordion/include/panel1.html"
+            , "partials/puiAccordion/include/panel2.html"];
+
+    $scope.distributedData = {
+        field1: "field1"
+        , field2: "field2"
+        , field3: "field3"
+    };
+
+    $scope.addPanel = function() {
+        $scope.includeList.push("partials/puiAccordion/include/panel3.html");
     }
 
 }
