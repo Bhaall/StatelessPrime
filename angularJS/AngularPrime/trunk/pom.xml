@@ -30,6 +30,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <angular-version>1.0.5</angular-version>
 	</properties>
 	<build>
 
@@ -68,6 +69,29 @@
 				</configuration>
 			</plugin>
 
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/src/main/webapp/js/libs/angular</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/resources/angular/${angular-version}</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 
@@ -94,6 +118,41 @@
 				</plugins>
 			</build>
 		</profile>
+        <profile>
+            <id>Angular104</id>
+            <properties>
+                <angular-version>1.0.4</angular-version>
+            </properties>
+
+        </profile>
+        <profile>
+            <id>Angular105</id>
+            <properties>
+                <angular-version>1.0.5</angular-version>
+            </properties>
+
+        </profile>
+        <profile>
+            <id>Angular106</id>
+            <properties>
+                <angular-version>1.0.6</angular-version>
+            </properties>
+
+        </profile>
+        <profile>
+            <id>Angular113</id>
+            <properties>
+                <angular-version>1.1.3</angular-version>
+            </properties>
+
+        </profile>
+        <profile>
+            <id>Angular114</id>
+            <properties>
+                <angular-version>1.1.4</angular-version>
+            </properties>
+
+        </profile>
 	</profiles>
 
 </project>
