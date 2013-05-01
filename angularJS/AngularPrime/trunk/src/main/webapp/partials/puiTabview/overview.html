@@ -16,11 +16,25 @@
 				<li>Tabs can be removed</li>
 				<li>Programmatic setting the active tab</li>
 				<li>User callback when tab is selected</li>
+                <li>Panel can be in an included file.</li>
+                <li>Support for changing number of tabs dynamically</li>
 			</ul>
 		</fieldset>
 		<fieldset id="issues" pui-fieldset style="margin-bottom:20px">
 			<legend>Known issues</legend>
 		</fieldset>
+        <fieldset id="fixes" pui-fieldset style="margin-bottom:20px">
+            <legend>History</legend>
+            <ul>
+                <li>0.3</li>
+                <li style="list-style-type:none">
+                    <ul>
+                        <li>Support for tab panels from included files</li>
+                        <li>Number of tabs can be changed dynamically</li>
+                    </ul>
+                </li>
+            </ul>
+        </fieldset>
 		<fieldset id="planned" pui-fieldset style="margin-bottom:20px">
 			<legend>Planned</legend>
 			<ul>
@@ -32,6 +46,23 @@
 
 		<fieldset id="Configuration" pui-fieldset style="margin-bottom:20px">
 			<legend>Configuration</legend>
+            <table class="doc-table">
+                <thead>
+                <tr>
+                    <th class="ui-state-default">Type</th>
+                    <th class="ui-state-default">Default</th>
+                    <th class="ui-state-default">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="ui-widget-content">
+                    <td>Array of String</td>
+                    <td>null</td>
+                    <td>URL's of the included files as panel</td>
+                </tr>
+                </tbody>
+            </table>
+            When directive points to an object
 			<table class="doc-table">
 				<thead>
 				<tr>
@@ -66,7 +97,12 @@
 					<td>0</td>
 					<td>The active tab in the view.</td>
 				</tr>
-				activeElement
+                <tr class="ui-widget-content">
+                    <td>urls</td>
+                    <td>Array of String</td>
+                    <td>null</td>
+                    <td>URL's of the included files as tab</td>
+                </tr>
 				</tbody>
 			</table>
 		</fieldset>

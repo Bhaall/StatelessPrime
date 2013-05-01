@@ -2,25 +2,100 @@
 
 /*globals angular $ */
 
-angular.module('angular.prime').directive('puiTabview', function () {
+angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCache', '$compile',
+                                                    function ($http, $templateCache, $compile) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
             return function postLink (scope, element, attrs) {
                 var options = scope.$eval(attrs.puiTabview) || {};
+                var dynamicPanels = angular.isArray(options) || angular.isArray(options.urls);
+                var content = [];
+                var urls = [];
+                var remaining;
+                var initialCall = true;
 
-                $(function () {
-                    if (options.closeable === true) {
-                        element.find('a').after('<span class="ui-icon ui-icon-close"></span>');
-                    }
-                    element.puitabview({
-                        orientation: options.orientation || 'top'
+                function generateHtml(contentArray, tagName) {
+                    var filtered = $.grep(contentArray, function(n, i){
+                        return tagName === n.nodeName;
+                    });
+                    var result = '';
+                    angular.forEach(filtered, function (part) {
+                        result = result+ part.outerHTML;
+                    });
+                    return result;
+                }
+
+                function renderTabPanels(panels) {
+                    var htmlContent = '';
+                    angular.forEach(panels, function(panelContent) {
+                        htmlContent = htmlContent + panelContent;
                     });
 
-                });
-                if (options.callback) {
-                    element.bind('puitabviewchange', function (eventData, index) {
-                        options.callback(index);
+                    var tmp = $.parseHTML(htmlContent);
+
+                    var titleHtml = generateHtml(tmp, 'LI');
+                    var panelHtml = generateHtml(tmp, 'DIV');
+
+                    element.html('<ul>'+titleHtml+'</ul><div>'+panelHtml+'</div>');
+                    $compile(element.contents())(scope);
+                    $(function () {
+                        if (!initialCall) {
+                            element.puitabview('destroy', {});
+                        }
+                        element.puitabview({
+                            orientation: options.orientation || 'top'
+                        });
+                        initialCall = false;
+
+                    });
+                }
+
+                function loadHtmlContents(idx, url) {
+                    $http.get(url, {cache: $templateCache}).success(function (response) {
+                        content[idx] = response;
+                        remaining--;
+                        if (remaining === 0) {
+                            renderTabPanels(content);
+                        }
+                    }).error(function () {
+                            console.error('error loading included file for panel of accordion');
+                        });
+
+                }
+
+                function loadAndRenderTabPanels() {
+                    remaining = urls.length;
+                    for (var i = 0; i < urls.length; i++) {
+                        loadHtmlContents(i, urls[i]);
+                    }
+                }
+
+                if (dynamicPanels) {
+                    if (angular.isArray(options)) {
+                        scope.$watch(attrs.puiTabview, function(x) {
+                            urls = x;
+                            loadAndRenderTabPanels();
+                        }, true);
+
+                    } else {
+                        scope.$watch(attrs.puiTabview+'.urls', function(x) {
+                            urls = x;
+                            loadAndRenderTabPanels();
+                        }, true);
+                    }
+
+                    loadAndRenderTabPanels();
+
+                } else {
+                    $(function () {
+                        if (options.closeable === true) {
+                            element.find('a').after('<span class="ui-icon ui-icon-close"></span>');
+                        }
+                        element.puitabview({
+                            orientation: options.orientation || 'top'
+                        });
+
                     });
                 }
 
@@ -37,7 +112,7 @@ angular.module('angular.prime').directive('puiTabview', function () {
             }
         }
     }
-});
+}]);
 
 ;/**
  * PrimeUI tabview widget

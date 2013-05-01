@@ -500,7 +500,13 @@
             {
                 "label": "programmatic index change",
                 "path": "puiTabview/programmatic"
+            },
+            {
+                "label": "inclusions",
+                "path": "puiTabview/repeat",
+                "tooltip": "new in 0.3"
             }
+
         ]
     },
 

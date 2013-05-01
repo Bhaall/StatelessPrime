@@ -92,6 +92,18 @@ function TabviewController($scope, Widgets) {
         activeElement : 1
     };
 
+    $scope.includeList = ["partials/puiTabview/include/panel1.html"
+        , "partials/puiTabview/include/panel2.html"];
+
+    $scope.distributedData = {
+        field1: "field1"
+        , field2: "field2"
+        , field3: "field3"
+    };
+
+    $scope.addPanel = function() {
+        $scope.includeList.push("partials/puiTabview/include/panel3.html");
+    }
 }
 
 function CheckBoxController($scope, Widgets) {
