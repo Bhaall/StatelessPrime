@@ -15,6 +15,12 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
                 var remaining;
                 var initialCall = true;
 
+                function supportForCloseableTabs() {
+                    if (options.closeable === true) {
+                        element.find('a').after('<span class="ui-icon ui-icon-close"></span>');
+                    }
+                }
+
                 function generateHtml(contentArray, tagName) {
                     var filtered = $.grep(contentArray, function(n, i){
                         return tagName === n.nodeName;
@@ -38,6 +44,7 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
                     var panelHtml = generateHtml(tmp, 'DIV');
 
                     element.html('<ul>'+titleHtml+'</ul><div>'+panelHtml+'</div>');
+                    supportForCloseableTabs();
                     $compile(element.contents())(scope);
                     $(function () {
                         if (!initialCall) {
@@ -94,9 +101,7 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
                             element.children('div').wrapAll("<div />");
                         }
 
-                        if (options.closeable === true) {
-                            element.find('a').after('<span class="ui-icon ui-icon-close"></span>');
-                        }
+                        supportForCloseableTabs();
                         element.puitabview({
                             orientation: options.orientation || 'top'
                         });
