@@ -89,6 +89,11 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
 
                 } else {
                     $(function () {
+                        if (element.children('ul').length === 0) {
+                            element.children('li').wrapAll("<ul />");
+                            element.children('div').wrapAll("<div />");
+                        }
+
                         if (options.closeable === true) {
                             element.find('a').after('<span class="ui-icon ui-icon-close"></span>');
                         }
@@ -96,6 +101,12 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
                             orientation: options.orientation || 'top'
                         });
 
+                    });
+                }
+
+                if (options.callback) {
+                    element.bind('puitabviewchange', function (eventData, index) {
+                        options.callback(index);
                     });
                 }
 

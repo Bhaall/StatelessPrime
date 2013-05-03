@@ -9,6 +9,23 @@ angular.module('angular.prime').directive('puiPanel', ['$interpolate', function 
             return function postLink (scope, element, attrs) {
                 var options = scope.$eval(attrs.puiPanel) || {};
 
+                var withinPuiAccordion = false;
+                var withinPuiTabview = false;
+
+                $(function () {
+                    withinPuiAccordion = element.parent().attr('pui-accordion') != undefined;
+                    withinPuiTabview = element.parent().attr('pui-tabview') != undefined;
+                });
+
+                if (withinPuiAccordion) {
+                    element.replaceWith('<h3>'+element.attr('title')+'</h3><div>'+element.html()+'</div>');
+                }
+
+                if (withinPuiTabview) {
+                    var id = element.attr('id');
+                    element.replaceWith('<li><a href="#"'+id+'">'+element.attr('title')+'</a></li><div id="'+id+'">'+element.html()+'</div>');
+                }
+                if (!withinPuiAccordion && !withinPuiTabview) {
                 var titleWatches = [];
                 if (element.attr('title')) {
                     var parsedExpression = $interpolate(element.attr('title'));
@@ -50,7 +67,7 @@ angular.module('angular.prime').directive('puiPanel', ['$interpolate', function 
                         });
                     });
                 });
-
+                }
 
             }
 

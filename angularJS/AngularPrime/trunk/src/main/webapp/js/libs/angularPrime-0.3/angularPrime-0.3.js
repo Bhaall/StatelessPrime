@@ -4873,6 +4873,23 @@ angular.module('angular.prime').directive('puiPanel', ['$interpolate', function 
             return function postLink (scope, element, attrs) {
                 var options = scope.$eval(attrs.puiPanel) || {};
 
+                var withinPuiAccordion = false;
+                var withinPuiTabview = false;
+
+                $(function () {
+                    withinPuiAccordion = element.parent().attr('pui-accordion') != undefined;
+                    withinPuiTabview = element.parent().attr('pui-tabview') != undefined;
+                });
+
+                if (withinPuiAccordion) {
+                    element.replaceWith('<h3>'+element.attr('title')+'</h3><div>'+element.html()+'</div>');
+                }
+
+                if (withinPuiTabview) {
+                    var id = element.attr('id');
+                    element.replaceWith('<li><a href="#"'+id+'">'+element.attr('title')+'</a></li><div id="'+id+'">'+element.html()+'</div>');
+                }
+                if (!withinPuiAccordion && !withinPuiTabview) {
                 var titleWatches = [];
                 if (element.attr('title')) {
                     var parsedExpression = $interpolate(element.attr('title'));
@@ -4914,7 +4931,7 @@ angular.module('angular.prime').directive('puiPanel', ['$interpolate', function 
                         });
                     });
                 });
-
+                }
 
             }
 
@@ -5656,6 +5673,11 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
 
                 } else {
                     $(function () {
+                        if (element.children('ul').length === 0) {
+                            element.children('li').wrapAll("<ul />");
+                            element.children('div').wrapAll("<div />");
+                        }
+
                         if (options.closeable === true) {
                             element.find('a').after('<span class="ui-icon ui-icon-close"></span>');
                         }
@@ -5663,6 +5685,12 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
                             orientation: options.orientation || 'top'
                         });
 
+                    });
+                }
+
+                if (options.callback) {
+                    element.bind('puitabviewchange', function (eventData, index) {
+                        options.callback(index);
                     });
                 }
 

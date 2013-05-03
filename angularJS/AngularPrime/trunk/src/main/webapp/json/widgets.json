@@ -32,6 +32,11 @@
                 "label": "inclusions",
                 "path": "puiAccordion/repeat",
                 "tooltip": "new in 0.3"
+            },
+            {
+                "label": "puiPanel",
+                "path": "puiAccordion/panel",
+                "tooltip": "new in 0.3"
             }
         ]
     },
@@ -504,6 +509,11 @@
             {
                 "label": "inclusions",
                 "path": "puiTabview/repeat",
+                "tooltip": "new in 0.3"
+            },
+            {
+                "label": "puiPanel",
+                "path": "puiTabview/panel",
                 "tooltip": "new in 0.3"
             }
 
