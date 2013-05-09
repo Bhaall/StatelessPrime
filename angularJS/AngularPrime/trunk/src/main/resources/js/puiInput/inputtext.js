@@ -10,26 +10,36 @@ $(function() {
 
         _create: function() {
             var input = this.element,
-            disabled = input.prop('disabled');
+                disabled = input.prop('disabled');
 
             //visuals
             input.addClass('pui-inputtext ui-widget ui-state-default ui-corner-all');
-            
+
             if(disabled) {
                 input.addClass('ui-state-disabled');
             }
             else {
-                this._enableMouseEffects(input);
+                this._enableMouseEffects(input); // Added For AngularPrime
+                /*
+                 wrapped in method For AngularPrime
+                input.hover(function() {
+                    input.toggleClass('ui-state-hover');
+                }).focus(function() {
+                        input.addClass('ui-state-focus');
+                    }).blur(function() {
+                        input.removeClass('ui-state-focus');
+                    });
+                */
             }
 
             //aria
             input.attr('role', 'textbox').attr('aria-disabled', disabled)
-                                          .attr('aria-readonly', input.prop('readonly'))
-                                          .attr('aria-multiline', input.is('textarea'));
+                .attr('aria-readonly', input.prop('readonly'))
+                .attr('aria-multiline', input.is('textarea'));
         },
-        
+
         _destroy: function() {
-            
+
         },
 
         // Added for AngularPrime
@@ -70,7 +80,7 @@ $(function() {
             this.element.removeClass('ui-state-disabled');
             this._enableMouseEffects();
         }
-        
+
     });
-    
+
 });

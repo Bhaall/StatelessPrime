@@ -42,37 +42,39 @@ angular.module('angular.prime').directive('puiFieldset', function () {
             }
         }
     }
-});;/**
+});;"use strict";
+/*globals $ */
+
+/**
  * PrimeFaces Fieldset Widget
  */
 $(function() {
 
     $.widget("primeui.puifieldset", {
-       
+
         options: {
             toggleable: false,
             toggleDuration: 'normal',
             collapsed: false
         },
-        
+
         _create: function() {
             this.element.addClass('pui-fieldset ui-widget ui-widget-content ui-corner-all').
                 children('legend').addClass('pui-fieldset-legend ui-corner-all ui-state-default');
-            
+
             this.element.contents(':not(legend)').wrapAll('<div class="pui-fieldset-content" />');
-            
+
             this.legend = this.element.children('legend.pui-fieldset-legend');
             this.content = this.element.children('div.pui-fieldset-content');
 
-            // Correct order for IE9
-            this.legend.prependTo(this.element);  // added for AngularPrime
+            this.legend.prependTo(this.element);
 
             if(this.options.toggleable) {
                 this.element.addClass('pui-fieldset-toggleable');
                 this.toggler = $('<span class="pui-fieldset-toggler ui-icon" />').prependTo(this.legend);
-                
+
                 this._bindEvents();
-                
+
                 if(this.options.collapsed) {
                     this.content.hide();
                     this.toggler.addClass('ui-icon-plusthick');
@@ -81,20 +83,20 @@ $(function() {
                 }
             }
         },
-        
+
         _bindEvents: function() {
             var $this = this;
-            
+
             this.legend.on('click.puifieldset', function(e) {$this.toggle(e);})
-                            .on('mouseover.puifieldset', function() {$this.legend.addClass('ui-state-hover');})
-                            .on('mouseout.puifieldset', function() {$this.legend.removeClass('ui-state-hover ui-state-active');})
-                            .on('mousedown.puifieldset', function() {$this.legend.removeClass('ui-state-hover').addClass('ui-state-active');})
-                            .on('mouseup.puifieldset', function() {$this.legend.removeClass('ui-state-active').addClass('ui-state-hover');})
+                .on('mouseover.puifieldset', function() {$this.legend.addClass('ui-state-hover');})
+                .on('mouseout.puifieldset', function() {$this.legend.removeClass('ui-state-hover ui-state-active');})
+                .on('mousedown.puifieldset', function() {$this.legend.removeClass('ui-state-hover').addClass('ui-state-active');})
+                .on('mouseup.puifieldset', function() {$this.legend.removeClass('ui-state-active').addClass('ui-state-hover');})
         },
-        
+
         toggle: function(e) {
             var $this = this;
-            
+
             this._trigger('beforeToggle', e);
 
             if(this.options.collapsed) {
@@ -109,7 +111,7 @@ $(function() {
             });
         },
 
-        // added for angularPrime
+        // added for AngularPrime
         collapse: function() {
             if (!this.options.collapsed) {
                 this.toggle(null);

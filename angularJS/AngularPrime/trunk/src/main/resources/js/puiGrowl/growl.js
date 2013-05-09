@@ -1,37 +1,40 @@
+"use strict";
+/*globals $ */
+
 /**
  * PrimeFaces Growl Widget
  */
 $(function() {
 
     $.widget("primeui.puigrowl", {
-       
+
         options: {
             sticky: false,
             life: 3000
         },
-        
+
         _create: function() {
             var container = this.element;
-            
+
             container.addClass("pui-growl ui-widget").appendTo(document.body);
         },
-        
+
         show: function(msgs) {
             var $this = this;
-        
+
             //this.jq.css('z-index', ++PrimeFaces.zindex);
 
             //this.clear();  Changed for AngularPrime
 
             $.each(msgs, function(i, msg) {
                 $this._renderMessage(msg);
-            }); 
+            });
         },
-        
+
         clear: function() {
             this.element.children('div.pui-growl-item-container').remove();
         },
-        
+
         _renderMessage: function(msg) {
             var markup = '<div class="pui-growl-item-container ui-state-highlight ui-corner-all ui-helper-hidden" aria-live="polite">';
             markup += '<div class="pui-growl-item pui-shadow">';
@@ -43,11 +46,11 @@ $(function() {
             markup += '</div><div style="clear: both;"></div></div></div>';
 
             var message = $(markup);
-            
+
             this._bindMessageEvents(message);
             message.appendTo(this.element).fadeIn();
         },
-        
+
         _removeMessage: function(message) {
             message.fadeTo('normal', 0, function() {
                 message.slideUp('normal', 'easeInOutCirc', function() {
@@ -55,10 +58,10 @@ $(function() {
                 });
             });
         },
-        
+
         _bindMessageEvents: function(message) {
             var $this = this,
-            sticky = this.options.sticky;
+                sticky = this.options.sticky;
 
             message.on('mouseover.puigrowl', function() {
                 var msg = $(this);
@@ -67,9 +70,9 @@ $(function() {
                     msg.find('div.pui-growl-icon-close:first').show();
                 }
             })
-            .on('mouseout.puigrowl', function() {        
-                $(this).find('div.pui-growl-icon-close:first').hide();
-            });
+                .on('mouseout.puigrowl', function() {
+                    $(this).find('div.pui-growl-icon-close:first').hide();
+                });
 
             //remove message on click of close icon
             message.find('div.pui-growl-icon-close').on('click.puigrowl',function() {
@@ -84,7 +87,7 @@ $(function() {
                 this._setRemovalTimeout(message);
             }
         },
-        
+
         _setRemovalTimeout: function(message) {
             var $this = this;
 

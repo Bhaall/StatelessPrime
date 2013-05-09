@@ -111,13 +111,16 @@ angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($p
     }]
 
 );
-;/**
+;"use strict";
+/*globals $ */
+
+/**
  * PrimeUI dropdown widget
  */
 $(function() {
 
     $.widget("primeui.puidropdown", {
-       
+
         options: {
             effect: 'fade',
             effectSpeed: 'normal',
@@ -140,36 +143,36 @@ $(function() {
                         this.element.append('<option value="' + choice + '">' + choice + '</option>');
                 }
             }
-            
+
             this.element.wrap('<div class="pui-dropdown ui-widget ui-state-default ui-corner-all ui-helper-clearfix" />')
-                    .wrap('<div class="ui-helper-hidden-accessible" />');
+                .wrap('<div class="ui-helper-hidden-accessible" />');
             this.container = this.element.closest('.pui-dropdown');
             this.focusElementContainer = $('<div class="ui-helper-hidden-accessible"><input type="text" /></div>').appendTo(this.container);
             this.focusElement = this.focusElementContainer.children('input');
-            this.label = this.options.editable ? $('<input type="text" class="pui-dropdown-label pui-inputtext ui-corner-all"">') 
-                                : $('<label class="pui-dropdown-label pui-inputtext ui-corner-all"/>');
+            this.label = this.options.editable ? $('<input type="text" class="pui-dropdown-label pui-inputtext ui-corner-all"">')
+                : $('<label class="pui-dropdown-label pui-inputtext ui-corner-all"/>');
             this.label.appendTo(this.container);
             this.menuIcon = $('<div class="pui-dropdown-trigger ui-state-default ui-corner-right"><span class="ui-icon ui-icon-triangle-1-s"></span></div>')
-                                .appendTo(this.container);
+                .appendTo(this.container);
             this.panel = $('<div class="pui-dropdown-panel ui-widget-content ui-corner-all ui-helper-hidden pui-shadow" />').appendTo(document.body);
             this.itemsWrapper = $('<div class="pui-dropdown-items-wrapper" />').appendTo(this.panel);
             this.itemsContainer = $('<ul class="pui-dropdown-items pui-dropdown-list ui-widget-content ui-widget ui-corner-all ui-helper-reset"></ul>')
-                                    .appendTo(this.itemsWrapper);
+                .appendTo(this.itemsWrapper);
             this.disabled = this.element.prop('disabled');
             this.choices = this.element.children('option');
             this.optGroupsSize = this.itemsContainer.children('li.puiselectonemenu-item-group').length;
-            
+
             if(this.options.filter) {
                 this.filterContainer = $('<div class="pui-dropdown-filter-container" />').prependTo(this.panel);
                 this.filterInput = $('<input type="text" autocomplete="off" class="pui-dropdown-filter pui-inputtext ui-widget ui-state-default ui-corner-all" />')
-                                            .appendTo(this.filterContainer);
+                    .appendTo(this.filterContainer);
                 this.filterContainer.append('<span class="ui-icon ui-icon-search"></span>');
             }
 
             this._generateItems();
-            
+
             var $this = this,
-            selectedOption = this.choices.filter(':selected');
+                selectedOption = this.choices.filter(':selected');
 
             //disable options
             this.choices.filter(':disabled').each(function() {
@@ -198,26 +201,26 @@ $(function() {
                 this._highlightItem(this.items.eq(selectedOption.index()));
             }
 
-            if(!this.disabled) {            
+            if(!this.disabled) {
                 this._bindEvents();
                 this._bindConstantEvents();
             }
 
             this._initDimensions();
         },
-        
+
         _generateItems: function() {
             for(var i = 0; i < this.choices.length; i++) {
                 var option = this.choices.eq(i),
-                optionLabel = option.text(),
-                content = this.options.content ? this.options.content.call(this, this.options.source[i]) : optionLabel;
-                    
+                    optionLabel = option.text(),
+                    content = this.options.content ? this.options.content.call(this, this.options.source[i]) : optionLabel;
+
                 this.itemsContainer.append('<li data-label="' + optionLabel + '" class="pui-dropdown-item pui-dropdown-list-item ui-corner-all">' + content + '</li>');
             }
-            
+
             this.items = this.itemsContainer.children('.pui-dropdown-item');
         },
-        
+
         _bindEvents: function() {
             var $this = this;
 
@@ -227,12 +230,12 @@ $(function() {
                 if(!el.hasClass('ui-state-highlight'))
                     $(this).addClass('ui-state-hover');
             })
-            .on('mouseout.puidropdown', function() {
-                $(this).removeClass('ui-state-hover');
-            })
-            .on('click.puidropdown', function() {
-                $this._selectItem($(this));   
-            });
+                .on('mouseout.puidropdown', function() {
+                    $(this).removeClass('ui-state-hover');
+                })
+                .on('click.puidropdown', function() {
+                    $this._selectItem($(this));
+                });
 
             this.triggers.on('mouseenter.puidropdown', function() {
                 if(!$this.container.hasClass('ui-state-focus')) {
@@ -240,34 +243,34 @@ $(function() {
                     $this.menuIcon.addClass('ui-state-hover');
                 }
             })
-            .on('mouseleave.puidropdown', function() {
-                $this.container.removeClass('ui-state-hover');
-                $this.menuIcon.removeClass('ui-state-hover');
-            })
-            .on('click.puidropdown', function(e) {
-                if($this.panel.is(":hidden")) {
-                    $this._show();
-                }
-                else {
-                    $this._hide();
+                .on('mouseleave.puidropdown', function() {
+                    $this.container.removeClass('ui-state-hover');
+                    $this.menuIcon.removeClass('ui-state-hover');
+                })
+                .on('click.puidropdown', function(e) {
+                    if($this.panel.is(":hidden")) {
+                        $this._show();
+                    }
+                    else {
+                        $this._hide();
 
-                    $this._revert();
-                }
+                        $this._revert();
+                    }
 
-                $this.container.removeClass('ui-state-hover');
-                $this.menuIcon.removeClass('ui-state-hover');          
-                $this.focusElement.trigger('focus.puidropdown');
-                e.preventDefault();
-            });
+                    $this.container.removeClass('ui-state-hover');
+                    $this.menuIcon.removeClass('ui-state-hover');
+                    $this.focusElement.trigger('focus.puidropdown');
+                    e.preventDefault();
+                });
 
             this.focusElement.on('focus.puidropdown', function() {
                 $this.container.addClass('ui-state-focus');
                 $this.menuIcon.addClass('ui-state-focus');
             })
-            .on('blur.puidropdown', function() {
-                $this.container.removeClass('ui-state-focus');
-                $this.menuIcon.removeClass('ui-state-focus');
-            });
+                .on('blur.puidropdown', function() {
+                    $this.container.removeClass('ui-state-focus');
+                    $this.menuIcon.removeClass('ui-state-focus');
+                });
 
             if(this.options.editable) {
                 this.label.on('change.pui-dropdown', function() {
@@ -292,10 +295,10 @@ $(function() {
                 });
             }
         },
-        
+
         _bindConstantEvents: function() {
             var $this = this;
-            
+
             $(document.body).bind('mousedown.pui-dropdown', function (e) {
                 if($this.panel.is(":hidden")) {
                     return;
@@ -322,37 +325,37 @@ $(function() {
             this._unbindResize();
             this._bindResize();
         },
-        
+
         _bindKeyEvents: function() {
             var $this = this;
 
             this.focusElement.on('keydown.puiselectonemenu', function(e) {
                 var keyCode = $.ui.keyCode,
-                key = e.which;
+                    key = e.which;
 
-                switch(key) { 
+                switch(key) {
                     case keyCode.UP:
                     case keyCode.LEFT:
                         var activeItem = $this._getActiveItem(),
-                        prev = activeItem.prevAll(':not(.ui-state-disabled,.ui-selectonemenu-item-group):first');
+                            prev = activeItem.prevAll(':not(.ui-state-disabled,.ui-selectonemenu-item-group):first');
 
                         if(prev.length == 1) {
                             if($this.panel.is(':hidden')) {
                                 $this._selectItem(prev);
-                            } 
+                            }
                             else {
                                 $this._highlightItem(prev);
                                 PUI.scrollInView($this.itemsWrapper, prev);
                             }
                         }
 
-                        e.preventDefault();                    
-                    break;
+                        e.preventDefault();
+                        break;
 
                     case keyCode.DOWN:
                     case keyCode.RIGHT:
                         var activeItem = $this._getActiveItem(),
-                        next = activeItem.nextAll(':not(.ui-state-disabled,.ui-selectonemenu-item-group):first');
+                            next = activeItem.nextAll(':not(.ui-state-disabled,.ui-selectonemenu-item-group):first');
 
                         if(next.length == 1) {
                             if($this.panel.is(':hidden')) {
@@ -369,10 +372,10 @@ $(function() {
                         }
 
                         e.preventDefault();
-                    break;
+                        break;
 
                     case keyCode.ENTER:
-                    case keyCode.NUMPAD_ENTER: 
+                    case keyCode.NUMPAD_ENTER:
                         if($this.panel.is(':hidden')) {
                             $this._show();
                         }
@@ -381,25 +384,25 @@ $(function() {
                         }
 
                         e.preventDefault();
-                    break;
+                        break;
 
                     case keyCode.TAB:
                         if($this.panel.is(':visible')) {
                             $this._revert();
                             $this._hide();
                         }
-                    break;
+                        break;
 
                     case keyCode.ESCAPE:
                         if($this.panel.is(':visible')) {
                             $this._revert();
                             $this._hide();
                         }
-                    break;
+                        break;
 
-                    default:    
+                    default:
                         var k = String.fromCharCode((96 <= key && key <= 105)? key-48 : key),
-                        currentItem = $this.items.filter('.ui-state-highlight');
+                            currentItem = $this.items.filter('.ui-state-highlight');
 
                         //Search items forward from current to end and on no result, search from start until current
                         var highlightItem = $this._search(k, currentItem.index() + 1, $this.options.length);
@@ -414,20 +417,20 @@ $(function() {
                             else {
                                 $this._highlightItem(highlightItem);
                                 PUI.scrollInView($this.itemsWrapper, highlightItem);
-                            }    
+                            }
                         }
 
-                    break;
+                        break;
                 }
             });
         },
-        
+
         _initDimensions: function() {
             var userStyle = this.element.attr('style');
 
             //do not adjust width of container if there is user width defined
             if(!userStyle||userStyle.indexOf('width') == -1) {
-                this.container.width(this.element.outerWidth(true) + 5);  
+                this.container.width(this.element.outerWidth(true) + 5);
             }
 
             //width of label
@@ -440,17 +443,17 @@ $(function() {
             }
 
             this.element.parent().addClass('ui-helper-hidden').removeClass('ui-helper-hidden-accessible');
-            
+
             if(this.options.scrollHeight && this.panel.outerHeight() > this.options.scrollHeight) {
                 this.itemsWrapper.height(this.options.scrollHeight);
             }
         },
-        
+
         _selectItem: function(item, silent) {
             var selectedOption = this.choices.eq(this._resolveItemIndex(item)),
-            currentOption = this.choices.filter(':selected'),
-            sameOption = selectedOption.val() == currentOption.val(),
-            shouldChange = null;
+                currentOption = this.choices.filter(':selected'),
+                sameOption = selectedOption.val() == currentOption.val(),
+                shouldChange = null;
 
             if(this.options.editable) {
                 shouldChange = (!sameOption)||(selectedOption.text() != this.label.val());
@@ -461,7 +464,7 @@ $(function() {
 
             if(shouldChange) {
                 this._highlightItem(item);
-                this.element.val(selectedOption.val());
+                this.element.val(selectedOption.val())
 
                 // this._triggerChange();  Moved for AngularPrime
 
@@ -480,14 +483,14 @@ $(function() {
                 this._hide();
             }
         },
-        
+
         _highlightItem: function(item) {
             this.items.filter('.ui-state-highlight').removeClass('ui-state-highlight');
             item.addClass('ui-state-highlight');
 
             this._setLabel(item.data('label'));
         },
-        
+
         _triggerChange: function(edited) {
             //this.changed = false; Removed for AngularPrime
 
@@ -499,14 +502,14 @@ $(function() {
                 this.value = this.choices.filter(':selected').val();
             }
         },
-        
+
         _resolveItemIndex: function(item) {
             if(this.optGroupsSize === 0)
                 return item.index();
             else
-                return item.index() - item.prevAll('li.pui-dropdown-item-group').length;        
+                return item.index() - item.prevAll('li.pui-dropdown-item-group').length;
         },
-        
+
         _setLabel: function(value) {
             if(this.options.editable) {
                 this.label.val(value);
@@ -518,7 +521,7 @@ $(function() {
                     this.label.text(value);
             }
         },
-        
+
         _bindResize: function() {
             var $this = this;
 
@@ -540,20 +543,20 @@ $(function() {
             // this.focusInput.off(); Does not exists, should be removed (AngularPrime)
             this.label.off();
         },
-        
-        _alignPanel: function() {        
+
+        _alignPanel: function() {
             this.panel.css({left:'', top:''}).position({
-                                            my: 'left top'
-                                            ,at: 'left bottom'
-                                            ,of: this.container
-                                        });
+                my: 'left top'
+                ,at: 'left bottom'
+                ,of: this.container
+            });
         },
-        
+
         _show: function() {
             this._alignPanel();
 
             this.panel.css('z-index', ++PUI.zindex);
-            
+
             if(this.options.effect != 'none')
                 this.panel.show(this.options.effect, {}, this.options.effectSpeed);
             else
@@ -565,7 +568,7 @@ $(function() {
         _hide: function() {
             this.panel.hide();
         },
-        
+
         _revert: function() {
             if(this.options.editable && this.customInput) {
                 this._setLabel(this.customInputVal);
@@ -576,11 +579,11 @@ $(function() {
                 this._highlightItem(this.items.eq(this.preShowValue.index()));
             }
         },
-        
+
         _getActiveItem: function() {
             return this.items.filter('.ui-state-highlight');
         },
-        
+
         _setupFilterMatcher: function() {
             this.filterMatchers = {
                 'startsWith': this._startsWithFilter
@@ -605,7 +608,7 @@ $(function() {
         },
 
         _filter: function(value) {
-            this.initialHeight = this.initialHeight||this.itemsWrapper.height();        
+            this.initialHeight = this.initialHeight||this.itemsWrapper.height();
             var filterValue = this.options.caseSensitiveFilter ? $.trim(value) : $.trim(value).toLowerCase();
 
             if(filterValue === '') {
@@ -614,8 +617,8 @@ $(function() {
             else {
                 for(var i = 0; i < this.choices.length; i++) {
                     var option = this.choices.eq(i),
-                    itemLabel = this.options.caseSensitiveFilter ? option.text() : option.text().toLowerCase(),
-                    item = this.items.eq(i);
+                        itemLabel = this.options.caseSensitiveFilter ? option.text() : option.text().toLowerCase(),
+                        item = this.items.eq(i);
 
                     if(this.filterMatcher(itemLabel, filterValue))
                         item.show();
@@ -631,8 +634,8 @@ $(function() {
                 this.itemsWrapper.height(this.initialHeight);
             }
         },
-        
-        _search: function(text, start, end) { 
+
+        _search: function(text, start, end) {
             for(var i = start; i  < end; i++) {
                 var option = this.choices.eq(i);
 
@@ -679,8 +682,6 @@ $(function() {
         selectIndex : function(idx) {
             this._selectItem(this.items.eq(idx), true);
         }
-
-
     });
-    
+
 });

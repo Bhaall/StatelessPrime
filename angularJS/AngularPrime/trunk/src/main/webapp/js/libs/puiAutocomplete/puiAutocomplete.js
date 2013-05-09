@@ -122,13 +122,16 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
 
     }
 
-});;/**
+});;"use strict";
+/*globals $ */
+
+/**
  * PrimeUI autocomplete widget
  */
 $(function() {
 
     $.widget("primeui.puiautocomplete", {
-       
+
         options: {
             delay: 300,
             minQueryLength: 1,
@@ -146,10 +149,10 @@ $(function() {
         _create: function() {
             this.element.puiinputtext();
             this.panel = $('<div class="pui-autocomplete-panel ui-widget-content ui-corner-all ui-helper-hidden pui-shadow"></div>').appendTo('body');
-            
+
             if(this.options.multiple) {
-                this.element.wrap('<ul class="pui-autocomplete-multiple ui-widget pui-inputtext ui-state-default ui-corner-all">' + 
-                                        '<li class="pui-autocomplete-input-token"></li></ul>');
+                this.element.wrap('<ul class="pui-autocomplete-multiple ui-widget pui-inputtext ui-state-default ui-corner-all">' +
+                    '<li class="pui-autocomplete-input-token"></li></ul>');
                 this.inputContainer = this.element.parent();
                 this.multiContainer = this.inputContainer.parent();
             }
@@ -165,7 +168,7 @@ $(function() {
             this._bindKeyEvents(); // Added for AngularPrime
             this._bindEvents();
         },
-                
+
         _bindEvents: function() {
             var $this = this;
 
@@ -177,57 +180,57 @@ $(function() {
                         $this.dropdown.toggleClass('ui-state-hover');
                     }
                 })
-                .on('mousedown.puiautocomplete', function() {
-                    if(!$this.element.prop('disabled')) {
-                        $this.dropdown.addClass('ui-state-active');
-                    }
-                })
-                .on('mouseup.puiautocomplete', function() {
-                    if(!$this.element.prop('disabled')) {
-                        $this.dropdown.removeClass('ui-state-active');
-                        $this.search('');
-                        $this.element.focus();
-                    }
-                })
-                .on('focus.puiautocomplete', function() {
-                    $this.dropdown.addClass('ui-state-focus');
-                })
-                .on('blur.puiautocomplete', function() {
-                    $this.dropdown.removeClass('ui-state-focus');
-                })
-                .on('keydown.puiautocomplete', function(e) {
-                    var keyCode = $.ui.keyCode;
+                    .on('mousedown.puiautocomplete', function() {
+                        if(!$this.element.prop('disabled')) {
+                            $this.dropdown.addClass('ui-state-active');
+                        }
+                    })
+                    .on('mouseup.puiautocomplete', function() {
+                        if(!$this.element.prop('disabled')) {
+                            $this.dropdown.removeClass('ui-state-active');
+                            $this.search('');
+                            $this.element.focus();
+                        }
+                    })
+                    .on('focus.puiautocomplete', function() {
+                        $this.dropdown.addClass('ui-state-focus');
+                    })
+                    .on('blur.puiautocomplete', function() {
+                        $this.dropdown.removeClass('ui-state-focus');
+                    })
+                    .on('keydown.puiautocomplete', function(e) {
+                        var keyCode = $.ui.keyCode;
 
-                    if(e.which == keyCode.ENTER || e.which == keyCode.NUMPAD_ENTER) {
-                        $this.search('');
-                        $this.input.focus();
+                        if(e.which == keyCode.ENTER || e.which == keyCode.NUMPAD_ENTER) {
+                            $this.search('');
+                            $this.input.focus();
 
-                        e.preventDefault();
-                    }
-                });
+                            e.preventDefault();
+                        }
+                    });
             }
-            
+
             if(this.options.multiple) {
                 this.multiContainer.on('hover.puiautocomplete', function() {
                     $(this).toggleClass('ui-state-hover');
                 })
-                .on('click.puiautocomplete', function() {
-                    $this.element.trigger('focus');
-                });
+                    .on('click.puiautocomplete', function() {
+                        $this.element.trigger('focus');
+                    });
 
                 this.element.on('focus.pui-autocomplete', function() {
                     $this.multiContainer.addClass('ui-state-focus');
                 })
-                .on('blur.pui-autocomplete', function(e) {
-                    $this.multiContainer.removeClass('ui-state-focus');
-                });
+                    .on('blur.pui-autocomplete', function(e) {
+                        $this.multiContainer.removeClass('ui-state-focus');
+                    });
             }
-            
+
             if(this.options.forceSelection) {
                 this.cachedResults = [this.element.val()];
                 this.element.on('blur.puiautocomplete', function() {
                     var value = $this.element.val(),
-                    valid = false;
+                        valid = false;
 
                     for(var i = 0; i < $this.cachedResults.length; i++) {
                         if($this.cachedResults[i] == value) {
@@ -247,11 +250,11 @@ $(function() {
                 if($this.panel.is(":hidden")) {
                     return;
                 }
-                
+
                 if(e.target === $this.element.get(0)) {
                     return;
                 }
-                
+
                 var offset = $this.panel.offset();
                 if (e.pageX < offset.left ||
                     e.pageX > offset.left + $this.panel.width() ||
@@ -267,25 +270,25 @@ $(function() {
                 }
             });
         },
-        
+
         _bindKeyEvents: function() {
             var $this = this;
 
             this.element.on('keyup.puiautocomplete', function(e) {
                 var keyCode = $.ui.keyCode,
-                key = e.which,
-                shouldSearch = true;
+                    key = e.which,
+                    shouldSearch = true;
 
-                if(key == keyCode.UP 
-                    || key == keyCode.LEFT 
-                    || key == keyCode.DOWN 
-                    || key == keyCode.RIGHT 
-                    || key == keyCode.TAB 
-                    || key == keyCode.SHIFT 
+                if(key == keyCode.UP
+                    || key == keyCode.LEFT
+                    || key == keyCode.DOWN
+                    || key == keyCode.RIGHT
+                    || key == keyCode.TAB
+                    || key == keyCode.SHIFT
                     || key == keyCode.ENTER
                     || key == keyCode.NUMPAD_ENTER) {
                     shouldSearch = false;
-                } 
+                }
 
                 if(shouldSearch) {
                     var value = $this.element.val();
@@ -300,69 +303,69 @@ $(function() {
                         }
 
                         $this.timeout = setTimeout(function() {
-                            $this.search(value);
-                        }, 
-                        $this.options.delay);
+                                $this.search(value);
+                            },
+                            $this.options.delay);
                     }
                 }
 
             }).on('keydown.puiautocomplete', function(e) {
-                if($this.panel.is(':visible')) {
-                    var keyCode = $.ui.keyCode,
-                    highlightedItem = $this.items.filter('.ui-state-highlight');
+                    if($this.panel.is(':visible')) {
+                        var keyCode = $.ui.keyCode,
+                            highlightedItem = $this.items.filter('.ui-state-highlight');
 
-                    switch(e.which) {
-                        case keyCode.UP:
-                        case keyCode.LEFT:
-                            var prev = highlightedItem.prev();
+                        switch(e.which) {
+                            case keyCode.UP:
+                            case keyCode.LEFT:
+                                var prev = highlightedItem.prev();
 
-                            if(prev.length == 1) {
-                                highlightedItem.removeClass('ui-state-highlight');
-                                prev.addClass('ui-state-highlight');
+                                if(prev.length == 1) {
+                                    highlightedItem.removeClass('ui-state-highlight');
+                                    prev.addClass('ui-state-highlight');
 
-                                if($this.options.scrollHeight) {
-                                    PUI.scrollInView($this.panel, prev);
+                                    if($this.options.scrollHeight) {
+                                        PUI.scrollInView($this.panel, prev);
+                                    }
                                 }
-                            }
 
-                            e.preventDefault();
-                            break;
+                                e.preventDefault();
+                                break;
 
-                        case keyCode.DOWN:
-                        case keyCode.RIGHT:
-                            var next = highlightedItem.next();
+                            case keyCode.DOWN:
+                            case keyCode.RIGHT:
+                                var next = highlightedItem.next();
 
-                            if(next.length == 1) {
-                                highlightedItem.removeClass('ui-state-highlight');
-                                next.addClass('ui-state-highlight');
+                                if(next.length == 1) {
+                                    highlightedItem.removeClass('ui-state-highlight');
+                                    next.addClass('ui-state-highlight');
 
-                                if($this.options.scrollHeight) {
-                                    PUI.scrollInView($this.panel, next);
+                                    if($this.options.scrollHeight) {
+                                        PUI.scrollInView($this.panel, next);
+                                    }
                                 }
-                            }
 
-                            e.preventDefault();
-                            break;
+                                e.preventDefault();
+                                break;
 
-                        case keyCode.ENTER:
-                        case keyCode.NUMPAD_ENTER:
-                            highlightedItem.trigger('click');
+                            case keyCode.ENTER:
+                            case keyCode.NUMPAD_ENTER:
+                                highlightedItem.trigger('click');
 
-                            e.preventDefault();
-                            break;
+                                e.preventDefault();
+                                break;
 
-                        case keyCode.ALT: 
-                        case 224:
-                            break;
+                            case keyCode.ALT:
+                            case 224:
+                                break;
 
-                        case keyCode.TAB:
-                            highlightedItem.trigger('click');
-                            $this.hide();
-                            break;
+                            case keyCode.TAB:
+                                highlightedItem.trigger('click');
+                                $this.hide();
+                                break;
+                        }
                     }
-                }
 
-            });
+                });
         },
 
         _bindDynamicEvents: function() {
@@ -376,32 +379,32 @@ $(function() {
                     item.addClass('ui-state-highlight');
                 }
             })
-            .on('click.puiautocomplete', function(event) {
-                var item = $(this);
-                
-                if($this.options.multiple) {
-                    var tokenMarkup = '<li class="pui-autocomplete-token ui-state-active ui-corner-all ui-helper-hidden">';
-                    tokenMarkup += '<span class="pui-autocomplete-token-icon ui-icon ui-icon-close" />';
-                    tokenMarkup += '<span class="pui-autocomplete-token-label">' + item.data('label') + '</span></li>';
+                .on('click.puiautocomplete', function(event) {
+                    var item = $(this);
 
-                    $(tokenMarkup).data(item.data())
-                        .insertBefore($this.inputContainer).fadeIn()
-                        .children('.pui-autocomplete-token-icon').on('click.pui-autocomplete', function(e) {
-                            var token = $(this).parent();
-                            $this._removeItem(token);
+                    if($this.options.multiple) {
+                        var tokenMarkup = '<li class="pui-autocomplete-token ui-state-active ui-corner-all ui-helper-hidden">';
+                        tokenMarkup += '<span class="pui-autocomplete-token-icon ui-icon ui-icon-close" />';
+                        tokenMarkup += '<span class="pui-autocomplete-token-label">' + item.data('label') + '</span></li>';
+
+                        $(tokenMarkup).data(item.data())
+                            .insertBefore($this.inputContainer).fadeIn()
+                            .children('.pui-autocomplete-token-icon').on('click.pui-autocomplete', function(e) {
+                                var token = $(this).parent();
+                                $this._removeItem(token);
                             $this._trigger('unselect', e, token.data('label'));  // Changed for AngularPrime
-                    });
-                    
-                    $this.element.val('').trigger('focus');
-                }
-                else {
-                    $this.element.val(item.data('label')).focus();
-                }
+                            });
+
+                        $this.element.val('').trigger('focus');
+                    }
+                    else {
+                        $this.element.val(item.data('label')).focus();
+                    }
 
                 //$this._trigger('select', event, item); // Changed for AngularPrime
                 $this._trigger('select', event, item.data('label'));
-                $this.hide();
-            });
+                    $this.hide();
+                });
         },
 
         search: function(q) {
@@ -414,13 +417,13 @@ $(function() {
             if(this.options.completeSource) {
                 if($.isArray(this.options.completeSource)) {
                     var sourceArr = this.options.completeSource,
-                    data = [],
-                    emptyQuery = ($.trim(q) === '');
-                    
+                        data = [],
+                        emptyQuery = ($.trim(q) === '');
+
                     for(var i = 0 ; i < sourceArr.length; i++) {
                         var item = sourceArr[i],
-                        itemLabel = item.label||item;
-                        
+                            itemLabel = item.label||item;
+
                         if(!this.options.caseSensitive) {
                             itemLabel = itemLabel.toLowerCase();
                         }
@@ -446,30 +449,30 @@ $(function() {
             for(var i = 0; i < data.length; i++) {
                 var item = $('<li class="pui-autocomplete-item pui-autocomplete-list-item ui-corner-all"></li>');
                 item.data(data[i]);
-                
+
                 if(this.options.content)
                     item.html(this.options.content.call(this, data[i]));
                 else
                     item.text(data[i].label);
-                
+
                 this.listContainer.append(item);
             }
-            
+
             this.items = this.listContainer.children('.pui-autocomplete-item');
-            
+
             this._bindDynamicEvents();
 
             if(this.items.length > 0) {
                 var firstItem = $this.items.eq(0),
-                hidden = this.panel.is(':hidden');
+                    hidden = this.panel.is(':hidden');
                 firstItem.addClass('ui-state-highlight');
 
                 if($this.query.length > 0 && !$this.options.content) {
                     $this.items.each(function() {
                         var item = $(this),
-                        text = item.html(),
-                        re = new RegExp(PUI.escapeRegExp($this.query), 'gi'),
-                        highlighedText = text.replace(re, '<span class="pui-autocomplete-query">$&</span>');
+                            text = item.html(),
+                            re = new RegExp(PUI.escapeRegExp($this.query), 'gi'),
+                            highlighedText = text.replace(re, '<span class="pui-autocomplete-query">$&</span>');
 
                         item.html(highlighedText);
                     });
@@ -489,7 +492,7 @@ $(function() {
                     if(heightConstraint > $this.options.scrollHeight)
                         $this.panel.height($this.options.scrollHeight);
                     else
-                        $this.panel.css('height', 'auto');                              
+                        $this.panel.css('height', 'auto');
 
                 }
 
@@ -514,11 +517,11 @@ $(function() {
                 this.panel.show();
         },
 
-        hide: function() {        
+        hide: function() {
             this.panel.hide();
             this.panel.css('height', 'auto');
         },
-        
+
         _removeItem: function(item) {
             item.fadeOut('fast', function() {
                 var token = $(this);
@@ -526,7 +529,7 @@ $(function() {
                 token.remove();
             });
         },
-        
+
         _alignPanel: function() {
             var panelWidth = null;
 
@@ -550,16 +553,16 @@ $(function() {
             }
 
             this.panel.css({
-                            'left':'',
-                            'top':'',
-                            'width': panelWidth,
-                            'z-index': ++PUI.zindex
-                    })
-                    .position({
-                        my: 'left top'
-                        ,at: 'left bottom'
-                        ,of: this.element
-                    });
+                'left':'',
+                'top':'',
+                'width': panelWidth,
+                'z-index': ++PUI.zindex
+            })
+                .position({
+                    my: 'left top'
+                    ,at: 'left bottom'
+                    ,of: this.element
+                });
         },
 
         // Added for AngularPrime
@@ -586,5 +589,5 @@ $(function() {
         }
 
     });
-    
+
 });

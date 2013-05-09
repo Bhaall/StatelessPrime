@@ -1,12 +1,15 @@
+"use strict";
+/*globals $ */
+
 /**
  * PrimeUI inputtextarea widget
  */
 $(function() {
 
     $.widget("primeui.puiinputtextarea", {
-       
+
         options: {
-             autoResize: false
+            autoResize: false
             ,autoComplete: false
             ,maxlength: null
             ,counter: null
@@ -17,63 +20,63 @@ $(function() {
 
         _create: function() {
             var $this = this;
-            
+
             this.element.puiinputtext();
-            
+
             if(this.options.autoResize) {
                 this.options.rowsDefault = this.element.attr('rows');
                 this.options.colsDefault = this.element.attr('cols');
-        
+
                 this.element.addClass('pui-inputtextarea-resizable');
-                
+
                 this.element.keyup(function() {
                     $this._resize();
                 }).focus(function() {
-                    $this._resize();
-                }).blur(function() {
-                    $this._resize();
-                });
+                        $this._resize();
+                    }).blur(function() {
+                        $this._resize();
+                    });
             }
-            
+
             if(this.options.maxlength) {
                 this.element.keyup(function(e) {
                     var value = $this.element.val(),
-                    length = value.length;
+                        length = value.length;
 
                     if(length > $this.options.maxlength) {
                         $this.element.val(value.substr(0, $this.options.maxlength));
                     }
 
                     if($this.options.counter) {
-                        $this.updateCounter();
+                        $this.updateCounter(); // Changed for AngularPrime (visibility)
                     }
                 });
             }
-            
+
             if(this.options.counter) {
-                this.updateCounter();
+                this.updateCounter(); // Changed for AngularPrime (visibility)
             }
-            
+
             if(this.options.autoComplete) {
                 this._initAutoComplete();
             }
         },
-        
+
         updateCounter: function() {  // Changed for AngularPrime (visibility)
             var value = this.element.val(),
-            length = value.length;
+                length = value.length;
 
             if(this.options.counter) {
                 var remaining = this.options.maxlength - length,
-                remainingText = this.options.counterTemplate.replace('{0}', remaining);
+                    remainingText = this.options.counterTemplate.replace('{0}', remaining);
 
                 this.options.counter.text(remainingText);
             }
         },
-        
+
         _resize: function() {
             var linesCount = 0,
-            lines = this.element.val().split('\n');
+                lines = this.element.val().split('\n');
 
             for(var i = lines.length-1; i >= 0 ; --i) {
                 linesCount += Math.floor((lines[i].length / this.options.colsDefault) + 1);
@@ -83,11 +86,11 @@ $(function() {
 
             this.element.attr('rows', newRows);
         },
-        
-        
+
+
         _initAutoComplete: function() {
             var panelMarkup = '<div id="' + this.id + '_panel" class="pui-autocomplete-panel ui-widget-content ui-corner-all ui-helper-hidden ui-shadow"></div>',
-            $this = this;
+                $this = this;
 
             this.panel = $(panelMarkup).appendTo(document.body);
 
@@ -109,13 +112,13 @@ $(function() {
                     case keyCode.ESCAPE:
                     case 224:   //mac command
                         //do not search
-                    break;
+                        break;
 
                     default:
-                        var query = $this._extractQuery();           
+                        var query = $this._extractQuery();
                         if(query && query.length >= $this.options.minQueryLength) {
 
-                             //Cancel the search request if user types within the timeout
+                            //Cancel the search request if user types within the timeout
                             if($this.timeout) {
                                 $this._clearTimeout($this.timeout);
                             }
@@ -125,93 +128,93 @@ $(function() {
                             }, $this.options.queryDelay);
 
                         }
-                    break;
+                        break;
                 }
 
             }).keydown(function(e) {
-                var overlayVisible = $this.panel.is(':visible'),
-                keyCode = $.ui.keyCode;
+                    var overlayVisible = $this.panel.is(':visible'),
+                        keyCode = $.ui.keyCode;
 
-                switch(e.which) {
-                    case keyCode.UP:
-                    case keyCode.LEFT:
-                        if(overlayVisible) {
-                            var highlightedItem = $this.items.filter('.ui-state-highlight'),
-                            prev = highlightedItem.length == 0 ? $this.items.eq(0) : highlightedItem.prev();
+                    switch(e.which) {
+                        case keyCode.UP:
+                        case keyCode.LEFT:
+                            if(overlayVisible) {
+                                var highlightedItem = $this.items.filter('.ui-state-highlight'),
+                                    prev = highlightedItem.length == 0 ? $this.items.eq(0) : highlightedItem.prev();
 
-                            if(prev.length == 1) {
-                                highlightedItem.removeClass('ui-state-highlight');
-                                prev.addClass('ui-state-highlight');
+                                if(prev.length == 1) {
+                                    highlightedItem.removeClass('ui-state-highlight');
+                                    prev.addClass('ui-state-highlight');
 
-                                if($this.options.scrollHeight) {
-                                    PUI.scrollInView($this.panel, prev);
+                                    if($this.options.scrollHeight) {
+                                        PUI.scrollInView($this.panel, prev);
+                                    }
                                 }
+
+                                e.preventDefault();
                             }
+                            else {
+                                $this._clearTimeout();
+                            }
+                            break;
 
-                            e.preventDefault();
-                        }
-                        else {
-                            $this._clearTimeout();
-                        }
-                    break;
+                        case keyCode.DOWN:
+                        case keyCode.RIGHT:
+                            if(overlayVisible) {
+                                var highlightedItem = $this.items.filter('.ui-state-highlight'),
+                                    next = highlightedItem.length == 0 ? _self.items.eq(0) : highlightedItem.next();
 
-                    case keyCode.DOWN:
-                    case keyCode.RIGHT:
-                        if(overlayVisible) {
-                            var highlightedItem = $this.items.filter('.ui-state-highlight'),
-                            next = highlightedItem.length == 0 ? _self.items.eq(0) : highlightedItem.next();
+                                if(next.length == 1) {
+                                    highlightedItem.removeClass('ui-state-highlight');
+                                    next.addClass('ui-state-highlight');
 
-                            if(next.length == 1) {
-                                highlightedItem.removeClass('ui-state-highlight');
-                                next.addClass('ui-state-highlight');
-
-                                if($this.options.scrollHeight) {
-                                    PUI.scrollInView($this.panel, next);
+                                    if($this.options.scrollHeight) {
+                                        PUI.scrollInView($this.panel, next);
+                                    }
                                 }
+
+                                e.preventDefault();
                             }
+                            else {
+                                $this._clearTimeout();
+                            }
+                            break;
 
-                            e.preventDefault();
-                        }
-                        else {
+                        case keyCode.ENTER:
+                        case keyCode.NUMPAD_ENTER:
+                            if(overlayVisible) {
+                                $this.items.filter('.ui-state-highlight').trigger('click');
+
+                                e.preventDefault();
+                            }
+                            else {
+                                $this._clearTimeout();
+                            }
+                            break;
+
+                        case keyCode.SPACE:
+                        case keyCode.CONTROL:
+                        case keyCode.ALT:
+                        case keyCode.BACKSPACE:
+                        case keyCode.ESCAPE:
+                        case 224:   //mac command
                             $this._clearTimeout();
-                        }
-                    break;
 
-                    case keyCode.ENTER:
-                    case keyCode.NUMPAD_ENTER:
-                        if(overlayVisible) {
-                            $this.items.filter('.ui-state-highlight').trigger('click');
+                            if(overlayVisible) {
+                                $this._hide();
+                            }
+                            break;
 
-                            e.preventDefault();
-                        }
-                        else {
+                        case keyCode.TAB:
                             $this._clearTimeout();
-                        } 
-                    break;
 
-                    case keyCode.SPACE:
-                    case keyCode.CONTROL:
-                    case keyCode.ALT:
-                    case keyCode.BACKSPACE:
-                    case keyCode.ESCAPE:
-                    case 224:   //mac command
-                        $this._clearTimeout();
-
-                        if(overlayVisible) {
-                            $this._hide();
-                        }
-                    break;
-
-                    case keyCode.TAB:
-                        $this._clearTimeout();
-
-                        if(overlayVisible) {
-                            $this.items.filter('.ui-state-highlight').trigger('click');
-                            $this._hide();
-                        }
-                    break;
-                }
-            });
+                            if(overlayVisible) {
+                                $this.items.filter('.ui-state-highlight').trigger('click');
+                                $this._hide();
+                            }
+                            break;
+                    }
+                });
 
             //hide panel when outside is clicked
             $(document.body).bind('mousedown.puiinputtextarea', function (e) {
@@ -252,19 +255,19 @@ $(function() {
                     item.addClass('ui-state-highlight');
                 }
             })
-            .bind('click', function(event) {
-                var item = $(this),
-                itemValue = item.attr('data-item-value'),
-                insertValue = itemValue.substring($this.query.length);
+                .bind('click', function(event) {
+                    var item = $(this),
+                        itemValue = item.attr('data-item-value'),
+                        insertValue = itemValue.substring($this.query.length);
 
-                $this.element.focus();
+                    $this.element.focus();
 
-                $this.element.insertText(insertValue, $this.element.getSelection().start, true);
+                    $this.element.insertText(insertValue, $this.element.getSelection().start, true);
 
-                $this._hide();
-                
-                $this._trigger("itemselect", event, item);
-            });
+                    $this._hide();
+
+                    $this._trigger("itemselect", event, item);
+                });
         },
 
         _clearTimeout: function() {
@@ -277,8 +280,8 @@ $(function() {
 
         _extractQuery: function() {
             var end = this.element.getSelection().end,
-            result = /\S+$/.exec(this.element.get(0).value.slice(0, end)),
-            lastWord = result ? result[0] : null;
+                result = /\S+$/.exec(this.element.get(0).value.slice(0, end)),
+                lastWord = result ? result[0] : null;
 
             return lastWord;
         },
@@ -287,7 +290,7 @@ $(function() {
             this.query = q;
 
             var request = {
-                query: q 
+                query: q
             };
 
             if(this.options.completeSource) {
@@ -313,7 +316,7 @@ $(function() {
 
             this._bindDynamicEvents();
 
-            if(this.items.length > 0) {                            
+            if(this.items.length > 0) {
                 //highlight first item
                 this.items.eq(0).addClass('ui-state-highlight');
 
@@ -324,7 +327,7 @@ $(function() {
 
                 if(this.panel.is(':hidden')) {
                     this._show();
-                } 
+                }
                 else {
                     this._alignPanel(); //with new items
                 }
@@ -337,13 +340,13 @@ $(function() {
 
         _alignPanel: function() {
             var pos = this.element.getCaretPosition(),
-            offset = this.element.offset();
+                offset = this.element.offset();
 
             this.panel.css({
-                            'left': offset.left + pos.left,
-                            'top': offset.top + pos.top,
-                            'width': this.element.innerWidth()
-                    });
+                'left': offset.left + pos.left,
+                'top': offset.top + pos.top,
+                'width': this.element.innerWidth()
+            });
         },
 
         _show: function() {
@@ -352,19 +355,9 @@ $(function() {
             this.panel.show();
         },
 
-        _hide: function() {        
+        _hide: function() {
             this.panel.hide();
-        },
-
-        // called when created, and later when changing options
-        _refresh: function() {
-            
-        },
-
-        _destroy: function() {
-
         }
-        
     });
-    
+
 });

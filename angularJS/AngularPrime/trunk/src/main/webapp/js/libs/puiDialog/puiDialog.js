@@ -72,13 +72,16 @@ angular.module('angular.prime').directive('puiDialog', function () {
     }
 
 );
-;/**
+;"use strict";
+/*globals $ */
+
+/**
  * PrimeUI Dialog Widget
  */
 $(function() {
 
     $.widget("primeui.puidialog", {
-       
+
         options: {
             draggable: true,
             resizable: true,
@@ -101,60 +104,60 @@ $(function() {
             appendTo: null,
             buttons: null
         },
-        
+
         _create: function() {
             //container
             this.element.addClass('pui-dialog ui-widget ui-widget-content ui-helper-hidden ui-corner-all pui-shadow')
-                        .contents().wrapAll('<div class="pui-dialog-content ui-widget-content" />');
-                    
+                .contents().wrapAll('<div class="pui-dialog-content ui-widget-content" />');
+
             //header
             this.element.prepend('<div class="pui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">'
-                                + '<span id="' + this.element.attr('id') + '_label" class="pui-dialog-title">' + this.element.attr('title') + '</span>')
-                                .removeAttr('title');
-            
+                    + '<span id="' + this.element.attr('id') + '_label" class="pui-dialog-title">' + this.element.attr('title') + '</span>')
+                .removeAttr('title');
+
             //footer
             if(this.options.buttons) {
                 this.footer = $('<div class="pui-dialog-buttonpane ui-widget-content ui-helper-clearfix"></div>').appendTo(this.element);
                 for(var i = 0; i < this.options.buttons.length; i++) {
                     var buttonMeta = this.options.buttons[i],
-                    button = $('<button type="button"></button>').appendTo(this.footer);
+                        button = $('<button type="button"></button>').appendTo(this.footer);
                     if(buttonMeta.text) {
                         button.text(buttonMeta.text);
                     }
-                    
+
                     button.puibutton(buttonMeta);
-                }  
+                }
             }
-            
+
             if(this.options.rtl) {
                 this.element.addClass('pui-dialog-rtl');
             }
-            
+
             //elements
             this.content = this.element.children('.pui-dialog-content');
             this.titlebar = this.element.children('.pui-dialog-titlebar');
-            
+
             if(this.options.closable) {
                 this._renderHeaderIcon('pui-dialog-titlebar-close', 'ui-icon-close');
             }
-            
+
             if(this.options.minimizable) {
                 this._renderHeaderIcon('pui-dialog-titlebar-maximize', 'ui-icon-extlink');
             }
-            
+
             if(this.options.minimizable) {
                 this._renderHeaderIcon('pui-dialog-titlebar-minimize', 'ui-icon-minus');
             }
-            
+
             //icons
             this.icons = this.titlebar.children('.pui-dialog-titlebar-icon');
             this.closeIcon = this.titlebar.children('.pui-dialog-titlebar-close');
             this.minimizeIcon = this.titlebar.children('.pui-dialog-titlebar-minimize');
             this.maximizeIcon = this.titlebar.children('.pui-dialog-titlebar-maximize');
-            
-            this.blockEvents = 'focus.puidialog mousedown.puidialog mouseup.puidialog keydown.puidialog keyup.puidialog';            
+
+            this.blockEvents = 'focus.puidialog mousedown.puidialog mouseup.puidialog keydown.puidialog keyup.puidialog';
             this.parent = this.element.parent();
-            
+
             //size
             this.element.css({'width': this.options.width, 'height': 'auto'});
             this.content.height(this.options.height);
@@ -186,46 +189,46 @@ $(function() {
                 this.show();
             }
         },
-        
+
         _renderHeaderIcon: function(styleClass, icon) {
             this.titlebar.append('<a class="pui-dialog-titlebar-icon ' + styleClass + ' ui-corner-all" href="#" role="button">'
-                                + '<span class="ui-icon ' + icon + '"></span></a>');
+                + '<span class="ui-icon ' + icon + '"></span></a>');
         },
-        
+
         _enableModality: function() {
             var $this = this,
-            doc = $(document);
+                doc = $(document);
 
             this.modality = $('<div id="' + this.element.attr('id') + '_modal" class="ui-widget-overlay"></div>').appendTo(document.body)
-                                .css({
-                                    'width' : doc.width(),
-                                    'height' : doc.height(),
-                                    'z-index' : this.element.css('z-index') - 1
-                                });
+                .css({
+                    'width' : doc.width(),
+                    'height' : doc.height(),
+                    'z-index' : this.element.css('z-index') - 1
+                });
 
             //Disable tabbing out of modal dialog and stop events from targets outside of dialog
             doc.bind('keydown.puidialog',
-                    function(event) {
-                        if(event.keyCode == $.ui.keyCode.TAB) {
-                            var tabbables = $this.content.find(':tabbable'), 
-                            first = tabbables.filter(':first'), 
+                function(event) {
+                    if(event.keyCode == $.ui.keyCode.TAB) {
+                        var tabbables = $this.content.find(':tabbable'),
+                            first = tabbables.filter(':first'),
                             last = tabbables.filter(':last');
 
-                            if(event.target === last[0] && !event.shiftKey) {
-                                first.focus(1);
-                                return false;
-                            } 
-                            else if (event.target === first[0] && event.shiftKey) {
-                                last.focus(1);
-                                return false;
-                            }
-                        }
-                    })
-                    .bind(this.blockEvents, function(event) {
-                        if ($(event.target).zIndex() < $this.element.zIndex()) {
+                        if(event.target === last[0] && !event.shiftKey) {
+                            first.focus(1);
                             return false;
                         }
-                    });
+                        else if (event.target === first[0] && event.shiftKey) {
+                            last.focus(1);
+                            return false;
+                        }
+                    }
+                })
+                .bind(this.blockEvents, function(event) {
+                    if ($(event.target).zIndex() < $this.element.zIndex()) {
+                        return false;
+                    }
+                });
         },
 
         _disableModality: function(){
@@ -242,7 +245,7 @@ $(function() {
             if(!this.positionInitialized) {
                 this._initPosition();
             }
-            
+
             this._trigger('beforeShow', null);
 
             if(this.options.showEffect) {
@@ -251,7 +254,7 @@ $(function() {
                 this.element.show(this.options.showEffect, this.options.effectOptions, this.options.effectSpeed, function() {
                     $this._postShow();
                 });
-            }    
+            }
             else {
                 this.element.show();
 
@@ -265,7 +268,7 @@ $(function() {
             }
         },
 
-        _postShow: function() {   
+        _postShow: function() {
             //execute user defined callback
             this._trigger('afterShow', null);
 
@@ -277,11 +280,11 @@ $(function() {
             this._applyFocus();
         },
 
-        hide: function() {   
+        hide: function() {
             if(this.element.is(':hidden')) {
                 return;
             }
-            
+
             this._trigger('beforeHide', null);
 
             if(this.options.hideEffect) {
@@ -301,7 +304,7 @@ $(function() {
                 this._disableModality();
             }
         },
-        
+
         _postHide: function() {
             //execute user defined callback
             this._trigger('afterHide', null);
@@ -316,14 +319,14 @@ $(function() {
             this.element.find(':not(:submit):not(:button):input:visible:enabled:first').focus();
         },
 
-        _bindEvents: function() {   
+        _bindEvents: function() {
             var $this = this;
 
             this.icons.mouseover(function() {
                 $(this).addClass('ui-state-hover');
             }).mouseout(function() {
-                $(this).removeClass('ui-state-hover');
-            });
+                    $(this).removeClass('ui-state-hover');
+                });
 
             this.closeIcon.on('click.puidialog', function(e) {
                 $this.hide();
@@ -342,15 +345,15 @@ $(function() {
 
             if(this.options.closeOnEscape) {
                 $(document).on('keydown.dialog_' + this.element.attr('id'), function(e) {
-                   var keyCode = $.ui.keyCode,
-                    active = parseInt($this.element.css('z-index')) === PUI.zindex;
+                    var keyCode = $.ui.keyCode,
+                        active = parseInt($this.element.css('z-index')) === PUI.zindex;
 
                     if(e.which === keyCode.ESCAPE && active && $this.element.is(':visible')) { // Changed for AngularPrime
                         $this.hide();
                     };
                 });
             }
-            
+
             if(this.options.modal) {
                 $(window).on('resize.puidialog', function() {
                     $(document.body).children('.ui-widget-overlay').css({
@@ -361,7 +364,7 @@ $(function() {
             }
         },
 
-        _setupDraggable: function() {    
+        _setupDraggable: function() {
             this.element.draggable({
                 cancel: '.pui-dialog-content, .pui-dialog-titlebar-close',
                 handle: '.pui-dialog-titlebar',
@@ -388,26 +391,26 @@ $(function() {
                 this.options.location = this.options.location.replace(',', ' ');
 
                 this.element.position({
-                            my: 'center'
-                            ,at: this.options.location
-                            ,collision: 'fit'
-                            ,of: window
-                            //make sure dialog stays in viewport
-                            ,using: function(pos) {
-                                var l = pos.left < 0 ? 0 : pos.left,
-                                t = pos.top < 0 ? 0 : pos.top;
+                    my: 'center'
+                    ,at: this.options.location
+                    ,collision: 'fit'
+                    ,of: window
+                    //make sure dialog stays in viewport
+                    ,using: function(pos) {
+                        var l = pos.left < 0 ? 0 : pos.left,
+                            t = pos.top < 0 ? 0 : pos.top;
 
-                                $(this).css({
-                                    left: l
-                                    ,top: t
-                                });
-                            }
+                        $(this).css({
+                            left: l
+                            ,top: t
                         });
+                    }
+                });
             }
             else {
                 var coords = this.options.position.split(','),
-                x = $.trim(coords[0]),
-                y = $.trim(coords[1]);
+                    x = $.trim(coords[0]),
+                    y = $.trim(coords[1]);
 
                 this.element.offset({
                     left: x
@@ -443,9 +446,9 @@ $(function() {
                     'width': win.width() - 6
                     ,'height': win.height()
                 }).offset({
-                    top: win.scrollTop()
-                    ,left: win.scrollLeft()
-                });
+                        top: win.scrollTop()
+                        ,left: win.scrollLeft()
+                    });
 
                 //maximize content
                 this.content.css({
@@ -461,7 +464,7 @@ $(function() {
 
         toggleMinimize: function() {
             var animate = true,
-            dockingZone = $(document.body).children('.pui-dialog-docking-zone');
+                dockingZone = $(document.body).children('.pui-dialog-docking-zone');
 
             if(this.maximized) {
                 this.toggleMaximize();
@@ -480,7 +483,7 @@ $(function() {
                 if(this.options.resizable) {
                     this.resizers.show();
                 }
-                
+
                 if(this.footer) {
                     this.footer.show();
                 }
@@ -490,14 +493,14 @@ $(function() {
 
                 if(animate) {
                     this.element.effect('transfer', {
-                                    to: dockingZone
-                                    ,className: 'pui-dialog-minimizing'
-                                    }, 500, 
-                                    function() {
-                                        $this._dock(dockingZone);
-                                        $this.element.addClass('pui-dialog-minimized');
-                                    });
-                } 
+                            to: dockingZone
+                            ,className: 'pui-dialog-minimizing'
+                        }, 500,
+                        function() {
+                            $this._dock(dockingZone);
+                            $this.element.addClass('pui-dialog-minimized');
+                        });
+                }
                 else {
                     this._dock(dockingZone);
                 }
@@ -514,11 +517,11 @@ $(function() {
             if(this.options.resizable) {
                 this.resizers.hide();
             }
-            
+
             if(this.footer) {
                 this.footer.hide();
             }
-            
+
             zone.css('z-index',++PUI.zindex);
 
             this._trigger('minimize');
@@ -538,11 +541,11 @@ $(function() {
 
         _restoreState: function() {
             this.element.width(this.state.width).height(this.state.height);
-            
+
             var win = $(window);
             this.element.offset({
-                    top: this.state.offset.top + (win.scrollTop() - this.state.windowScrollTop)
-                    ,left: this.state.offset.left + (win.scrollLeft() - this.state.windowScrollLeft)
+                top: this.state.offset.top + (win.scrollTop() - this.state.windowScrollTop)
+                ,left: this.state.offset.left + (win.scrollLeft() - this.state.windowScrollLeft)
             });
         },
 
