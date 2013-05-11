@@ -564,6 +564,38 @@ function PasswordController($scope, Widgets) {
     $scope.value = null;
 }
 
+function ProgressbarController($scope, $timeout, Widgets) {
+    $scope.widgets = Widgets;
+
+    $scope.value = 0;
+
+    $scope.timedValue = 0;
+
+    $scope.smoothProgress = {
+        value : 0,
+        showLabel : false,
+        easing: 'linear',
+        effectSpeed: 1000
+    }
+
+    $scope.doStep = function() {
+        $scope.timedValue = $scope.timedValue + 10;
+        $scope.smoothProgress.value = $scope.smoothProgress.value + 10;
+        $timeout(function() {
+            if ($scope.timedValue < 100) {
+                $scope.doStep();
+            }
+        }, 1000);
+    };
+
+    $scope.startTimer = function() {
+        $scope.timedValue = 0;
+        $scope.smoothProgress.value = 0;
+        $scope.doStep();
+    }
+
+}
+
 function Ctrl($scope, Widgets, version) {
 
     $scope.widgets = Widgets;

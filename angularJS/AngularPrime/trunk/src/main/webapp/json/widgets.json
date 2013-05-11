@@ -386,7 +386,25 @@
             }
         ]
     },
-
+    {
+        "widget": "puiProgressbar",
+        "controller": "ProgressbarController",
+        "defaultPath": "puiProgressbar/overview",
+        "subPages": [
+            {
+                "label": "overview",
+                "path": "puiProgressbar/overview"
+            },
+            {
+                "label": "default",
+                "path": "puiProgressbar/default"
+            },
+            {
+                "label": "options",
+                "path": "puiProgressbar/options"
+            }
+        ]
+    },
     {
         "widget": "radiobutton",
         "controller": "RadiobuttonController",
@@ -551,8 +569,6 @@
             }
         ]
     },
-
-
     {
          "widget": "puiTooltip",
          "controller": "TooltipController",
