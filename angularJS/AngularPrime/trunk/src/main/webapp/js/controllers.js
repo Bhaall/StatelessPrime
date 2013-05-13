@@ -596,6 +596,18 @@ function ProgressbarController($scope, $timeout, Widgets) {
 
 }
 
+function MenuController($scope, Widgets) {
+    $scope.widgets = Widgets;
+
+    $scope.doCommand = function(commandText) {
+        alert("Click on item '"+commandText+"'");
+    };
+
+    $scope.popupOptions = {
+        trigger : "#showBtn"
+    }
+}
+
 function Ctrl($scope, Widgets, version) {
 
     $scope.widgets = Widgets;

@@ -314,6 +314,25 @@
         ]
     },
     {
+        "widget": "puiMenu",
+        "controller": "MenuController",
+        "defaultPath": "puiMenu/overview",
+        "subPages": [
+            {
+                "label": "overview",
+                "path": "puiMenu/overview"
+            },
+            {
+                "label": "default",
+                "path": "puiMenu/default"
+            },
+            {
+                "label": "popup",
+                "path": "puiMenu/popup"
+            }
+        ]
+    },
+    {
         "widget": "puiNotify",
         "controller": "NotifyController",
         "defaultPath": "puiNotify/overview",
