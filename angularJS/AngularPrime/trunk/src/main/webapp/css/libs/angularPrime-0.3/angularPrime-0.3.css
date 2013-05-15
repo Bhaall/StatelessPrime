@@ -821,6 +821,46 @@ button.pui-button::-moz-focus-inner {
 .pui-menubutton .ui-button {
     margin:0;
 }
+
+/** SlideMenu **/
+.pui-slidemenu .pui-slidemenu-wrapper {
+    position: relative;
+}
+
+.pui-slidemenu .pui-slidemenu-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+
+.pui-slidemenu .pui-menu-list {
+    position: absolute;
+    top: 0;
+}
+
+.pui-slidemenu .pui-menu-parent {
+    position: static;
+}
+
+.pui-slidemenu .pui-menu-child {
+    box-shadow : none;
+    border: 0 none;
+    background: none repeat scroll 0 0 transparent;
+}
+
+.pui-slidemenu-backward {
+    position: absolute;
+    bottom: 0;
+    width: 95%;
+    margin-bottom: 0.4em;
+    padding: 0.2em;
+    cursor: pointer;
+    display: none;
+}
+
+.pui-slidemenu-backward .ui-icon {
+    float:left;
+}
 .pui-notify {
     position: fixed;
     width: 100%;

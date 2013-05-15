@@ -606,6 +606,10 @@ function MenuController($scope, Widgets) {
     $scope.popupOptions = {
         trigger : "#showBtn"
     }
+
+    $scope.submenuOptions = {
+        autoDisplay : false
+    }
 }
 
 function Ctrl($scope, Widgets, version) {

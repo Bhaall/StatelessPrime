@@ -20,9 +20,44 @@ angular.module('angular.prime').directive('puiMenu', function () {
                     }
 
                 }
-                element.puimenu({
-                    popup : options.popup
-                    ,trigger : options.trigger
+                if ( options.isContextMenu && options.isSlideMenu) {
+                    throw new Error("ContextMenu can't be combined with the SlideMenu");
+                }
+                $(function() {
+                    var hasSubMenu = element.find("ul").length > 0;
+                    var hasH3Element = element.find("h3").length > 0;
+
+                    if (hasSubMenu || ! hasH3Element) {
+                        if (hasH3Element) {
+                            console.log("Warning : Menu with submenu and h3 elements found");
+                        }
+                        if (options.isContextMenu) {
+                            element.puicontextmenu({
+                                popup: options.popup
+                                , trigger: options.trigger
+                            });
+
+                        } else {
+                            if (options.isSlideMenu) {
+                                element.puislidemenu({
+                                    popup: options.popup
+                                    , trigger: options.trigger
+                                });
+
+                            } else {
+                                element.puitieredmenu({
+                                    popup: options.popup, trigger: options.trigger, autoDisplay: options.autoDisplay
+                                });
+
+                            }
+                        }
+                    } else {
+                        element.puimenu({
+                            popup: options.popup
+                            , trigger: options.trigger
+                        });
+
+                    }
                 });
             }
         }

@@ -329,6 +329,22 @@
             {
                 "label": "popup",
                 "path": "puiMenu/popup"
+            },
+            {
+                "label": "submenu",
+                "path": "puiMenu/submenu"
+            },
+            {
+                "label": "submenu after click",
+                "path": "puiMenu/submenuclick"
+            },
+            {
+                "label": "contextmenu on page",
+                "path": "puiMenu/contextMenu"
+            },
+            {
+                "label": "slide menu",
+                "path": "puiMenu/slidemenu"
             }
         ]
     },
