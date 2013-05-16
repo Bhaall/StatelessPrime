@@ -81,6 +81,25 @@
         ]
     },
     {
+        "widget": "puiBreadcrumb",
+        "controller": "BreadcrumbController",
+        "defaultPath": "puiBreadcrumb/overview",
+        "subPages": [
+            {
+                "label": "overview",
+                "path": "puiBreadcrumb/overview"
+            },
+            {
+                "label": "default",
+                "path": "puiBreadcrumb/default"
+            },
+            {
+                "label": "custom icon",
+                "path": "puiBreadcrumb/customIcon"
+            }
+        ]
+    },
+    {
         "widget": "puiButton",
         "controller": "ButtonController",
         "defaultPath": "puiButton/overview",

@@ -621,6 +621,15 @@ function MenubarController($scope, Widgets) {
 
 }
 
+function BreadcrumbController($scope, Widgets) {
+    $scope.widgets = Widgets;
+
+    $scope.doCommand = function(commandText) {
+        alert("Click on item '"+commandText+"'");
+    };
+
+}
+
 function Ctrl($scope, Widgets, version) {
 
     $scope.widgets = Widgets;
