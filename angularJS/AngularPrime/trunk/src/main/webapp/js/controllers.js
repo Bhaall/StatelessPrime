@@ -231,27 +231,31 @@ function LightboxController($scope, Widgets) {
     $scope.widgets = Widgets;
 
     $scope.items = [
-        { shortTitle: 'Sopranos1'
-         ,longTitle: 'One line about Sopranos1'
+        { title: 'Sopranos1'
+         ,oneLiner: 'One line about Sopranos1'
          ,image: 'demo/images/sopranos/sopranos1.jpg'
          ,thumbnail: 'demo/images/sopranos/sopranos1_small.jpg'
         },
-        { shortTitle: 'Sopranos2'
-         ,longTitle: 'One line about Sopranos2'
+        { title: 'Sopranos2'
+         ,oneLiner: 'One line about Sopranos2'
          ,image: 'demo/images/sopranos/sopranos2.jpg'
          ,thumbnail: 'demo/images/sopranos/sopranos2_small.jpg'
         },
-        { shortTitle: 'Sopranos3'
-         ,longTitle: 'One line about Sopranos3'
+        { title: 'Sopranos3'
+         ,oneLiner: 'One line about Sopranos3'
          ,image: 'demo/images/sopranos/sopranos3.jpg'
          ,thumbnail: 'demo/images/sopranos/sopranos3_small.jpg'
-        },
-        { shortTitle: 'Sopranos4'
-         ,longTitle: 'One line about Sopranos4'
-         ,image: 'demo/images/sopranos/sopranos4.jpg'
-         ,thumbnail: 'demo/images/sopranos/sopranos4_small.jpg'
         }
+
     ]
+
+    $scope.addItem = function() {
+        $scope.items.push({ title: 'Sopranos4'
+            ,oneLiner: 'One line about Sopranos4'
+            ,image: 'demo/images/sopranos/sopranos4.jpg'
+            ,thumbnail: 'demo/images/sopranos/sopranos4_small.jpg'
+        });
+    }
 }
 
 function DropdownController($scope, Widgets) {

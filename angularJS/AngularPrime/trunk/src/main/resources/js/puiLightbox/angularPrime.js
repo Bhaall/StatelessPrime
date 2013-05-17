@@ -2,8 +2,10 @@
 
 /*globals angular $ */
 
-angular.module('angular.prime').directive('puiLightbox', function () {
-    return {
+angular.module('angular.prime').directive('puiLightbox', ['$compile',
+            function ($compile) {
+
+                return {
         restrict: 'A',
         priority: 5,
         compile: function (element, attrs) {
@@ -13,24 +15,61 @@ angular.module('angular.prime').directive('puiLightbox', function () {
                 // TODO check if iframeWidth or iframeWidth the directive is placed on a <a>-tag
                 options.iframe = 'A' === element[0].nodeName;
 
-                /*
-                scope.$watch(function () {
-                    console.log('Digest done ');
-                });
-                */
-                $(function () {
-                    element.puilightbox({
-                        iframe: options.iframe
-                        , iframeWidth: options.iframeWidth
-                        , iframeHeight: options.iframeHeight
+                var dynamicList = angular.isArray(options) || angular.isArray(options.items);
+                var items = [];
+                var initialCall = true;
+
+                function renderLightbox() {
+                    var htmlContent = '';
+                    angular.forEach(items, function(item) {
+                        htmlContent = htmlContent +
+                            '<a href="'+item.image+'" title="'+item.oneLiner+'"><img src="'+item.thumbnail+'" title="'+item.title+'"/></a>';
                     });
-                });
+                    element.html(htmlContent);
+                    $compile(element.contents())(scope);
+                    $(function () {
+                        if (!initialCall) {
+                            element.puilightbox('destroy', {});
+                        }
+                        element.puilightbox({
+                            iframe: options.iframe
+                            , iframeWidth: options.iframeWidth
+                            , iframeHeight: options.iframeHeight
+                        });
+                        initialCall = false;
+
+                    });
+                }
+
+                if (dynamicList) {
+                    if (angular.isArray(options)) {
+                        scope.$watch(attrs.puiLightbox, function(x) {
+                            items = x;
+                            renderLightbox();
+                        }, true);
+
+                    } else {
+                        scope.$watch(attrs.puiLightbox+'.items', function(x) {
+                            items = x;
+                            renderLightbox();
+                        }, true);
+                    }
+
+                } else {
+                    $(function () {
+                        element.puilightbox({
+                            iframe: options.iframe
+                            , iframeWidth: options.iframeWidth
+                            , iframeHeight: options.iframeHeight
+                        });
+                    });
+                }
 
             };
 
         }
     };
-}).directive('puiLightboxItem', function () {
+}]).directive('puiLightboxItem', function () {
     return {
         restrict: 'A',
         priority: 10,

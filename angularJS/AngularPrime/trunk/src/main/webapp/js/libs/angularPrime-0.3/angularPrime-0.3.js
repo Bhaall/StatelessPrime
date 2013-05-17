@@ -4553,8 +4553,10 @@ $(function() {
 
 /*globals angular $ */
 
-angular.module('angular.prime').directive('puiLightbox', function () {
-    return {
+angular.module('angular.prime').directive('puiLightbox', ['$compile',
+            function ($compile) {
+
+                return {
         restrict: 'A',
         priority: 5,
         compile: function (element, attrs) {
@@ -4564,24 +4566,61 @@ angular.module('angular.prime').directive('puiLightbox', function () {
                 // TODO check if iframeWidth or iframeWidth the directive is placed on a <a>-tag
                 options.iframe = 'A' === element[0].nodeName;
 
-                /*
-                scope.$watch(function () {
-                    console.log('Digest done ');
-                });
-                */
-                $(function () {
-                    element.puilightbox({
-                        iframe: options.iframe
-                        , iframeWidth: options.iframeWidth
-                        , iframeHeight: options.iframeHeight
+                var dynamicList = angular.isArray(options) || angular.isArray(options.items);
+                var items = [];
+                var initialCall = true;
+
+                function renderLightbox() {
+                    var htmlContent = '';
+                    angular.forEach(items, function(item) {
+                        htmlContent = htmlContent +
+                            '<a href="'+item.image+'" title="'+item.oneLiner+'"><img src="'+item.thumbnail+'" title="'+item.title+'"/></a>';
                     });
-                });
+                    element.html(htmlContent);
+                    $compile(element.contents())(scope);
+                    $(function () {
+                        if (!initialCall) {
+                            element.puilightbox('destroy', {});
+                        }
+                        element.puilightbox({
+                            iframe: options.iframe
+                            , iframeWidth: options.iframeWidth
+                            , iframeHeight: options.iframeHeight
+                        });
+                        initialCall = false;
+
+                    });
+                }
+
+                if (dynamicList) {
+                    if (angular.isArray(options)) {
+                        scope.$watch(attrs.puiLightbox, function(x) {
+                            items = x;
+                            renderLightbox();
+                        }, true);
+
+                    } else {
+                        scope.$watch(attrs.puiLightbox+'.items', function(x) {
+                            items = x;
+                            renderLightbox();
+                        }, true);
+                    }
+
+                } else {
+                    $(function () {
+                        element.puilightbox({
+                            iframe: options.iframe
+                            , iframeWidth: options.iframeWidth
+                            , iframeHeight: options.iframeHeight
+                        });
+                    });
+                }
 
             };
 
         }
     };
-}).directive('puiLightboxItem', function () {
+}]).directive('puiLightboxItem', function () {
     return {
         restrict: 'A',
         priority: 10,
@@ -6961,7 +7000,7 @@ angular.module('angular.prime').directive('puiTooltip', ['$interpolate', functio
 
                 var tooltipWatches = [];
 
-                if (options.content) {
+                if (options.content && options.content != '') {
                     var parsedExpression = $interpolate(options.content);
                     options.content = scope.$eval(parsedExpression);
                     angular.forEach(parsedExpression.parts, function(part) {
@@ -6969,32 +7008,31 @@ angular.module('angular.prime').directive('puiTooltip', ['$interpolate', functio
                             tooltipWatches.push(part.exp);
                         }
                     }, tooltipWatches)
-                }
 
-                $(function () {
-                    element.puitooltip({
-                        content: options.content
-                        ,showEvent: options.showEvent
-                        ,hideEvent: options.hideEvent
-                        ,showEffect: options.showEffect
-                        ,hideEffect: options.hideEffect
-                        ,showEffectSpeed: options.showEffectSpeed
-                        ,hideEffectSpeed: options.hideEffectSpeed
-                        ,my: options.my
-                        ,at: options.at
-                        ,showDelay: options.showDelay
-                    });
-                });
-
-                angular.forEach(tooltipWatches, function(watchValue) {
-                    scope.$watch(watchValue, function (value) {
-                        $(function () {
-                            element.puitooltip('setTooltipContent', scope.$eval(parsedExpression));
+                    $(function () {
+                        element.puitooltip({
+                            content: options.content
+                            ,showEvent: options.showEvent
+                            ,hideEvent: options.hideEvent
+                            ,showEffect: options.showEffect
+                            ,hideEffect: options.hideEffect
+                            ,showEffectSpeed: options.showEffectSpeed
+                            ,hideEffectSpeed: options.hideEffectSpeed
+                            ,my: options.my
+                            ,at: options.at
+                            ,showDelay: options.showDelay
                         });
                     });
-                });
 
+                    angular.forEach(tooltipWatches, function(watchValue) {
+                        scope.$watch(watchValue, function (value) {
+                            $(function () {
+                                element.puitooltip('setTooltipContent', scope.$eval(parsedExpression));
+                            });
+                        });
+                    });
 
+                }
             }
 
         }

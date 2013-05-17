@@ -333,6 +333,10 @@
             {
                 "label": "iframe",
                 "path": "puiLightbox/iframe"
+            },
+            {
+                "label": "dynamic",
+                "path": "puiLightbox/dynamic"
             }
         ]
     },
