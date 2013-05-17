@@ -24,7 +24,7 @@ angular.module('angular.prime').directive('puiTooltip', ['$interpolate', functio
 
                 var tooltipWatches = [];
 
-                if (options.content) {
+                if (options.content && options.content != '') {
                     var parsedExpression = $interpolate(options.content);
                     options.content = scope.$eval(parsedExpression);
                     angular.forEach(parsedExpression.parts, function(part) {
@@ -32,32 +32,31 @@ angular.module('angular.prime').directive('puiTooltip', ['$interpolate', functio
                             tooltipWatches.push(part.exp);
                         }
                     }, tooltipWatches)
-                }
 
-                $(function () {
-                    element.puitooltip({
-                        content: options.content
-                        ,showEvent: options.showEvent
-                        ,hideEvent: options.hideEvent
-                        ,showEffect: options.showEffect
-                        ,hideEffect: options.hideEffect
-                        ,showEffectSpeed: options.showEffectSpeed
-                        ,hideEffectSpeed: options.hideEffectSpeed
-                        ,my: options.my
-                        ,at: options.at
-                        ,showDelay: options.showDelay
-                    });
-                });
-
-                angular.forEach(tooltipWatches, function(watchValue) {
-                    scope.$watch(watchValue, function (value) {
-                        $(function () {
-                            element.puitooltip('setTooltipContent', scope.$eval(parsedExpression));
+                    $(function () {
+                        element.puitooltip({
+                            content: options.content
+                            ,showEvent: options.showEvent
+                            ,hideEvent: options.hideEvent
+                            ,showEffect: options.showEffect
+                            ,hideEffect: options.hideEffect
+                            ,showEffectSpeed: options.showEffectSpeed
+                            ,hideEffectSpeed: options.hideEffectSpeed
+                            ,my: options.my
+                            ,at: options.at
+                            ,showDelay: options.showDelay
                         });
                     });
-                });
 
+                    angular.forEach(tooltipWatches, function(watchValue) {
+                        scope.$watch(watchValue, function (value) {
+                            $(function () {
+                                element.puitooltip('setTooltipContent', scope.$eval(parsedExpression));
+                            });
+                        });
+                    });
 
+                }
             }
 
         }
