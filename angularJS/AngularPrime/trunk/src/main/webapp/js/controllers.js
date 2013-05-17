@@ -628,6 +628,22 @@ function BreadcrumbController($scope, Widgets) {
         alert("Click on item '"+commandText+"'");
     };
 
+    $scope.items = [
+        {id: 'lvl0', label: 'Categories', onclick: "doCommand('{id}')", globalAction: true},
+        {id: 'lvl1', label: 'Sports'}
+    ];
+
+    $scope.newItem = {
+        id : ''
+        , label : ''
+    };
+
+
+    $scope.addItem = function () {
+        $scope.items.push({id: $scope.newItem.id, label: $scope.newItem.label});
+        $scope.newItem.id = '';
+        $scope.newItem.label = '';
+    }
 }
 
 function Ctrl($scope, Widgets, version) {

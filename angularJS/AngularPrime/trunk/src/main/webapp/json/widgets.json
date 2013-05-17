@@ -96,6 +96,10 @@
             {
                 "label": "custom icon",
                 "path": "puiBreadcrumb/customIcon"
+            },
+            {
+                "label": "model based",
+                "path": "puiBreadcrumb/model"
             }
         ]
     },
