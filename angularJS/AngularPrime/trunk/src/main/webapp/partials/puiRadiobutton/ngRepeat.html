@@ -6,7 +6,7 @@
 
 		<section>
 			<header>Integration with ng-repeat</header>
-			<table>
+			<table id="repeat">
 				<tr ng-repeat="option in options">
 					<td>
 						<input type="radio" ng-model="optionExample.selectedOptionValue" value="{{option.value}}"
@@ -17,7 +17,7 @@
 					</td>
 				</tr>
 			</table>
-			Controller value = {{optionExample.selectedOptionValue}}
+			Controller value = <span id="modelValue">{{optionExample.selectedOptionValue}}</span>
 		</section>
 
 		<fieldset id="Source" pui-fieldset style="margin-bottom:20px">

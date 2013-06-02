@@ -6,7 +6,7 @@
 
 		<section>
 			<header>Integration ng-disabled</header>
-			<table>
+			<table id="disabled">
 				<tr>
 					<td><input type="radio" pui-input ng-model="radioValue1" name="rd" id="rd1" value="1"/></td>
 					<td><label for="rd1">Option 1</label></td>
@@ -16,10 +16,10 @@
 					<td><label for="rd2">Option 2</label></td>
 				</tr>
 			</table>
-			Controller value = {{radioValue1}}
+			Controller value = <span id="modelValue">{{radioValue1}}</span>
 			<br/>
-			<button ng-click="enableWidget()" type="button" ng-show="disabledWidget">Enable input</button>
-			<button ng-click="disableWidget()" type="button" ng-hide="disabledWidget">Disable input</button>
+			<button ng-click="enableWidget()" type="button" ng-show="disabledWidget" id="enableBtn">Enable input</button>
+			<button ng-click="disableWidget()" type="button" ng-hide="disabledWidget" id="disableBtn">Disable input</button>
 
 		</section>
 

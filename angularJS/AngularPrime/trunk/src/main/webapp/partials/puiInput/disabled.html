@@ -7,10 +7,10 @@
 		<section>
 			<header>Integration with ng-disabled</header>
 
-			<input id="default" type="text" pui-input ng-model="value1" ng-disabled="fieldDisabled"/><br/>
+			<input id="disabled" type="text" pui-input ng-model="value1" ng-disabled="fieldDisabled"/><br/>
 			<br/>
-			<button ng-click="enableField()" type="button" ng-show="fieldDisabled">Enable</button>
-			<button ng-click="disableField()" type="button" ng-hide="fieldDisabled">Disable</button>
+			<button ng-click="enableField()" type="button" ng-show="fieldDisabled" id="enableBtn">Enable</button>
+			<button ng-click="disableField()" type="button" ng-hide="fieldDisabled" id="disableBtn">Disable</button>
 
 
 		</section>

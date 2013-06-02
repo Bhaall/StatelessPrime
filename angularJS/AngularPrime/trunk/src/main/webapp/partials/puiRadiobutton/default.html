@@ -6,7 +6,7 @@
 
 		<section>
 			<header>Default integration</header>
-			<table>
+			<table id="default">
 				<tr>
 					<td><input type="radio" pui-input ng-model="radioValue1" name="rd" id="rd1" value="1"/></td>
 					<td><label for="rd1">Option 1</label></td>
@@ -16,7 +16,7 @@
 					<td><label for="rd2">Option 2</label></td>
 				</tr>
 			</table>
-			Controller value = {{radioValue1}}
+			Controller value = <span id="modelValue">{{radioValue1}}</span>
 		</section>
 
 		<fieldset id="Source" pui-fieldset style="margin-bottom:20px">
