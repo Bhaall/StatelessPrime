@@ -3509,6 +3509,7 @@ angular.module('angular.prime').directive('puiInput', function () {
                 var radiobutton = false;
                 var password = false;
                 var options = scope.$eval(attrs.puiInput) || {};
+                var helper = {};
 
                 if ('INPUT' === htmlElementName) {
                     if (attrs.type === 'password') {
@@ -3568,7 +3569,7 @@ angular.module('angular.prime').directive('puiInput', function () {
                 }
                 if (checkbox) {
                     // Write data to the model
-                    var helper = {
+                    helper = {
                         read: function () {
                             $(function () {
                                 var checked = element.puicheckbox('isChecked');
@@ -3607,7 +3608,7 @@ angular.module('angular.prime').directive('puiInput', function () {
 
                 if (radiobutton) {
                     // Write data to the model
-                    var helper = {
+                    helper = {
                         read: function () {
                             $(function () {
                                 var checked = element.puiradiobutton('isChecked');
