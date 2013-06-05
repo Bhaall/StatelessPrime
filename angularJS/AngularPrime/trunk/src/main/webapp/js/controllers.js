@@ -329,20 +329,21 @@ function GrowlController($scope, Widgets, puiGrowl) {
     $scope.widgets = Widgets;
 
     $scope.showInfoGrowl = function() {
-        $scope.showInfoMessage('Info message title', "Info detail message");
+        puiGrowl.showInfoMessage('Info message title', "Info detail message");
     };
 
     $scope.showErrorGrowl = function() {
-        $scope.showErrorMessage('Error message title', "Error detail message");
+        puiGrowl.showErrorMessage('Error message title', "Error detail message");
     };
 
     $scope.showWarnGrowl = function() {
-        $scope.showWarnMessage('Warn message title', "Warn detail message");
+        puiGrowl.showWarnMessage('Warn message title', "Warn detail message");
     };
 
     $scope.showStickyMessage = function() {
         puiGrowl.setSticky(true);
-        $scope.showInfoMessage('Message', "Message remains until close icon clicked or other message requested");
+        puiGrowl.clear();
+        puiGrowl.showInfoMessage('Message', "Message remains until close icon clicked or other message requested");
     };
 
     $scope.resetGrowlOptions = function() {

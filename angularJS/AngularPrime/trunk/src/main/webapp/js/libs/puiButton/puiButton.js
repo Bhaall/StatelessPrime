@@ -57,7 +57,7 @@ angular.module('angular.prime').directive('puiButton', ['$interpolate', function
 /*globals $ */
 
 /**
- * PrimeFaces Growl Widget
+ * PrimeFaces Button Widget
  */
 $(function() {
 

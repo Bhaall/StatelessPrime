@@ -2,7 +2,7 @@
 
 /*globals angular */
 
-angular.module('angular.prime', []).run(['$rootScope', 'puiGrowl', function ($rootScope, puiGrowl) {
+angular.module('angular.prime', []).run(['$rootScope', function ($rootScope) {
 
     $rootScope.safeApply = function(fn) {
       var phase = this.$root.$$phase;
@@ -15,19 +15,8 @@ angular.module('angular.prime', []).run(['$rootScope', 'puiGrowl', function ($ro
       }
     };
 
-    $rootScope.showInfoMessage = function (title, msg) {
-        puiGrowl.showInfoMessage(title, msg);
-    };
-
-    $rootScope.showWarnMessage = function (title, msg) {
-        puiGrowl.showWarnMessage(title, msg);
-    };
-
-    $rootScope.showErrorMessage = function (title, msg) {
-        puiGrowl.showErrorMessage(title, msg);
-    };
-
 }]);
+
 ;"use strict";
 /*globals $ */
 

@@ -528,19 +528,19 @@ button.pui-button::-moz-focus-inner {
 }
 
 .pui-growl-image-info {
-    background-position: 0 -264px;
+    background-position: 0 -264px !important; /*Changed for AngularPrime */
 }
 
 .pui-growl-image-warn {
-    background-position: 0 -396px;
+    background-position: 0 -396px !important; /*Changed for AngularPrime */
 }
 
 .pui-growl-image-error {
-    background-position: 0 0;
+    background-position: 0 0 !important; /*Changed for AngularPrime */
 }
 
 .pui-growl-image-fatal {
-    background-position: 0 -228px;
+    background-position: 0 -228px !important; /*Changed for AngularPrime */
 }
 
 .pui-growl-message {
