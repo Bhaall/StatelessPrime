@@ -1,0 +1,17 @@
+AngularPrime
+===========
+Rudy De Busscher <rdebusscher@gmail.com>
+0.3 15/05/2013
+
+== Introduction
+
+== Widgets
+
+include::input.adi[]
+=== Input
+
+The input html element can be styled by using the +pui-input+ directive.
+
+// End include
+
+== Themes
