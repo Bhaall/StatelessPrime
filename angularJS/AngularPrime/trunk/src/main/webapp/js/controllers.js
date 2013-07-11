@@ -116,6 +116,7 @@ function CheckBoxController($scope, Widgets) {
     $scope.checkboxSelectedValue4 = true;
 
     $scope.disabledWidget = true;
+    $scope.checkboxVisible = true;
 
     $scope.enableWidget = function() {
         $scope.disabledWidget = false;

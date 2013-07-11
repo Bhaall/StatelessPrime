@@ -11,6 +11,10 @@ angular.module('angular.prime').directive('puiInput', function () {
                 return;
             } // do nothing if no ng-model
 
+            if (attrs.type === 'range') {
+                return;
+                // When input type range, theming has not much sense.
+            }
             var htmlElementName = element[0].nodeName;
             $(function () {
                 var checkbox = false;
@@ -183,7 +187,62 @@ angular.module('angular.prime').directive('puiInput', function () {
             });
         }
     };
-});;"use strict";
+});
+
+angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 'angular.prime.config', function ($compile, $parse, angularPrimeConfig) {
+
+    return {
+        restrict: 'EA',
+        priority: 1005,
+        compile: function (element, attrs) {
+
+            return function postLink(scope, element, attrs) {
+                var id = attrs.id
+                    , label = ''
+                    , contents = '<input type="checkbox" pui-input '
+                    , handledAttributes = 'id ngModel puiInput ngShow ngHide puiCheckbox'.split(' ')
+                    , attrsToRemove = 'id ngModel puiInput'.split(' ');
+
+                try {
+                    $parse(attrs.puiCheckbox); // see if it is a valid AngularExpression
+                    label = scope.$eval(attrs.puiCheckbox) || attrs.puiCheckbox;
+                } catch (e) {
+                    label = attrs.puiCheckbox;
+                }
+
+                contents += 'id="' + id + '"';
+                contents += 'ng-model="' + attrs.ngModel + '" ';
+
+                for (var property in attrs) {
+                    if (attrs.hasOwnProperty(property) && property.substring(0,1) !== '$' ) {
+                        if (handledAttributes.indexOf(property) === -1) {
+                            // attrs.$attr[property] is the original name of the attribute on the element
+                            contents += attrs.$attr[property] + '="' + attrs[property] + '" ';
+                        }
+                        if (attrsToRemove.indexOf(property) !== -1) {
+                            element.removeAttr(attrs.$attr[property]);
+                        }
+                    }
+
+                }
+
+
+                contents += ' />';
+
+                contents += '<label id="'+ angularPrimeConfig.labelPrefix + id + '"';
+                contents += 'for="' + id + '"';
+                contents += '>'+label;
+                contents += '</label>';
+
+                element.html(contents);
+
+
+                $compile(element.contents())(scope);
+
+            }
+        }
+    }
+}]);;"use strict";
 /*globals $ */
 
 /**

@@ -154,6 +154,16 @@
             {
                 "label": "change",
                 "path": "puiCheckbox/change"
+            },
+            {
+                "label": "directive",
+                "path": "puiCheckbox/directive",
+                "tooltip": "new in 0.4"
+            },
+            {
+                "label": "ngShow",
+                "path": "puiCheckbox/ngShow",
+                "tooltip": "new in 0.4"
             }
         ]
     },
