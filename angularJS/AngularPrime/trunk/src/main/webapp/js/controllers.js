@@ -543,6 +543,8 @@ function RadiobuttonController($scope, Widgets) {
         }
     ];
 
+    $scope.radioboxVisible = true;
+
 }
 
 function SpinnerController($scope, Widgets) {

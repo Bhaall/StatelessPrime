@@ -2,6 +2,41 @@
 
 /*globals angular $ */
 
+angular.module('angular.prime').factory('puiInput.helper', function () {
+
+    var puiInputHelper = {};
+
+    puiInputHelper.handleAttrubutes = function (element, attrs, handledAttributes, attrsToRemove) {
+        var contents = '';
+        for (var property in attrs) {
+            if (attrs.hasOwnProperty(property) && property.substring(0, 1) !== '$') {
+                if (handledAttributes.indexOf(property) === -1) {
+                    // attrs.$attr[property] is the original name of the attribute on the element
+                    contents += attrs.$attr[property] + '="' + attrs[property] + '" ';
+                }
+                if (attrsToRemove.indexOf(property) !== -1) {
+                    element.removeAttr(attrs.$attr[property]);
+                }
+            }
+
+        }
+        return contents;
+    }
+
+    puiInputHelper.defineLabel = function(id, label, prefix) {
+        var contents = '';
+
+        contents += '<label id="'+ prefix + id + '"';
+        contents += 'for="' + id + '"';
+        contents += '>'+label;
+        contents += '</label>';
+
+        return contents;
+    }
+    return puiInputHelper;
+});
+
+
 angular.module('angular.prime').directive('puiInput', function () {
     return {
         restrict: 'A',
@@ -189,7 +224,8 @@ angular.module('angular.prime').directive('puiInput', function () {
     };
 });
 
-angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 'angular.prime.config', function ($compile, $parse, angularPrimeConfig) {
+angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 'puiInput.helper', 'angular.prime.config',
+                                                function ($compile, $parse,  puiInputHelper, angularPrimeConfig) {
 
     return {
         restrict: 'EA',
@@ -213,29 +249,56 @@ angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 
                 contents += 'id="' + id + '"';
                 contents += 'ng-model="' + attrs.ngModel + '" ';
 
-                for (var property in attrs) {
-                    if (attrs.hasOwnProperty(property) && property.substring(0,1) !== '$' ) {
-                        if (handledAttributes.indexOf(property) === -1) {
-                            // attrs.$attr[property] is the original name of the attribute on the element
-                            contents += attrs.$attr[property] + '="' + attrs[property] + '" ';
-                        }
-                        if (attrsToRemove.indexOf(property) !== -1) {
-                            element.removeAttr(attrs.$attr[property]);
-                        }
-                    }
-
-                }
-
+                contents += puiInputHelper.handleAttrubutes(element, attrs, handledAttributes, attrsToRemove, contents);
 
                 contents += ' />';
 
-                contents += '<label id="'+ angularPrimeConfig.labelPrefix + id + '"';
-                contents += 'for="' + id + '"';
-                contents += '>'+label;
-                contents += '</label>';
+                contents += puiInputHelper.defineLabel(id, label, angularPrimeConfig.labelPrefix);
 
                 element.html(contents);
 
+
+                $compile(element.contents())(scope);
+
+            }
+        }
+    }
+}]);
+
+angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse', 'puiInput.helper', 'angular.prime.config',
+                                                    function ($compile, $parse, puiInputHelper, angularPrimeConfig) {
+
+    return {
+        restrict: 'EA',
+        priority: 1005,
+        compile: function (element, attrs) {
+
+            return function postLink(scope, element, attrs) {
+                var id = attrs.id
+                    , label = ''
+                    , contents = '<input type="radio" pui-input '
+                    , handledAttributes = 'id ngModel puiInput ngShow ngHide puiRadiobutton name value'.split(' ')
+                    , attrsToRemove = 'id ngModel puiInput'.split(' ');
+
+                try {
+                    $parse(attrs.puiRadiobutton); // see if it is a valid AngularExpression
+                    label = scope.$eval(attrs.puiRadiobutton) || attrs.puiRadiobutton;
+                } catch (e) {
+                    label = attrs.puiRadiobutton;
+                }
+
+                contents += 'id="' + id + '"';
+                contents += 'ng-model="' + attrs.ngModel + '" ';
+                contents += 'name="' + attrs.name + '" ';
+                contents += 'value="' + attrs.value + '" ';
+
+                contents += puiInputHelper.handleAttrubutes(element, attrs, handledAttributes, attrsToRemove, contents);
+
+                contents += ' />';
+
+                contents += puiInputHelper.defineLabel(id, label, angularPrimeConfig.labelPrefix);
+
+                element.html(contents);
 
                 $compile(element.contents())(scope);
 

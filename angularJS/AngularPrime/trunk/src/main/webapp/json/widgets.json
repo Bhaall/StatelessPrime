@@ -520,8 +520,15 @@
             {
                 "label": "repeat",
                 "path": "puiRadiobutton/ngRepeat"
+            },
+            {
+                "label": "directive",
+                "path": "puiRadiobutton/directive"
+            },
+            {
+                "label": "ngShow",
+                "path": "puiRadiobutton/ngShow"
             }
-
         ]
     },
     {
