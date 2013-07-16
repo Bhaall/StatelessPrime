@@ -168,6 +168,41 @@
         ]
     },
     {
+        "widget": "puiDatatable",
+        "controller": "DatatableController",
+        "defaultPath": "puiDatatable/overview",
+        "subPages": [
+            {
+                "label": "overview",
+                "path": "puiDatatable/overview"
+            },
+            {
+                "label": "default",
+                "path": "puiDatatable/default"
+            },
+            {
+                "label": "remote",
+                "path": "puiDatatable/remoteData"
+            },
+            {
+                "label": "columns",
+                "path": "puiDatatable/columns"
+            },
+            {
+                "label": "sort and selection",
+                "path": "puiDatatable/sortSelection"
+            },
+            {
+                "label": "paginator",
+                "path": "puiDatatable/paginator"
+            },
+            {
+                "label": "captions",
+                "path": "puiDatatable/captions"
+            }
+        ]
+    },
+    {
         "widget": "puiDialog",
         "controller": "DialogController",
         "defaultPath": "puiDialog/overview",
