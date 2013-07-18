@@ -6525,35 +6525,37 @@ $(function() {
         },
 
         _showSubmenu: function(menuitem, submenu) {
-            submenu.css('z-index', ++PUI.zindex);
-
-            if(menuitem.parent().hasClass('pui-menu-child')) {    //submenu menuitem
-                var win = $(window),
-                    offset = menuitem.offset(),
-                    menuitemTop = offset.top,
-                    submenuHeight = submenu.outerHeight(),
-                    menuitemHeight = menuitem.outerHeight(),
-                    top = (menuitemTop + submenuHeight) > (win.height() + win.scrollTop()) ? (-1 * submenuHeight) + menuitemHeight : 0;  //viewport check
-
-                submenu.css({
-                    'left': menuitem.outerWidth(),
-                    'top': top,
+            var win = $(window),
+                submenuOffsetTop = null,
+                submenuCSS = {
                     'z-index': ++PUI.zindex
-                }).show();
+                };
+
+            if(menuitem.parent().hasClass('pui-menu-child')) {
+                submenuCSS.left = menuitem.outerWidth();
+                submenuCSS.top = 0;
+                submenuOffsetTop = menuitem.offset().top - win.scrollTop();
             }
             else {
-                submenu.css({                                    //root menuitem
-                    'left': 0
-                    ,'top': menuitem.outerHeight()
-                });
-
+                submenuCSS.left = 0;
+                submenuCSS.top = menuitem.outerHeight();
+                menuitem.offset().top - win.scrollTop();
+                submenuOffsetTop = menuitem.offset().top + submenuCSS.top - win.scrollTop();
             }
 
-            submenu.show();
+            //adjust height within viewport
+            submenu.css('height', 'auto');
+            if((submenuOffsetTop + submenu.outerHeight()) > win.height()) {
+                submenuCSS.overflow = 'auto';
+                submenuCSS.height = win.height() - (submenuOffsetTop + 20);
+            }
+
+            submenu.css(submenuCSS).show();
         }
     });
 
 });
+
 ;"use strict";
 
 /*globals angular $ */
@@ -7348,6 +7350,11 @@ $(function() {
             this.wrapper.append('<a class="pui-spinner-button pui-spinner-up ui-corner-tr ui-button ui-widget ui-state-default ui-button-text-only"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-n"></span></span></a><a class="pui-spinner-button pui-spinner-down ui-corner-br ui-button ui-widget ui-state-default ui-button-text-only"><span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-s"></span></span></a>');
             //this.upButton = this.wrapper.children('a.pui-spinner-up');
             //this.downButton = this.wrapper.children('a.pui-spinner-down');
+            this.options.step = this.options.step||1;
+
+            if(parseInt(this.options.step) === 0) {
+                this.options.precision = this.options.step.toString().split(/[,]|[.]/)[1].length;
+            }
 
             this._initValue();
 
@@ -7465,15 +7472,26 @@ $(function() {
             this._spin(this.options.step * dir);
         },
 
+        _toFixed: function (value, precision) {
+            var power = Math.pow(10, precision||0);
+            return String(Math.round(value * power) / power);
+        },
+
         _spin: function(step) {
-            var newValue = this.value + step;
+            var newValue, // Changed for AngularPrime
+            currentValue = this.value ? this.value : 0;
+
+            if(this.options.precision)
+                newValue = parseFloat(this._toFixed(currentValue + step, this.options.precision));
+            else
+                newValue = parseInt(currentValue + step);
 
             if(this.options.min != undefined && newValue < this.options.min) {
-                newValue = this.options.min;   // Changed for AngularPrime
+                newValue = this.options.min;
             }
 
             if(this.options.max != undefined && newValue > this.options.max) {
-                newValue = this.options.max;   // Changed for AngularPrime
+                newValue = this.options.max;
             }
 
             this.element.val(newValue).attr('aria-valuenow', newValue);
