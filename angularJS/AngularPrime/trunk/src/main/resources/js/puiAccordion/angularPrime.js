@@ -1,10 +1,10 @@
-/*globals angular $ console*/
+/*globals angular $ */
 
 (function () {
     "use strict";
 
-    angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCache', '$compile',
-                                                  function ($http, $templateCache, $compile) {
+    angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCache', '$compile', '$log',
+                                                  function ($http, $templateCache, $compile, $log) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
@@ -45,7 +45,7 @@
                             renderAccordion(content);
                         }
                     }).error(function () {
-                            console.error('error loading included file for panel of accordion');
+                            $log.error('Error loading included file ' + url + ' for panel of accordion');
                         });
 
                 }

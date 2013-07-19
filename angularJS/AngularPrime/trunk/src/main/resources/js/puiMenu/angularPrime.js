@@ -1,9 +1,9 @@
-/*globals angular $ console*/
+/*globals angular $ */
 
 (function () {
     "use strict";
 
-angular.module('angular.prime').directive('puiMenu', function () {
+angular.module('angular.prime').directive('puiMenu', ['$log', function ($log) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
@@ -30,7 +30,7 @@ angular.module('angular.prime').directive('puiMenu', function () {
 
                     if (hasSubMenu || ! hasH3Element) {
                         if (hasH3Element) {
-                            console.log("Warning : Menu with submenu and h3 elements found");
+                            $log.warn("Menu with submenu and h3 elements found");
                         }
                         if (options.isContextMenu) {
                             element.puicontextmenu({
@@ -65,6 +65,6 @@ angular.module('angular.prime').directive('puiMenu', function () {
             };
         }
     };
-});
+}]);
 
 }());

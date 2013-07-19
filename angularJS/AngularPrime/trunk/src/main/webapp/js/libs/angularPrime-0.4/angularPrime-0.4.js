@@ -700,13 +700,13 @@ $(function() {
 
     });
 });
-;/*globals angular $ console*/
+;/*globals angular $ */
 
 (function () {
     "use strict";
 
-    angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCache', '$compile',
-                                                  function ($http, $templateCache, $compile) {
+    angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCache', '$compile', '$log',
+                                                  function ($http, $templateCache, $compile, $log) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
@@ -747,7 +747,7 @@ $(function() {
                             renderAccordion(content);
                         }
                     }).error(function () {
-                            console.error('error loading included file for panel of accordion');
+                            $log.error('Error loading included file ' + url + ' for panel of accordion');
                         });
 
                 }
@@ -5939,12 +5939,12 @@ $(function() {
             this.show();
         }
     });
-});;/*globals angular $ console*/
+});;/*globals angular $ */
 
 (function () {
     "use strict";
 
-angular.module('angular.prime').directive('puiMenu', function () {
+angular.module('angular.prime').directive('puiMenu', ['$log', function ($log) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
@@ -5971,7 +5971,7 @@ angular.module('angular.prime').directive('puiMenu', function () {
 
                     if (hasSubMenu || ! hasH3Element) {
                         if (hasH3Element) {
-                            console.log("Warning : Menu with submenu and h3 elements found");
+                            $log.warn("Menu with submenu and h3 elements found");
                         }
                         if (options.isContextMenu) {
                             element.puicontextmenu({
@@ -6006,7 +6006,7 @@ angular.module('angular.prime').directive('puiMenu', function () {
             };
         }
     };
-});
+}]);
 
 }());
 ;/*jshint laxcomma:true*/
@@ -6528,12 +6528,12 @@ $(function() {
     });
 
 });
-;/*globals angular $ console*/
+;/*globals angular $ */
 
 (function () {
     "use strict";
 
-angular.module('angular.prime').directive('puiMenubar', function () {
+angular.module('angular.prime').directive('puiMenubar', ['$log', function ($log) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
@@ -6541,7 +6541,7 @@ angular.module('angular.prime').directive('puiMenubar', function () {
 
                 var options = scope.$eval(attrs.puiMenu) || {};
                 if (element.find("h3").length > 0) {
-                    console.log("Warning: "); // TODO
+                    $log.warn("Warning: "); // TODO
                 }
                 element.puimenubar({
                     autoDisplay: options.autoDisplay
@@ -6550,7 +6550,7 @@ angular.module('angular.prime').directive('puiMenubar', function () {
             };
         }
     };
-});
+}]);
 
 }());
 ;/*globals $ PUI window*/
@@ -7644,12 +7644,12 @@ $(function() {
             this._unbindEvents();
         }
     });
-});;/*globals angular $ console*/
+});;/*globals angular $ */
 (function () {
     "use strict";
 
-angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCache', '$compile',
-                                                    function ($http, $templateCache, $compile) {
+angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCache', '$compile', '$log',
+                                                    function ($http, $templateCache, $compile, $log) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
@@ -7712,7 +7712,7 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
                             renderTabPanels(content);
                         }
                     }).error(function () {
-                            console.error('error loading included file for panel of accordion');
+                            $log.error('Error loading included file ' + url + 'for panel of accordion');
                         });
 
                 }

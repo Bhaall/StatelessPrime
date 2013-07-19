@@ -1,9 +1,9 @@
-/*globals angular $ console*/
+/*globals angular $ */
 
 (function () {
     "use strict";
 
-angular.module('angular.prime').directive('puiMenubar', function () {
+angular.module('angular.prime').directive('puiMenubar', ['$log', function ($log) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
@@ -11,7 +11,7 @@ angular.module('angular.prime').directive('puiMenubar', function () {
 
                 var options = scope.$eval(attrs.puiMenu) || {};
                 if (element.find("h3").length > 0) {
-                    console.log("Warning: "); // TODO
+                    $log.warn("Warning: "); // TODO
                 }
                 element.puimenubar({
                     autoDisplay: options.autoDisplay
@@ -20,7 +20,7 @@ angular.module('angular.prime').directive('puiMenubar', function () {
             };
         }
     };
-});
+}]);
 
 }());
 ;/*globals $ PUI window*/
