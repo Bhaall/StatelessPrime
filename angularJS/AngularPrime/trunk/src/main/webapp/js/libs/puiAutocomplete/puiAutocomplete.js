@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiAutocomplete', function () {
     return {
@@ -16,11 +17,11 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
                 // This is handles by the pui-input on a text area element.
                 return;
             }
-            var options = scope.$eval(attrs.puiAutocomplete) || {};
+            var options = scope.$eval(attrs.puiAutocomplete) || {},
+                optionIsFunction = angular.isFunction(options),
+                optionIsArray = angular.isArray(options),
+                completeSource = null;
 
-            var optionIsFunction = angular.isFunction(options);
-            var optionIsArray = angular.isArray(options);
-            var completeSource = null;
             if (optionIsFunction || optionIsArray) {
                 completeSource = options;
                 options = {};
@@ -35,7 +36,7 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
                 options.effectSpeed = options.effectSpeed || 'normal';
                 options.caseSensitive = (options.caseSensitive !== undefined) ? options.caseSensitive : false;
                 if (!options.completeSource) {
-                    throw ("completeSource property required for auto complete functionality")
+                    throw ("completeSource property required for auto complete functionality");
                 }
                 completeSource = options.completeSource;
             }
@@ -43,18 +44,18 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
             $(function () {
 
                 element.puiautocomplete({
-                    dropdown : options.dropdown
-                    ,multiple : options.multiple
-                    ,completeSource: completeSource
-                    ,forceSelection: options.forceSelection
+                    dropdown : options.dropdown ,
+                    multiple : options.multiple ,
+                    completeSource: completeSource ,
+                    forceSelection: options.forceSelection ,
 
-                    ,delay: options.delay
-                    ,minQueryLength: options.minQueryLength
-                    ,scrollHeight: options.scrollHeight
-                    ,effectSpeed: options.effectSpeed
-                    ,caseSensitive: options.caseSensitive
-                    ,effect: options.effect
-                    ,effectOptions: options.effectOptions
+                    delay: options.delay ,
+                    minQueryLength: options.minQueryLength ,
+                    scrollHeight: options.scrollHeight ,
+                    effectSpeed: options.effectSpeed ,
+                    caseSensitive: options.caseSensitive ,
+                    effect: options.effect ,
+                    effectOptions: options.effectOptions
                 });
 
                 var helper = {
@@ -120,15 +121,19 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
 
         }
 
-    }
+    };
 
-});;"use strict";
-/*globals $ */
+});
+
+}());
+;/*globals $ window PUI document*/
+/*jshint laxcomma:true*/
 
 /**
  * PrimeUI autocomplete widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiautocomplete", {
 
@@ -275,20 +280,20 @@ $(function() {
             var $this = this;
 
             this.element.on('keyup.puiautocomplete', function(e) {
+                if(key == keyCode.UP ||
+                    key == keyCode.LEFT ||
+                    key == keyCode.DOWN ||
+                    key == keyCode.RIGHT ||
+                    key == keyCode.TAB ||
+                    key == keyCode.SHIFT ||
+                    key == keyCode.ENTER ||
+                    key == keyCode.NUMPAD_ENTER) {
+                    shouldSearch = false;
+                }
+
                 var keyCode = $.ui.keyCode,
                     key = e.which,
                     shouldSearch = true;
-
-                if(key == keyCode.UP
-                    || key == keyCode.LEFT
-                    || key == keyCode.DOWN
-                    || key == keyCode.RIGHT
-                    || key == keyCode.TAB
-                    || key == keyCode.SHIFT
-                    || key == keyCode.ENTER
-                    || key == keyCode.NUMPAD_ENTER) {
-                    shouldSearch = false;
-                }
 
                 if(shouldSearch) {
                     var value = $this.element.val();
@@ -299,10 +304,10 @@ $(function() {
 
                     if(value.length >= $this.options.minQueryLength) {
                         if($this.timeout) {
-                            clearTimeout($this.timeout);
+                            window.clearTimeout($this.timeout);
                         }
 
-                        $this.timeout = setTimeout(function() {
+                        $this.timeout = window.setTimeout(function() {
                                 $this.search(value);
                             },
                             $this.options.delay);

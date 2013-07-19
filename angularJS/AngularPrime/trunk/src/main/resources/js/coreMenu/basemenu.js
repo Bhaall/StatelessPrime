@@ -1,11 +1,12 @@
-"use strict";
+/*jshint laxcomma:true*/
 
-/*globals $ */
+/*globals $ document window PUI */
 
 /**
  * PrimeUI BaseMenu widget
  */
 $(function() {
+    "use strict";    // Added for AngularPrime
 
     $.widget("primeui.puibasemenu", {
 
@@ -32,7 +33,7 @@ $(function() {
                 my: this.options.my
                 ,at: this.options.at
                 ,of: this.options.trigger
-            }
+            };
 
             this.options.trigger.on(this.options.triggerEvent + '.pui-menu', function(e) {
                 var trigger = $(this);

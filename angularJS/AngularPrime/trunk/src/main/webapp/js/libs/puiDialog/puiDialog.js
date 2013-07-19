@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiDialog', function () {
         return {
@@ -65,20 +66,23 @@ angular.module('angular.prime').directive('puiDialog', function () {
                             scope[attrs.puiDialog].dlgVisible = false;
                         });
                     });
-                }
+                };
             }
-        }
+        };
 
     }
 
 );
-;"use strict";
-/*globals $ */
+
+}());
+;/*jshint laxcomma:true*/
+/*globals $ document PUI window*/
 
 /**
  * PrimeUI Dialog Widget
  */
 $(function() {
+    "use strict"; // added for AngularPrime
 
     $.widget("primeui.puidialog", {
 
@@ -111,8 +115,8 @@ $(function() {
                 .contents().wrapAll('<div class="pui-dialog-content ui-widget-content" />');
 
             //header
-            this.element.prepend('<div class="pui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">'
-                    + '<span id="' + this.element.attr('id') + '_label" class="pui-dialog-title">' + this.element.attr('title') + '</span>')
+            this.element.prepend('<div class="pui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">' +
+                    '<span id="' + this.element.attr('id') + '_label" class="pui-dialog-title">' + this.element.attr('title') + '</span>')
                 .removeAttr('title');
 
             //footer
@@ -178,8 +182,8 @@ $(function() {
             }
 
             //docking zone
-            if($(document.body).children('.pui-dialog-docking-zone').length == 0) {
-                $(document.body).append('<div class="pui-dialog-docking-zone"></div>')
+            if($(document.body).children('.pui-dialog-docking-zone').length === 0) {
+                $(document.body).append('<div class="pui-dialog-docking-zone"></div>');
             }
 
             //aria
@@ -191,8 +195,8 @@ $(function() {
         },
 
         _renderHeaderIcon: function(styleClass, icon) {
-            this.titlebar.append('<a class="pui-dialog-titlebar-icon ' + styleClass + ' ui-corner-all" href="#" role="button">'
-                + '<span class="ui-icon ' + icon + '"></span></a>');
+            this.titlebar.append('<a class="pui-dialog-titlebar-icon ' + styleClass + ' ui-corner-all" href="#" role="button">' +
+                '<span class="ui-icon ' + icon + '"></span></a>');
         },
 
         _enableModality: function() {
@@ -346,11 +350,11 @@ $(function() {
             if(this.options.closeOnEscape) {
                 $(document).on('keydown.dialog_' + this.element.attr('id'), function(e) {
                     var keyCode = $.ui.keyCode,
-                        active = parseInt($this.element.css('z-index')) === PUI.zindex;
+                        active = parseInt($this.element.css('z-index'), 10) === PUI.zindex;
 
                     if(e.which === keyCode.ESCAPE && active && $this.element.is(':visible')) { // Changed for AngularPrime
                         $this.hide();
-                    };
+                    }
                 });
             }
 

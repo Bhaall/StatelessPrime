@@ -1,6 +1,7 @@
-"use strict";
+/*globals angular $ console*/
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiMenubar', function () {
     return {
@@ -10,13 +11,15 @@ angular.module('angular.prime').directive('puiMenubar', function () {
 
                 var options = scope.$eval(attrs.puiMenu) || {};
                 if (element.find("h3").length > 0) {
-                    console.log("Warning: ")
+                    console.log("Warning: "); // TODO
                 }
                 element.puimenubar({
                     autoDisplay: options.autoDisplay
                 });
 
-            }
+            };
         }
-    }
-})
+    };
+});
+
+}());

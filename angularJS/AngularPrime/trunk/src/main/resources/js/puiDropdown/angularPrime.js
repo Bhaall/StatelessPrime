@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($parse) {
         return {
@@ -38,23 +39,23 @@ angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($p
 
                     $(function () {
                         element.puidropdown({
-                            editable: options.editable
-                            ,filter : options.filter
-                            ,effect: options.effect
-                            ,effectSpeed: options.effectSpeed
-                            ,filterMatchMode: options.filterMatchMode
-                            ,caseSensitiveFilter: options.caseSensitiveFilter
-                            ,filterFunction: options.filterFunction
-                            ,scrollHeight: options.scrollHeight
+                            editable: options.editable ,
+                            filter : options.filter ,
+                            effect: options.effect ,
+                            effectSpeed: options.effectSpeed ,
+                            filterMatchMode: options.filterMatchMode ,
+                            caseSensitiveFilter: options.caseSensitiveFilter ,
+                            filterFunction: options.filterFunction ,
+                            scrollHeight: options.scrollHeight
                         });
                     });
 
                     // Specify how UI should be updated
                     ngModel.$render = function () {
                         if (options.useLabel) {
-                            element.puidropdown('selectValue', ngModel.$viewValue)
+                            element.puidropdown('selectValue', ngModel.$viewValue);
                         } else {
-                            element.puidropdown('selectIndex', ngModel.$viewValue)
+                            element.puidropdown('selectIndex', ngModel.$viewValue);
                         }
                     };
 
@@ -62,8 +63,8 @@ angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($p
                     element.bind('puidropdownchange', function () {
                         scope.safeApply(read());
                         if (options.callback) {
-                            var idx = element.puidropdown('getSelectedValue');
-                            var label = element.puidropdown('getCustomInputVal'); // This also works when not editable
+                            var idx = element.puidropdown('getSelectedValue'),
+                                label = element.puidropdown('getCustomInputVal'); // This also works when not editable
                             options.callback(idx, label);
                         }
                     });
@@ -72,7 +73,7 @@ angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($p
 
                     // Write data to the model
                     function read () {
-                        var sel = undefined;
+                        var sel;
                         if (options.editable) {
                             sel = element.puidropdown('getCustomInputVal');
                         } else {
@@ -104,10 +105,12 @@ angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($p
                     }
 
 
-                }
+                };
             }
-        }
+        };
 
     }]
 
 );
+
+}());

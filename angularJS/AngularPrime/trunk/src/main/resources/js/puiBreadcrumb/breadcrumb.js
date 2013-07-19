@@ -1,11 +1,10 @@
-"use strict";
-
 /*globals $ */
 
 /**
  * PrimeUI BreadCrumb Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puibreadcrumb", {
 

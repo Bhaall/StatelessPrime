@@ -1,10 +1,11 @@
-"use strict";
-/*globals $ */
+/*jshint laxcomma:true*/
+/*globals $ document PUI window*/
 
 /**
  * PrimeUI dropdown widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puidropdown", {
 
@@ -351,7 +352,7 @@ $(function() {
 
             if(shouldChange) {
                 this._highlightItem(item);
-                this.element.val(selectedOption.val())
+                this.element.val(selectedOption.val());
 
                 // this._triggerChange();  Moved for AngularPrime
 
@@ -526,7 +527,7 @@ $(function() {
             for(var i = start; i  < end; i++) {
                 var option = this.choices.eq(i);
 
-                if(option.text().indexOf(text) == 0) {
+                if(option.text().indexOf(text) === 0) {
                     return this.items.eq(i);
                 }
             }

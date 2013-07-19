@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiDatatable', function () {
     return {
@@ -50,25 +51,25 @@ angular.module('angular.prime').directive('puiDatatable', function () {
                 if (options.paginatorRows) {
                     paginator = {
                         rows: options.paginatorRows
-                    }
+                    };
                 }
 
                 $(function () {
 
                     element.puidatatable({
-                        caption: options.caption
-                        , datasource : data
-                        , columns: columns
-                        , selectionMode: selectionMode
-                        , rowSelect: options.rowSelect
-                        , paginator: paginator
+                        caption: options.caption ,
+                        datasource : data ,
+                        columns: columns ,
+                        selectionMode: selectionMode ,
+                        rowSelect: options.rowSelect ,
+                        paginator: paginator
                     });
 
                 });
 
-            }
+            };
         }
-    }
+    };
 });
 
 angular.module('angular.prime').directive('puiColumn', function () {
@@ -77,9 +78,9 @@ angular.module('angular.prime').directive('puiColumn', function () {
         priority: 5,
         compile: function (element, attrs) {
             return function postLink(scope, element, attrs) {
-                  var columns = element.parent().data('puiColumns')
-                      , options = scope.$eval(attrs.puiColumn) || {}
-                      , columnInfo = {};
+                  var columns = element.parent().data('puiColumns') ,
+                      options = scope.$eval(attrs.puiColumn) || {} ,
+                      columnInfo = {};
 
                 if (columns === undefined) {
                     columns = [];
@@ -99,18 +100,19 @@ angular.module('angular.prime').directive('puiColumn', function () {
                 }
                 columns.push(columnInfo);
                 element.parent().data('puiColumns', columns);
-            }
+            };
         }
-    }
+    };
 });
-;"use strict";
 
-/*globals $ */
+}());
+;/*globals $ PUI document*/
 
 /**
  * PrimeUI Datatable Widget
  */
 $(function() {
+    "use strict"; // added for AngularPrime
 
     $.widget("primeui.puidatatable", {
 
@@ -173,7 +175,7 @@ $(function() {
             if(this.options.paginator) {
                 this.options.paginator.paginate = function(state) {
                     $this.paginate();
-                }
+                };
 
                 this.options.paginator.totalRecords = this.options.paginator.totalRecords||this.data.length;
                 this.paginator = $('<div></div>').insertAfter(this.tableWrapper).puipaginator(this.options.paginator);
@@ -449,14 +451,13 @@ $(function() {
             return this.options.paginator ? this.getFirst() + index : index;
         }
     });
-});;"use strict";
-
-/*globals $ */
+});;/*globals $ */
 
 /**
  * PrimeUI Paginator Widget
  */
 $(function() {
+    "use strict"; // added for AngularPrime
 
     var ElementHandlers = { // Changed for AngularPrime
 
@@ -593,7 +594,7 @@ $(function() {
                         var link = $(this);
 
                         if(!link.hasClass('ui-state-disabled')&&!link.hasClass('ui-state-active')) {
-                            paginator.option('page', parseInt(link.text()) - 1);
+                            paginator.option('page', parseInt(link.text(), 10) - 1); // Changed for AngularPrime
                         }
                     });
 
@@ -637,7 +638,7 @@ $(function() {
                     visiblePages = Math.min(pageLinks, pageCount);
 
                 //calculate range, keep current in middle if necessary
-                var start = Math.max(0, parseInt(Math.ceil(page - ((visiblePages) / 2)))),
+                var start = Math.max(0, parseInt(Math.ceil(page - ((visiblePages) / 2)), 10)), // Changed for AngularPrime
                     end = Math.min(pageCount - 1, start + visiblePages - 1);
 
                 //check when approaching to last page

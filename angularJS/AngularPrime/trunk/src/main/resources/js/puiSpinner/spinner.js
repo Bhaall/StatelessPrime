@@ -1,10 +1,11 @@
-"use strict";
-/*globals $ */
+/*jshint laxcomma:true*/
+/*globals $ window*/
 
 /**
  * PrimeUI spinner widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puispinner", {
 
@@ -23,7 +24,7 @@ $(function() {
             //this.downButton = this.wrapper.children('a.pui-spinner-down');
             this.options.step = this.options.step||1;
 
-            if(parseInt(this.options.step) === 0) {
+            if(parseInt(this.options.step, 10) === 0) {
                 this.options.precision = this.options.step.toString().split(/[,]|[.]/)[1].length;
             }
 
@@ -44,10 +45,10 @@ $(function() {
                 ,'aria-valuenow': this.value
             });
 
-            if(this.options.min != undefined)
+            if(this.options.min !== undefined)
                 input.attr('aria-valuemin', this.options.min);
 
-            if(this.options.max != undefined)
+            if(this.options.max !== undefined)
                 input.attr('aria-valuemax', this.options.max);
 
             if(input.prop('disabled'))
@@ -69,10 +70,10 @@ $(function() {
                     $(this).removeClass('ui-state-hover ui-state-active');
 
                     if($this.timer) {
-                        clearInterval($this.timer);
+                        window.clearInterval($this.timer);
                     }
                 }).mouseup(function() {
-                    clearInterval($this.timer);
+                    window.clearInterval($this.timer);
                     $(this).removeClass('ui-state-active').addClass('ui-state-hover');
                 }).mousedown(function(e) {
                     var element = $(this),
@@ -135,8 +136,8 @@ $(function() {
             var $this = this,
                 i = interval || 500;
 
-            clearTimeout(this.timer);
-            this.timer = setTimeout(function() {
+            window.clearTimeout(this.timer);
+            this.timer = window.setTimeout(function() {
                 $this._repeat(40, dir);
             }, i);
 
@@ -155,13 +156,13 @@ $(function() {
             if(this.options.precision)
                 newValue = parseFloat(this._toFixed(currentValue + step, this.options.precision));
             else
-                newValue = parseInt(currentValue + step);
+                newValue = parseInt(currentValue + step, 10);
 
-            if(this.options.min != undefined && newValue < this.options.min) {
+            if(this.options.min !== undefined && newValue < this.options.min) {
                 newValue = this.options.min;
             }
 
-            if(this.options.max != undefined && newValue > this.options.max) {
+            if(this.options.max !== undefined && newValue > this.options.max) {
                 newValue = this.options.max;
             }
 
@@ -174,8 +175,8 @@ $(function() {
         _updateValue: function() {
             var value = this.element.val();
 
-            if(value == '') {
-                if(this.options.min != undefined)
+            if(value === '') {
+                if(this.options.min !== undefined)
                     this.value = this.options.min;
                 else
                     this.value = 0;
@@ -184,7 +185,7 @@ $(function() {
                 if(this.options.step)
                     value = parseFloat(value);
                 else
-                    value = parseInt(value);
+                    value = parseInt(value, 10);
 
                 if(!isNaN(value)) {
                     this.value = value;
@@ -195,8 +196,8 @@ $(function() {
         _initValue: function() {
             var value = this.element.val();
 
-            if(value == '') {
-                if(this.options.min != undefined)
+            if(value === '') {
+                if(this.options.min !== undefined)
                     this.value = this.options.min;
                 else
                     this.value = 0;
@@ -211,7 +212,7 @@ $(function() {
                 if(this.options.step)
                     this.value = parseFloat(value);
                 else
-                    this.value = parseInt(value);
+                    this.value = parseInt(value, 10);
             }
         },
 

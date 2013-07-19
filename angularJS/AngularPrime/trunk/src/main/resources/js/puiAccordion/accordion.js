@@ -1,10 +1,10 @@
-"use strict";
 /*globals $ */
 
 /**
  * PrimeUI Accordion widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiaccordion", {
 

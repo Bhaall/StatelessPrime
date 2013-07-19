@@ -1,10 +1,11 @@
-"use strict";
-/*globals $ */
+/*jshint laxcomma:true*/
+/*globals $ document PUI window _self*/
 
 /**
  * PrimeUI inputtextarea widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiinputtextarea", {
 
@@ -123,7 +124,7 @@ $(function() {
                                 $this._clearTimeout($this.timeout);
                             }
 
-                            $this.timeout = setTimeout(function() {
+                            $this.timeout = window.setTimeout(function() {
                                 $this.search(query);
                             }, $this.options.queryDelay);
 
@@ -140,7 +141,7 @@ $(function() {
                         case keyCode.LEFT:
                             if(overlayVisible) {
                                 var highlightedItem = $this.items.filter('.ui-state-highlight'),
-                                    prev = highlightedItem.length == 0 ? $this.items.eq(0) : highlightedItem.prev();
+                                    prev = highlightedItem.length === 0 ? $this.items.eq(0) : highlightedItem.prev();
 
                                 if(prev.length == 1) {
                                     highlightedItem.removeClass('ui-state-highlight');
@@ -162,7 +163,7 @@ $(function() {
                         case keyCode.RIGHT:
                             if(overlayVisible) {
                                 var highlightedItem = $this.items.filter('.ui-state-highlight'),
-                                    next = highlightedItem.length == 0 ? _self.items.eq(0) : highlightedItem.next();
+                                    next = highlightedItem.length === 0 ? _self.items.eq(0) : highlightedItem.next();
 
                                 if(next.length == 1) {
                                     highlightedItem.removeClass('ui-state-highlight');
@@ -272,7 +273,7 @@ $(function() {
 
         _clearTimeout: function() {
             if(this.timeout) {
-                clearTimeout(this.timeout);
+                window.clearTimeout(this.timeout);
             }
 
             this.timeout = null;

@@ -1,6 +1,6 @@
-"use strict";
-
 /*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiSpinner', function () {
     return {
@@ -12,8 +12,16 @@ angular.module('angular.prime').directive('puiSpinner', function () {
             } // do nothing if no ng-model
             $(function () {
 
-                var options = scope.$eval(attrs.puiSpinner) || {};
+                var options = scope.$eval(attrs.puiSpinner) || {},
+                    helper = {
+                        read: function () {
+                            $(function () {
+                                scope.safeApply(function () {
+                                    ngModel.$setViewValue(element.val());
+                                });
 
+                            });
+                        }};
                 element.puispinner({
                     step: options.step,
                     prefix: options.prefix,
@@ -21,16 +29,6 @@ angular.module('angular.prime').directive('puiSpinner', function () {
                     min: options.min,
                     max: options.max
                 });
-
-                var helper = {
-                    read: function () {
-                        $(function () {
-                            scope.safeApply(function () {
-                                ngModel.$setViewValue(element.val());
-                            });
-
-                        })
-                    }};
 
                 // Listen for select events to enable binding
                 element.bind('puispinnerchange', function () {
@@ -54,3 +52,5 @@ angular.module('angular.prime').directive('puiSpinner', function () {
     };
 
 });
+
+}());

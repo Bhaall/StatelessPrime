@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiAutocomplete', function () {
     return {
@@ -16,11 +17,11 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
                 // This is handles by the pui-input on a text area element.
                 return;
             }
-            var options = scope.$eval(attrs.puiAutocomplete) || {};
+            var options = scope.$eval(attrs.puiAutocomplete) || {},
+                optionIsFunction = angular.isFunction(options),
+                optionIsArray = angular.isArray(options),
+                completeSource = null;
 
-            var optionIsFunction = angular.isFunction(options);
-            var optionIsArray = angular.isArray(options);
-            var completeSource = null;
             if (optionIsFunction || optionIsArray) {
                 completeSource = options;
                 options = {};
@@ -35,7 +36,7 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
                 options.effectSpeed = options.effectSpeed || 'normal';
                 options.caseSensitive = (options.caseSensitive !== undefined) ? options.caseSensitive : false;
                 if (!options.completeSource) {
-                    throw ("completeSource property required for auto complete functionality")
+                    throw ("completeSource property required for auto complete functionality");
                 }
                 completeSource = options.completeSource;
             }
@@ -43,18 +44,18 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
             $(function () {
 
                 element.puiautocomplete({
-                    dropdown : options.dropdown
-                    ,multiple : options.multiple
-                    ,completeSource: completeSource
-                    ,forceSelection: options.forceSelection
+                    dropdown : options.dropdown ,
+                    multiple : options.multiple ,
+                    completeSource: completeSource ,
+                    forceSelection: options.forceSelection ,
 
-                    ,delay: options.delay
-                    ,minQueryLength: options.minQueryLength
-                    ,scrollHeight: options.scrollHeight
-                    ,effectSpeed: options.effectSpeed
-                    ,caseSensitive: options.caseSensitive
-                    ,effect: options.effect
-                    ,effectOptions: options.effectOptions
+                    delay: options.delay ,
+                    minQueryLength: options.minQueryLength ,
+                    scrollHeight: options.scrollHeight ,
+                    effectSpeed: options.effectSpeed ,
+                    caseSensitive: options.caseSensitive ,
+                    effect: options.effect ,
+                    effectOptions: options.effectOptions
                 });
 
                 var helper = {
@@ -120,6 +121,8 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
 
         }
 
-    }
+    };
 
 });
+
+}());

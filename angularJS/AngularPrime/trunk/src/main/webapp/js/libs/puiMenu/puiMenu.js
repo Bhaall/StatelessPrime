@@ -1,6 +1,7 @@
-"use strict";
+/*globals angular $ console*/
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiMenu', function () {
     return {
@@ -12,7 +13,7 @@ angular.module('angular.prime').directive('puiMenu', function () {
                 options.popup = false;
                 if (options.trigger) {
                     var triggerElement = $(options.trigger);
-                    if (triggerElement != undefined) {
+                    if (triggerElement !== undefined) {
                         options.popup = true;
                         options.trigger = triggerElement;
                     } else {
@@ -24,8 +25,8 @@ angular.module('angular.prime').directive('puiMenu', function () {
                     throw new Error("ContextMenu can't be combined with the SlideMenu");
                 }
                 $(function() {
-                    var hasSubMenu = element.find("ul").length > 0;
-                    var hasH3Element = element.find("h3").length > 0;
+                    var hasSubMenu = element.find("ul").length > 0,
+                        hasH3Element = element.find("h3").length > 0;
 
                     if (hasSubMenu || ! hasH3Element) {
                         if (hasH3Element) {
@@ -33,44 +34,47 @@ angular.module('angular.prime').directive('puiMenu', function () {
                         }
                         if (options.isContextMenu) {
                             element.puicontextmenu({
-                                popup: options.popup
-                                , trigger: options.trigger
+                                popup: options.popup,
+                                trigger: options.trigger
                             });
 
                         } else {
                             if (options.isSlideMenu) {
                                 element.puislidemenu({
-                                    popup: options.popup
-                                    , trigger: options.trigger
+                                    popup: options.popup,
+                                    trigger: options.trigger
                                 });
 
                             } else {
                                 element.puitieredmenu({
-                                    popup: options.popup, trigger: options.trigger, autoDisplay: options.autoDisplay
+                                    popup: options.popup,
+                                    trigger: options.trigger,
+                                    autoDisplay: options.autoDisplay
                                 });
 
                             }
                         }
                     } else {
                         element.puimenu({
-                            popup: options.popup
-                            , trigger: options.trigger
+                            popup: options.popup,
+                            trigger: options.trigger
                         });
 
                     }
                 });
-            }
+            };
         }
-    }
-})
-;"use strict";
+    };
+});
 
+}());
+;/*jshint laxcomma:true*/
 /*globals $ PUI */
 /**
  * PrimeUI Menu widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puimenu", $.primeui.puibasemenu, {
 
         options: {
@@ -210,7 +214,7 @@ $(function() {
 
             if(this.options.autoDisplay === false) {
                 this.rootLinks = this.element.find('> .pui-menuitem > .pui-menuitem-link');
-                this.rootLinks.data('primeui-tieredmenu-rootlink', this.options.id).find('*').data('primeui-tieredmenu-rootlink', this.options.id)
+                this.rootLinks.data('primeui-tieredmenu-rootlink', this.options.id).find('*').data('primeui-tieredmenu-rootlink', this.options.id);
 
                 this.rootLinks.on('click.pui-menu', function(e) {
                     var link = $(this),
@@ -459,8 +463,8 @@ $(function() {
             this.element.addClass('pui-menu-list ui-helper-reset').
                 wrap('<div class="pui-menu pui-slidemenu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix"/>').
                 wrap('<div class="pui-slidemenu-wrapper" />').
-                after('<div class="pui-slidemenu-backward ui-widget-header ui-corner-all ui-helper-clearfix">\n\
-                    <span class="ui-icon ui-icon-triangle-1-w"></span>Back</div>').
+                after('<div class="pui-slidemenu-backward ui-widget-header ui-corner-all ui-helper-clearfix">' + // Changed for AngularPrime
+                    '<span class="ui-icon ui-icon-triangle-1-w"></span>Back</div>').
                 wrap('<div class="pui-slidemenu-content" />');
 
             this.element.parent().uniqueId();
@@ -502,7 +506,7 @@ $(function() {
                         submenu = link.next();
 
                     if(submenu.length == 1) {
-                        $this._forward(submenu)
+                        $this._forward(submenu);
                     }
                 });
 
@@ -543,7 +547,7 @@ $(function() {
             }, 500, 'easeInOutCirc', function() {
                 last.hide();
 
-                if(depth == 0) {
+                if(depth === 0) {
                     $this.backward.fadeOut('fast');
                 }
             });

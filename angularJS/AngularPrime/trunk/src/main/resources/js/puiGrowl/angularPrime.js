@@ -1,7 +1,7 @@
+/*globals angular $ */
+
 (function () {
     "use strict";
-
-    /*globals angular $ */
 
     angular.module('angular.prime').factory('puiGrowl', function () {
 
@@ -14,7 +14,7 @@
         var growlElement;
 
         var initializeGrowl = function () {
-            if (growlElement == undefined) {
+            if (growlElement === undefined) {
                 $(function () {
                     growlElement = $('#growl');
                     if (growlElement.length === 1 ) {

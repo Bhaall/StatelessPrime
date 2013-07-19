@@ -1,6 +1,6 @@
-"use strict";
-
 /*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiGalleria', function () {
     return {
@@ -16,8 +16,10 @@ angular.module('angular.prime').directive('puiGalleria', function () {
                 });
 
 
-            }
+            };
 
         }
-    }
+    };
 });
+
+}());

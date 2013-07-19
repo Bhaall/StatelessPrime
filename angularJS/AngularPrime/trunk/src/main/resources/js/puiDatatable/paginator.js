@@ -1,11 +1,10 @@
-"use strict";
-
 /*globals $ */
 
 /**
  * PrimeUI Paginator Widget
  */
 $(function() {
+    "use strict"; // added for AngularPrime
 
     var ElementHandlers = { // Changed for AngularPrime
 
@@ -142,7 +141,7 @@ $(function() {
                         var link = $(this);
 
                         if(!link.hasClass('ui-state-disabled')&&!link.hasClass('ui-state-active')) {
-                            paginator.option('page', parseInt(link.text()) - 1);
+                            paginator.option('page', parseInt(link.text(), 10) - 1); // Changed for AngularPrime
                         }
                     });
 
@@ -186,7 +185,7 @@ $(function() {
                     visiblePages = Math.min(pageLinks, pageCount);
 
                 //calculate range, keep current in middle if necessary
-                var start = Math.max(0, parseInt(Math.ceil(page - ((visiblePages) / 2)))),
+                var start = Math.max(0, parseInt(Math.ceil(page - ((visiblePages) / 2)), 10)), // Changed for AngularPrime
                     end = Math.min(pageCount - 1, start + visiblePages - 1);
 
                 //check when approaching to last page

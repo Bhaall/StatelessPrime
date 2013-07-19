@@ -1,10 +1,10 @@
-"use strict";
-/*globals $ */
+/*globals $ document PUI*/
 
 /**
  * PrimeFaces Notify Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puinotify", {
 

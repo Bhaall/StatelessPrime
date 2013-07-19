@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').factory('puiInput.helper', function () {
 
@@ -21,7 +22,7 @@ angular.module('angular.prime').factory('puiInput.helper', function () {
 
         }
         return contents;
-    }
+    };
 
     puiInputHelper.defineLabel = function(id, label, prefix) {
         var contents = '';
@@ -32,7 +33,8 @@ angular.module('angular.prime').factory('puiInput.helper', function () {
         contents += '</label>';
 
         return contents;
-    }
+    };
+
     return puiInputHelper;
 });
 
@@ -62,11 +64,11 @@ angular.module('angular.prime').directive('puiInput', function () {
                     if (attrs.type === 'password') {
                         options.inline = (options.inline !== undefined) ? options.inline : false;
                         element.puipassword({
-                            inline: options.inline
-                            , promptLabel: options.promptLabel || 'Please enter a password'
-                            , weakLabel: options.weakLabel || 'Weak'
-                            , goodLabel: options.goodLabel || 'Medium'
-                            , strongLabel: options.strongLabel || 'Strong'
+                            inline: options.inline,
+                            promptLabel: options.promptLabel || 'Please enter a password',
+                            weakLabel: options.weakLabel || 'Weak',
+                            goodLabel: options.goodLabel || 'Medium',
+                            strongLabel: options.strongLabel || 'Strong'
                         });
                         password = true;
                     }
@@ -95,15 +97,15 @@ angular.module('angular.prime').directive('puiInput', function () {
 
                     options.autoResize = (options.autoResize !== undefined) ? options.autoResize : false;
                     element.puiinputtextarea({
-                        autoResize: options.autoResize
-                        , autoComplete: autoComplete
-                        , scrollHeight: options.scrollHeight || 150
-                        , completeSource: completeSourceMethod
-                        , minQueryLength: options.minQueryLength || 3
-                        , queryDelay: options.queryDelay || 700
-                        , counter: $(options.display)
-                        , counterTemplate: options.template
-                        , maxlength: options.maxLength
+                        autoResize: options.autoResize,
+                        autoComplete: autoComplete,
+                        scrollHeight: options.scrollHeight || 150,
+                        completeSource: completeSourceMethod,
+                        minQueryLength: options.minQueryLength || 3,
+                        queryDelay: options.queryDelay || 700,
+                        counter: $(options.display),
+                        counterTemplate: options.template,
+                        maxlength: options.maxLength
                     });
 
                     if (options.display) {
@@ -233,11 +235,11 @@ angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 
         compile: function (element, attrs) {
 
             return function postLink(scope, element, attrs) {
-                var id = attrs.id
-                    , label = ''
-                    , contents = '<input type="checkbox" pui-input '
-                    , handledAttributes = 'id ngModel puiInput ngShow ngHide puiCheckbox'.split(' ')
-                    , attrsToRemove = 'id ngModel puiInput'.split(' ');
+                var id = attrs.id,
+                    label = '',
+                    contents = '<input type="checkbox" pui-input ',
+                    handledAttributes = 'id ngModel puiInput ngShow ngHide puiCheckbox'.split(' '),
+                    attrsToRemove = 'id ngModel puiInput'.split(' ');
 
                 try {
                     $parse(attrs.puiCheckbox); // see if it is a valid AngularExpression
@@ -260,9 +262,9 @@ angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 
 
                 $compile(element.contents())(scope);
 
-            }
+            };
         }
-    }
+    };
 }]);
 
 angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse', 'puiInput.helper', 'angular.prime.config',
@@ -274,11 +276,11 @@ angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse
         compile: function (element, attrs) {
 
             return function postLink(scope, element, attrs) {
-                var id = attrs.id
-                    , label = ''
-                    , contents = '<input type="radio" pui-input '
-                    , handledAttributes = 'id ngModel puiInput ngShow ngHide puiRadiobutton name value'.split(' ')
-                    , attrsToRemove = 'id ngModel puiInput'.split(' ');
+                var id = attrs.id,
+                    label = '',
+                    contents = '<input type="radio" pui-input ',
+                    handledAttributes = 'id ngModel puiInput ngShow ngHide puiRadiobutton name value'.split(' '),
+                    attrsToRemove = 'id ngModel puiInput'.split(' ');
 
                 try {
                     $parse(attrs.puiRadiobutton); // see if it is a valid AngularExpression
@@ -302,7 +304,10 @@ angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse
 
                 $compile(element.contents())(scope);
 
-            }
+            };
         }
-    }
+    };
 }]);
+
+}());
+

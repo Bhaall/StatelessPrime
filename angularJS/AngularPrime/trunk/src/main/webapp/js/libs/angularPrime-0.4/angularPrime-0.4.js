@@ -1,28 +1,28 @@
-"use strict";
-
 /*globals angular */
 
-angular.module('angular.prime.config', []).value('angular.prime.config',
-    {
-        labelPrefix : 'lbl'
-    }
-);
+(function () {
+    "use strict";
 
-angular.module('angular.prime', ['angular.prime.config']).run(['$rootScope', function ($rootScope) {
+    angular.module('angular.prime.config', []).value('angular.prime.config', {
+            labelPrefix: 'lbl'
+        });
 
-    $rootScope.safeApply = function(fn) {
-      var phase = this.$root.$$phase;
-      if(phase == '$apply' || phase == '$digest') {
-        if(fn && (typeof(fn) === 'function')) {
-          fn();
-        }
-      } else {
-        this.$apply(fn);
-      }
-    };
+    angular.module('angular.prime', ['angular.prime.config']).run(['$rootScope', function ($rootScope) {
 
-}]);
+        $rootScope.safeApply = function (fn) {
+            var phase = this.$root.$$phase;
+            if (phase == '$apply' || phase == '$digest') {
+                if (fn && (typeof(fn) === 'function')) {
+                    fn();
+                }
+            } else {
+                this.$apply(fn);
+            }
+        };
 
+    }]);
+
+}());
 ;"use strict";
 /*globals $ window document*/
 
@@ -460,14 +460,15 @@ $(function() {
             surroundSelectedText: jQuerify(surroundSelectedText, true)
         });
     });
-})(jQuery);;"use strict";
+})(jQuery);;/*jshint laxcomma:true*/
 
-/*globals $ */
+/*globals $ document window PUI */
 
 /**
  * PrimeUI BaseMenu widget
  */
 $(function() {
+    "use strict";    // Added for AngularPrime
 
     $.widget("primeui.puibasemenu", {
 
@@ -494,7 +495,7 @@ $(function() {
                 my: this.options.my
                 ,at: this.options.at
                 ,of: this.options.trigger
-            }
+            };
 
             this.options.trigger.on(this.options.triggerEvent + '.pui-menu', function(e) {
                 var trigger = $(this);
@@ -555,13 +556,13 @@ $(function() {
         }
     });
 });
-;"use strict";
-/*globals $ */
+;/*globals $ */
 
 /**
  * PrimeUI Accordion widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiaccordion", {
 
@@ -699,11 +700,12 @@ $(function() {
 
     });
 });
-;"use strict";
+;/*globals angular $ console*/
 
-/*globals angular $ console*/
+(function () {
+    "use strict";
 
-angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCache', '$compile',
+    angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCache', '$compile',
                                                   function ($http, $templateCache, $compile) {
     return {
         restrict: 'A',
@@ -711,12 +713,12 @@ angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCa
 
             return function postLink (scope, element, attrs) {
 
-                var options = scope.$eval(attrs.puiAccordion) || {};
-                var dynamicPanels = angular.isArray(options) || angular.isArray(options.urls);
-                var content = [];
-                var urls = [];
-                var remaining;
-                var initialCall = true;
+                var options = scope.$eval(attrs.puiAccordion) || {} ,
+                    dynamicPanels = angular.isArray(options) || angular.isArray(options.urls) ,
+                    content = [] ,
+                    urls = [] ,
+                    remaining ,
+                    initialCall = true;
 
                 function renderAccordion(panels) {
                     var htmlContent = '';
@@ -776,6 +778,8 @@ angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCa
 
 
                 } else {
+                    var scopedOptions = attrs.puiAccordion && attrs.puiAccordion.trim().charAt(0) !== '{';
+
                     options.activeIndex = options.activeIndex || 0;
                     $(function () {
                         element.puiaccordion({
@@ -784,7 +788,6 @@ angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCa
 
                     });
 
-                    var scopedOptions = attrs.puiAccordion && attrs.puiAccordion.trim().charAt(0) !== '{';
                     if (scopedOptions || options.callback) {
                         // Listen for change events to enable binding
                         element.bind('puiaccordionchange', function (eventData, idx) {
@@ -819,13 +822,15 @@ angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCa
                     var idx = (index !== undefined) ? index : element.puiaccordion('getActiveIndex');
                     scope[attrs.puiAccordion].activeIndex = idx;
                 }
-            }
-        }}
+            };
+        }};
 }]);
 
-;"use strict";
+}());
+;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiAutocomplete', function () {
     return {
@@ -841,11 +846,11 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
                 // This is handles by the pui-input on a text area element.
                 return;
             }
-            var options = scope.$eval(attrs.puiAutocomplete) || {};
+            var options = scope.$eval(attrs.puiAutocomplete) || {},
+                optionIsFunction = angular.isFunction(options),
+                optionIsArray = angular.isArray(options),
+                completeSource = null;
 
-            var optionIsFunction = angular.isFunction(options);
-            var optionIsArray = angular.isArray(options);
-            var completeSource = null;
             if (optionIsFunction || optionIsArray) {
                 completeSource = options;
                 options = {};
@@ -860,7 +865,7 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
                 options.effectSpeed = options.effectSpeed || 'normal';
                 options.caseSensitive = (options.caseSensitive !== undefined) ? options.caseSensitive : false;
                 if (!options.completeSource) {
-                    throw ("completeSource property required for auto complete functionality")
+                    throw ("completeSource property required for auto complete functionality");
                 }
                 completeSource = options.completeSource;
             }
@@ -868,18 +873,18 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
             $(function () {
 
                 element.puiautocomplete({
-                    dropdown : options.dropdown
-                    ,multiple : options.multiple
-                    ,completeSource: completeSource
-                    ,forceSelection: options.forceSelection
+                    dropdown : options.dropdown ,
+                    multiple : options.multiple ,
+                    completeSource: completeSource ,
+                    forceSelection: options.forceSelection ,
 
-                    ,delay: options.delay
-                    ,minQueryLength: options.minQueryLength
-                    ,scrollHeight: options.scrollHeight
-                    ,effectSpeed: options.effectSpeed
-                    ,caseSensitive: options.caseSensitive
-                    ,effect: options.effect
-                    ,effectOptions: options.effectOptions
+                    delay: options.delay ,
+                    minQueryLength: options.minQueryLength ,
+                    scrollHeight: options.scrollHeight ,
+                    effectSpeed: options.effectSpeed ,
+                    caseSensitive: options.caseSensitive ,
+                    effect: options.effect ,
+                    effectOptions: options.effectOptions
                 });
 
                 var helper = {
@@ -945,15 +950,19 @@ angular.module('angular.prime').directive('puiAutocomplete', function () {
 
         }
 
-    }
+    };
 
-});;"use strict";
-/*globals $ */
+});
+
+}());
+;/*globals $ window PUI document*/
+/*jshint laxcomma:true*/
 
 /**
  * PrimeUI autocomplete widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiautocomplete", {
 
@@ -1100,20 +1109,20 @@ $(function() {
             var $this = this;
 
             this.element.on('keyup.puiautocomplete', function(e) {
+                if(key == keyCode.UP ||
+                    key == keyCode.LEFT ||
+                    key == keyCode.DOWN ||
+                    key == keyCode.RIGHT ||
+                    key == keyCode.TAB ||
+                    key == keyCode.SHIFT ||
+                    key == keyCode.ENTER ||
+                    key == keyCode.NUMPAD_ENTER) {
+                    shouldSearch = false;
+                }
+
                 var keyCode = $.ui.keyCode,
                     key = e.which,
                     shouldSearch = true;
-
-                if(key == keyCode.UP
-                    || key == keyCode.LEFT
-                    || key == keyCode.DOWN
-                    || key == keyCode.RIGHT
-                    || key == keyCode.TAB
-                    || key == keyCode.SHIFT
-                    || key == keyCode.ENTER
-                    || key == keyCode.NUMPAD_ENTER) {
-                    shouldSearch = false;
-                }
 
                 if(shouldSearch) {
                     var value = $this.element.val();
@@ -1124,10 +1133,10 @@ $(function() {
 
                     if(value.length >= $this.options.minQueryLength) {
                         if($this.timeout) {
-                            clearTimeout($this.timeout);
+                            window.clearTimeout($this.timeout);
                         }
 
-                        $this.timeout = setTimeout(function() {
+                        $this.timeout = window.setTimeout(function() {
                                 $this.search(value);
                             },
                             $this.options.delay);
@@ -1415,9 +1424,10 @@ $(function() {
 
     });
 
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiBreadcrumb', ['$compile',
                                                     function ($compile) {
@@ -1426,29 +1436,31 @@ angular.module('angular.prime').directive('puiBreadcrumb', ['$compile',
         compile: function (element, attrs) {
             return function postLink(scope, element, attrs) {
 
-                var options = scope.$eval(attrs.puiBreadcrumb) || {};
-                var dynamicBreadcrumb = angular.isArray(options) || angular.isArray(options.items);
-                var breadcrumbItems = [];
-                var initialCall = true;
+                var options = scope.$eval(attrs.puiBreadcrumb) || {} ,
+                    dynamicBreadcrumb = angular.isArray(options) || angular.isArray(options.items) ,
+                    breadcrumbItems = [] ,
+                    initialCall = true;
 
                 function renderBreadcrumb() {
-                    var htmlContents = '';
-                    var globalActionText = null;
+                    var htmlContents = '' ,
+                        globalActionText = null;
                     angular.forEach(breadcrumbItems, function (breadcrumbItem) {
-                        var actionText = breadcrumbItem.onclick;
-                        if (actionText === undefined && globalActionText != null) {
+                        var actionText = breadcrumbItem.onclick ,
+                            hasPlaceholder = actionText !== undefined && actionText.indexOf('{id}') > -1;
+
+                        if (actionText === undefined && globalActionText !== null) {
                             actionText = globalActionText;
                         }
                         if (breadcrumbItem.globalAction)  {
                             globalActionText = actionText;
                         }
-                        var hasPlaceholder = actionText != undefined && actionText.indexOf('{id}') > -1;
+
                         if (hasPlaceholder) {
                             actionText = actionText.replace('{id}', breadcrumbItem.id);
                         }
 
                         htmlContents = htmlContents + '<li id="' + breadcrumbItem.id + '"><a ';
-                        if (actionText != undefined) {
+                        if (actionText !== undefined) {
                             htmlContents = htmlContents + 'ng-click="' + actionText +'"';
                         }
                         htmlContents = htmlContents + '>' + breadcrumbItem.label + '</a></li>';
@@ -1490,18 +1502,19 @@ angular.module('angular.prime').directive('puiBreadcrumb', ['$compile',
 
                 }
 
-            }
+            };
         }
-    }
-}])
-;"use strict";
+    };
+}]);
 
-/*globals $ */
+}());
+;/*globals $ */
 
 /**
  * PrimeUI BreadCrumb Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puibreadcrumb", {
 
@@ -1529,17 +1542,18 @@ $(function() {
         }
     });
 });
-;"use strict";
+;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiButton', ['$interpolate', function ($interpolate) {
         return {
             restrict: 'A',
             compile: function (element, attrs) {
                 return function postLink (scope, element, attrs) {
-                    var titleWatches = [];
-                    var parsedExpression = $interpolate(element.text());
+                    var titleWatches = [] ,
+                        parsedExpression = $interpolate(element.text());
                     element.text(scope.$eval(parsedExpression));
                     angular.forEach(parsedExpression.parts, function (part) {
                         if (angular.isFunction(part)) {
@@ -1578,19 +1592,23 @@ angular.module('angular.prime').directive('puiButton', ['$interpolate', function
                         });
                     });
 
-                }
+                };
             }
 
-        }
+        };
     }]
 
-);;"use strict";
+);
+
+}());
+;/*jshint laxcomma:true*/
 /*globals $ */
 
 /**
  * PrimeFaces Button Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puibutton", {
 
@@ -1689,9 +1707,10 @@ $(function() {
             this.element.find('.pui-button-text').html(title);
         }
     });
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiDatatable', function () {
     return {
@@ -1741,25 +1760,25 @@ angular.module('angular.prime').directive('puiDatatable', function () {
                 if (options.paginatorRows) {
                     paginator = {
                         rows: options.paginatorRows
-                    }
+                    };
                 }
 
                 $(function () {
 
                     element.puidatatable({
-                        caption: options.caption
-                        , datasource : data
-                        , columns: columns
-                        , selectionMode: selectionMode
-                        , rowSelect: options.rowSelect
-                        , paginator: paginator
+                        caption: options.caption ,
+                        datasource : data ,
+                        columns: columns ,
+                        selectionMode: selectionMode ,
+                        rowSelect: options.rowSelect ,
+                        paginator: paginator
                     });
 
                 });
 
-            }
+            };
         }
-    }
+    };
 });
 
 angular.module('angular.prime').directive('puiColumn', function () {
@@ -1768,9 +1787,9 @@ angular.module('angular.prime').directive('puiColumn', function () {
         priority: 5,
         compile: function (element, attrs) {
             return function postLink(scope, element, attrs) {
-                  var columns = element.parent().data('puiColumns')
-                      , options = scope.$eval(attrs.puiColumn) || {}
-                      , columnInfo = {};
+                  var columns = element.parent().data('puiColumns') ,
+                      options = scope.$eval(attrs.puiColumn) || {} ,
+                      columnInfo = {};
 
                 if (columns === undefined) {
                     columns = [];
@@ -1790,18 +1809,19 @@ angular.module('angular.prime').directive('puiColumn', function () {
                 }
                 columns.push(columnInfo);
                 element.parent().data('puiColumns', columns);
-            }
+            };
         }
-    }
+    };
 });
-;"use strict";
 
-/*globals $ */
+}());
+;/*globals $ PUI document*/
 
 /**
  * PrimeUI Datatable Widget
  */
 $(function() {
+    "use strict"; // added for AngularPrime
 
     $.widget("primeui.puidatatable", {
 
@@ -1864,7 +1884,7 @@ $(function() {
             if(this.options.paginator) {
                 this.options.paginator.paginate = function(state) {
                     $this.paginate();
-                }
+                };
 
                 this.options.paginator.totalRecords = this.options.paginator.totalRecords||this.data.length;
                 this.paginator = $('<div></div>').insertAfter(this.tableWrapper).puipaginator(this.options.paginator);
@@ -2140,14 +2160,13 @@ $(function() {
             return this.options.paginator ? this.getFirst() + index : index;
         }
     });
-});;"use strict";
-
-/*globals $ */
+});;/*globals $ */
 
 /**
  * PrimeUI Paginator Widget
  */
 $(function() {
+    "use strict"; // added for AngularPrime
 
     var ElementHandlers = { // Changed for AngularPrime
 
@@ -2284,7 +2303,7 @@ $(function() {
                         var link = $(this);
 
                         if(!link.hasClass('ui-state-disabled')&&!link.hasClass('ui-state-active')) {
-                            paginator.option('page', parseInt(link.text()) - 1);
+                            paginator.option('page', parseInt(link.text(), 10) - 1); // Changed for AngularPrime
                         }
                     });
 
@@ -2328,7 +2347,7 @@ $(function() {
                     visiblePages = Math.min(pageLinks, pageCount);
 
                 //calculate range, keep current in middle if necessary
-                var start = Math.max(0, parseInt(Math.ceil(page - ((visiblePages) / 2)))),
+                var start = Math.max(0, parseInt(Math.ceil(page - ((visiblePages) / 2)), 10)), // Changed for AngularPrime
                     end = Math.min(pageCount - 1, start + visiblePages - 1);
 
                 //check when approaching to last page
@@ -2423,9 +2442,10 @@ $(function() {
             return Math.ceil(this.options.totalRecords / this.options.rows)||1;
         }
     });
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiDialog', function () {
         return {
@@ -2490,20 +2510,23 @@ angular.module('angular.prime').directive('puiDialog', function () {
                             scope[attrs.puiDialog].dlgVisible = false;
                         });
                     });
-                }
+                };
             }
-        }
+        };
 
     }
 
 );
-;"use strict";
-/*globals $ */
+
+}());
+;/*jshint laxcomma:true*/
+/*globals $ document PUI window*/
 
 /**
  * PrimeUI Dialog Widget
  */
 $(function() {
+    "use strict"; // added for AngularPrime
 
     $.widget("primeui.puidialog", {
 
@@ -2536,8 +2559,8 @@ $(function() {
                 .contents().wrapAll('<div class="pui-dialog-content ui-widget-content" />');
 
             //header
-            this.element.prepend('<div class="pui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">'
-                    + '<span id="' + this.element.attr('id') + '_label" class="pui-dialog-title">' + this.element.attr('title') + '</span>')
+            this.element.prepend('<div class="pui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">' +
+                    '<span id="' + this.element.attr('id') + '_label" class="pui-dialog-title">' + this.element.attr('title') + '</span>')
                 .removeAttr('title');
 
             //footer
@@ -2603,8 +2626,8 @@ $(function() {
             }
 
             //docking zone
-            if($(document.body).children('.pui-dialog-docking-zone').length == 0) {
-                $(document.body).append('<div class="pui-dialog-docking-zone"></div>')
+            if($(document.body).children('.pui-dialog-docking-zone').length === 0) {
+                $(document.body).append('<div class="pui-dialog-docking-zone"></div>');
             }
 
             //aria
@@ -2616,8 +2639,8 @@ $(function() {
         },
 
         _renderHeaderIcon: function(styleClass, icon) {
-            this.titlebar.append('<a class="pui-dialog-titlebar-icon ' + styleClass + ' ui-corner-all" href="#" role="button">'
-                + '<span class="ui-icon ' + icon + '"></span></a>');
+            this.titlebar.append('<a class="pui-dialog-titlebar-icon ' + styleClass + ' ui-corner-all" href="#" role="button">' +
+                '<span class="ui-icon ' + icon + '"></span></a>');
         },
 
         _enableModality: function() {
@@ -2771,11 +2794,11 @@ $(function() {
             if(this.options.closeOnEscape) {
                 $(document).on('keydown.dialog_' + this.element.attr('id'), function(e) {
                     var keyCode = $.ui.keyCode,
-                        active = parseInt($this.element.css('z-index')) === PUI.zindex;
+                        active = parseInt($this.element.css('z-index'), 10) === PUI.zindex;
 
                     if(e.which === keyCode.ESCAPE && active && $this.element.is(':visible')) { // Changed for AngularPrime
                         $this.hide();
-                    };
+                    }
                 });
             }
 
@@ -2984,9 +3007,10 @@ $(function() {
             this.titlebar.children('a.pui-dialog-titlebar-icon').attr('role', 'button');
         }
     });
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($parse) {
         return {
@@ -3024,23 +3048,23 @@ angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($p
 
                     $(function () {
                         element.puidropdown({
-                            editable: options.editable
-                            ,filter : options.filter
-                            ,effect: options.effect
-                            ,effectSpeed: options.effectSpeed
-                            ,filterMatchMode: options.filterMatchMode
-                            ,caseSensitiveFilter: options.caseSensitiveFilter
-                            ,filterFunction: options.filterFunction
-                            ,scrollHeight: options.scrollHeight
+                            editable: options.editable ,
+                            filter : options.filter ,
+                            effect: options.effect ,
+                            effectSpeed: options.effectSpeed ,
+                            filterMatchMode: options.filterMatchMode ,
+                            caseSensitiveFilter: options.caseSensitiveFilter ,
+                            filterFunction: options.filterFunction ,
+                            scrollHeight: options.scrollHeight
                         });
                     });
 
                     // Specify how UI should be updated
                     ngModel.$render = function () {
                         if (options.useLabel) {
-                            element.puidropdown('selectValue', ngModel.$viewValue)
+                            element.puidropdown('selectValue', ngModel.$viewValue);
                         } else {
-                            element.puidropdown('selectIndex', ngModel.$viewValue)
+                            element.puidropdown('selectIndex', ngModel.$viewValue);
                         }
                     };
 
@@ -3048,8 +3072,8 @@ angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($p
                     element.bind('puidropdownchange', function () {
                         scope.safeApply(read());
                         if (options.callback) {
-                            var idx = element.puidropdown('getSelectedValue');
-                            var label = element.puidropdown('getCustomInputVal'); // This also works when not editable
+                            var idx = element.puidropdown('getSelectedValue'),
+                                label = element.puidropdown('getCustomInputVal'); // This also works when not editable
                             options.callback(idx, label);
                         }
                     });
@@ -3058,7 +3082,7 @@ angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($p
 
                     // Write data to the model
                     function read () {
-                        var sel = undefined;
+                        var sel;
                         if (options.editable) {
                             sel = element.puidropdown('getCustomInputVal');
                         } else {
@@ -3090,20 +3114,23 @@ angular.module('angular.prime').directive('puiDropdown', ['$parse', function ($p
                     }
 
 
-                }
+                };
             }
-        }
+        };
 
     }]
 
 );
-;"use strict";
-/*globals $ */
+
+}());
+;/*jshint laxcomma:true*/
+/*globals $ document PUI window*/
 
 /**
  * PrimeUI dropdown widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puidropdown", {
 
@@ -3450,7 +3477,7 @@ $(function() {
 
             if(shouldChange) {
                 this._highlightItem(item);
-                this.element.val(selectedOption.val())
+                this.element.val(selectedOption.val());
 
                 // this._triggerChange();  Moved for AngularPrime
 
@@ -3625,7 +3652,7 @@ $(function() {
             for(var i = start; i  < end; i++) {
                 var option = this.choices.eq(i);
 
-                if(option.text().indexOf(text) == 0) {
+                if(option.text().indexOf(text) === 0) {
                     return this.items.eq(i);
                 }
             }
@@ -3670,9 +3697,10 @@ $(function() {
         }
     });
 
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiFieldset', function () {
     return {
@@ -3685,9 +3713,9 @@ angular.module('angular.prime').directive('puiFieldset', function () {
                     var toggleable = options.collapsed !== undefined;
                     options.toggleDuration = options.toggleDuration || 'normal';
                     element.puifieldset({
-                        toggleable: toggleable
-                        ,toggleDuration: options.toggleDuration
-                        ,collapsed: options.collapsed
+                        toggleable: toggleable,
+                        toggleDuration: options.toggleDuration,
+                        collapsed: options.collapsed
                     });
 
                     if (toggleable) {
@@ -3711,17 +3739,19 @@ angular.module('angular.prime').directive('puiFieldset', function () {
                     }
 
                 });
-            }
+            };
         }
-    }
-});;"use strict";
-/*globals $ */
+    };
+});
+
+}());
+;/*globals $ */
 
 /**
  * PrimeFaces Fieldset Widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puifieldset", {
 
         options: {
@@ -3763,7 +3793,7 @@ $(function() {
                 .on('mouseover.puifieldset', function() {$this.legend.addClass('ui-state-hover');})
                 .on('mouseout.puifieldset', function() {$this.legend.removeClass('ui-state-hover ui-state-active');})
                 .on('mousedown.puifieldset', function() {$this.legend.removeClass('ui-state-hover').addClass('ui-state-active');})
-                .on('mouseup.puifieldset', function() {$this.legend.removeClass('ui-state-active').addClass('ui-state-hover');})
+                .on('mouseup.puifieldset', function() {$this.legend.removeClass('ui-state-active').addClass('ui-state-hover');});
         },
 
         toggle: function(e) {
@@ -3797,9 +3827,9 @@ $(function() {
         }
 
     });
-});;"use strict";
-
-/*globals angular $ */
+});;/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiGalleria', function () {
     return {
@@ -3815,17 +3845,20 @@ angular.module('angular.prime').directive('puiGalleria', function () {
                 });
 
 
-            }
+            };
 
         }
-    }
-});;"use strict";
-/*globals $ */
+    };
+});
+
+}());
+;/*globals $ window */
 
 /**
  * PrimeUI Lightbox Widget
  */
 $(function() {
+    "use strict"; //Added for AngularPrime
 
     $.widget("primeui.puigalleria", {
 
@@ -3893,10 +3926,10 @@ $(function() {
             for(var i = 0; i < this.panels.length; i++) {
                 var image = this.panels.eq(i).children('img'),
                     frameClass = (i == this.options.activeIndex) ? 'pui-galleria-frame pui-galleria-frame-active' : 'pui-galleria-frame',
-                    frameMarkup = '<li class="'+ frameClass + '" ' + frameStyle + '>'
-                        + '<div class="pui-galleria-frame-content" ' + frameStyle + '>'
-                        + '<img src="' + image.attr('src') + '" class="pui-galleria-frame-image" ' + frameStyle + '/>'
-                        + '</div></li>';
+                    frameMarkup = '<li class="'+ frameClass + '" ' + frameStyle + '>' +
+                        '<div class="pui-galleria-frame-content" ' + frameStyle + '>' +
+                        '<img src="' + image.attr('src') + '" class="pui-galleria-frame-image" ' + frameStyle + '/>' +
+                        '</div></li>';
 
                 this.strip.append(frameMarkup);
             }
@@ -3951,7 +3984,7 @@ $(function() {
         startSlideshow: function() {
             var $this = this;
 
-            this.interval = setInterval(function() {
+            this.interval = window.setInterval(function() {
                 $this.next();
             }, this.options.transitionInterval);
 
@@ -3959,7 +3992,7 @@ $(function() {
         },
 
         stopSlideshow: function() {
-            clearInterval(this.interval);
+            window.clearInterval(this.interval);
 
             this.slideshowActive = false;
         },
@@ -3997,7 +4030,7 @@ $(function() {
                 //viewport
                 if(reposition === undefined || reposition === true) {
                     var frameLeft = newFrame.position().left,
-                        stepFactor = this.options.frameWidth + parseInt(newFrame.css('margin-right')),
+                        stepFactor = this.options.frameWidth + parseInt(newFrame.css('margin-right'), 10),
                         stripLeft = this.strip.position().left,
                         frameViewportLeft = frameLeft + stripLeft,
                         frameViewportRight = frameViewportLeft + this.options.frameWidth;
@@ -4023,7 +4056,7 @@ $(function() {
         },
 
         prev: function() {
-            if(this.options.activeIndex != 0) {
+            if(this.options.activeIndex !== 0) {
                 this.select(this.options.activeIndex - 1);
             }
         },
@@ -4042,10 +4075,10 @@ $(function() {
             return this.strip.is(':animated');
         }
     });
-});;(function () {
-    "use strict";
+});;/*globals angular $ */
 
-    /*globals angular $ */
+(function () {
+    "use strict";
 
     angular.module('angular.prime').factory('puiGrowl', function () {
 
@@ -4058,7 +4091,7 @@ $(function() {
         var growlElement;
 
         var initializeGrowl = function () {
-            if (growlElement == undefined) {
+            if (growlElement === undefined) {
                 $(function () {
                     growlElement = $('#growl');
                     if (growlElement.length === 1 ) {
@@ -4136,14 +4169,13 @@ $(function() {
 
 }());
 
-;"use strict";
-/*globals $ */
+;/*globals $ window document*/
 
 /**
  * PrimeFaces Growl Widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puigrowl", {
 
         options: {
@@ -4217,7 +4249,7 @@ $(function() {
                 $this._removeMessage(message);
 
                 if(!sticky) {
-                    clearTimeout(message.data('timeout'));
+                    window.clearTimeout(message.data('timeout'));
                 }
             });
 
@@ -4229,7 +4261,7 @@ $(function() {
         _setRemovalTimeout: function(message) {
             var $this = this;
 
-            var timeout = setTimeout(function() {
+            var timeout = window.setTimeout(function() {
                 $this._removeMessage(message);
             }, this.options.life);
 
@@ -4241,9 +4273,10 @@ $(function() {
           this.options = newOptions;
         }
     });
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').factory('puiInput.helper', function () {
 
@@ -4264,7 +4297,7 @@ angular.module('angular.prime').factory('puiInput.helper', function () {
 
         }
         return contents;
-    }
+    };
 
     puiInputHelper.defineLabel = function(id, label, prefix) {
         var contents = '';
@@ -4275,7 +4308,8 @@ angular.module('angular.prime').factory('puiInput.helper', function () {
         contents += '</label>';
 
         return contents;
-    }
+    };
+
     return puiInputHelper;
 });
 
@@ -4305,11 +4339,11 @@ angular.module('angular.prime').directive('puiInput', function () {
                     if (attrs.type === 'password') {
                         options.inline = (options.inline !== undefined) ? options.inline : false;
                         element.puipassword({
-                            inline: options.inline
-                            , promptLabel: options.promptLabel || 'Please enter a password'
-                            , weakLabel: options.weakLabel || 'Weak'
-                            , goodLabel: options.goodLabel || 'Medium'
-                            , strongLabel: options.strongLabel || 'Strong'
+                            inline: options.inline,
+                            promptLabel: options.promptLabel || 'Please enter a password',
+                            weakLabel: options.weakLabel || 'Weak',
+                            goodLabel: options.goodLabel || 'Medium',
+                            strongLabel: options.strongLabel || 'Strong'
                         });
                         password = true;
                     }
@@ -4338,15 +4372,15 @@ angular.module('angular.prime').directive('puiInput', function () {
 
                     options.autoResize = (options.autoResize !== undefined) ? options.autoResize : false;
                     element.puiinputtextarea({
-                        autoResize: options.autoResize
-                        , autoComplete: autoComplete
-                        , scrollHeight: options.scrollHeight || 150
-                        , completeSource: completeSourceMethod
-                        , minQueryLength: options.minQueryLength || 3
-                        , queryDelay: options.queryDelay || 700
-                        , counter: $(options.display)
-                        , counterTemplate: options.template
-                        , maxlength: options.maxLength
+                        autoResize: options.autoResize,
+                        autoComplete: autoComplete,
+                        scrollHeight: options.scrollHeight || 150,
+                        completeSource: completeSourceMethod,
+                        minQueryLength: options.minQueryLength || 3,
+                        queryDelay: options.queryDelay || 700,
+                        counter: $(options.display),
+                        counterTemplate: options.template,
+                        maxlength: options.maxLength
                     });
 
                     if (options.display) {
@@ -4476,11 +4510,11 @@ angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 
         compile: function (element, attrs) {
 
             return function postLink(scope, element, attrs) {
-                var id = attrs.id
-                    , label = ''
-                    , contents = '<input type="checkbox" pui-input '
-                    , handledAttributes = 'id ngModel puiInput ngShow ngHide puiCheckbox'.split(' ')
-                    , attrsToRemove = 'id ngModel puiInput'.split(' ');
+                var id = attrs.id,
+                    label = '',
+                    contents = '<input type="checkbox" pui-input ',
+                    handledAttributes = 'id ngModel puiInput ngShow ngHide puiCheckbox'.split(' '),
+                    attrsToRemove = 'id ngModel puiInput'.split(' ');
 
                 try {
                     $parse(attrs.puiCheckbox); // see if it is a valid AngularExpression
@@ -4503,9 +4537,9 @@ angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 
 
                 $compile(element.contents())(scope);
 
-            }
+            };
         }
-    }
+    };
 }]);
 
 angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse', 'puiInput.helper', 'angular.prime.config',
@@ -4517,11 +4551,11 @@ angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse
         compile: function (element, attrs) {
 
             return function postLink(scope, element, attrs) {
-                var id = attrs.id
-                    , label = ''
-                    , contents = '<input type="radio" pui-input '
-                    , handledAttributes = 'id ngModel puiInput ngShow ngHide puiRadiobutton name value'.split(' ')
-                    , attrsToRemove = 'id ngModel puiInput'.split(' ');
+                var id = attrs.id,
+                    label = '',
+                    contents = '<input type="radio" pui-input ',
+                    handledAttributes = 'id ngModel puiInput ngShow ngHide puiRadiobutton name value'.split(' '),
+                    attrsToRemove = 'id ngModel puiInput'.split(' ');
 
                 try {
                     $parse(attrs.puiRadiobutton); // see if it is a valid AngularExpression
@@ -4545,16 +4579,20 @@ angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse
 
                 $compile(element.contents())(scope);
 
-            }
+            };
         }
-    }
-}]);;"use strict";
-/*globals $ */
+    };
+}]);
+
+}());
+
+;/*globals $ */
 
 /**
  * PrimeUI checkbox widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puicheckbox", {
 
@@ -4701,13 +4739,13 @@ $(function() {
         }
     });
 
-});;"use strict";
-/*globals $ */
+});;/*globals $ */
 
 /**
  * PrimeUI inputtext widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiinputtext", {
 
@@ -4786,13 +4824,14 @@ $(function() {
 
     });
 
-});;"use strict";
-/*globals $ */
+});;/*jshint laxcomma:true*/
+/*globals $ document PUI window _self*/
 
 /**
  * PrimeUI inputtextarea widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiinputtextarea", {
 
@@ -4911,7 +4950,7 @@ $(function() {
                                 $this._clearTimeout($this.timeout);
                             }
 
-                            $this.timeout = setTimeout(function() {
+                            $this.timeout = window.setTimeout(function() {
                                 $this.search(query);
                             }, $this.options.queryDelay);
 
@@ -4928,7 +4967,7 @@ $(function() {
                         case keyCode.LEFT:
                             if(overlayVisible) {
                                 var highlightedItem = $this.items.filter('.ui-state-highlight'),
-                                    prev = highlightedItem.length == 0 ? $this.items.eq(0) : highlightedItem.prev();
+                                    prev = highlightedItem.length === 0 ? $this.items.eq(0) : highlightedItem.prev();
 
                                 if(prev.length == 1) {
                                     highlightedItem.removeClass('ui-state-highlight');
@@ -4950,7 +4989,7 @@ $(function() {
                         case keyCode.RIGHT:
                             if(overlayVisible) {
                                 var highlightedItem = $this.items.filter('.ui-state-highlight'),
-                                    next = highlightedItem.length == 0 ? _self.items.eq(0) : highlightedItem.next();
+                                    next = highlightedItem.length === 0 ? _self.items.eq(0) : highlightedItem.next();
 
                                 if(next.length == 1) {
                                     highlightedItem.removeClass('ui-state-highlight');
@@ -5060,7 +5099,7 @@ $(function() {
 
         _clearTimeout: function() {
             if(this.timeout) {
-                clearTimeout(this.timeout);
+                window.clearTimeout(this.timeout);
             }
 
             this.timeout = null;
@@ -5148,13 +5187,13 @@ $(function() {
         }
     });
 
-});;"use strict";
-/*globals $ */
+});;/*globals $ window PUI*/
 
 /**
  * PrimeUI password widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puipassword", {
 
@@ -5207,7 +5246,7 @@ $(function() {
                         label = null,
                         meterPos = null;
 
-                    if(value.length == 0) {
+                    if(value.length === 0) {
                         label = $this.options.promptLabel;
                         meterPos = '0px 0px';
                     }
@@ -5307,13 +5346,13 @@ $(function() {
         }
     });
 
-});;"use strict";
-/*globals $ */
+});;/*globals $ */
 
 /**
  * PrimeUI radiobutton widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     var checkedRadios = {};
 
@@ -5353,7 +5392,7 @@ $(function() {
                 if(!$this.isChecked()) {// Changed for angularPrime (changed visibility)
                         $this.element.trigger('click');
 
-                        if($.browser.msie && parseInt($.browser.version) < 9) {
+                        if($.browser.msie && parseInt($.browser.version, 10) < 9) {
                             $this.element.trigger('change');
                         }
                     }
@@ -5423,26 +5462,25 @@ $(function() {
 
     });
 
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
-angular.module('angular.prime').directive('puiLightbox', ['$compile',
-            function ($compile) {
-
-                return {
+angular.module('angular.prime').directive('puiLightbox', ['$compile', function ($compile) {
+    return {
         restrict: 'A',
         priority: 5,
         compile: function (element, attrs) {
 
             return function postLink (scope, element, attrs) {
-                var options = scope.$eval(attrs.puiLightbox) || {};
+                var options = scope.$eval(attrs.puiLightbox) || {},
+                    dynamicList = angular.isArray(options) || angular.isArray(options.items),
+                    items = [],
+                    initialCall = true;
+
                 // TODO check if iframeWidth or iframeWidth the directive is placed on a <a>-tag
                 options.iframe = 'A' === element[0].nodeName;
-
-                var dynamicList = angular.isArray(options) || angular.isArray(options.items);
-                var items = [];
-                var initialCall = true;
 
                 function renderLightbox() {
                     var htmlContent = '';
@@ -5457,9 +5495,9 @@ angular.module('angular.prime').directive('puiLightbox', ['$compile',
                             element.puilightbox('destroy', {});
                         }
                         element.puilightbox({
-                            iframe: options.iframe
-                            , iframeWidth: options.iframeWidth
-                            , iframeHeight: options.iframeHeight
+                            iframe: options.iframe,
+                            iframeWidth: options.iframeWidth,
+                            iframeHeight: options.iframeHeight
                         });
                         initialCall = false;
 
@@ -5483,9 +5521,9 @@ angular.module('angular.prime').directive('puiLightbox', ['$compile',
                 } else {
                     $(function () {
                         element.puilightbox({
-                            iframe: options.iframe
-                            , iframeWidth: options.iframeWidth
-                            , iframeHeight: options.iframeHeight
+                            iframe: options.iframe,
+                            iframeWidth: options.iframeWidth,
+                            iframeHeight: options.iframeHeight
                         });
                     });
                 }
@@ -5501,7 +5539,7 @@ angular.module('angular.prime').directive('puiLightbox', ['$compile',
         compile: function (element, attrs) {
             var lightboxItemType = function() {
                 var items = element.parent().children('[pui-lightbox-item]');
-                if (items.length == 0) {
+                if (items.length === 0) {
                     // This is the case for the ng-repeat situation
                 } else {
                     if (items.length > 1) {
@@ -5551,13 +5589,17 @@ angular.module('angular.prime').directive('puiLightbox', ['$compile',
             }
         }
     };
-});;"use strict";
-/*globals $ */
+});
+
+}());
+;/*jshint laxcomma:true*/
+/*globals $ document window PUI*/
 
 /**
  * PrimeUI Lightbox Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puilightbox", {
 
@@ -5687,17 +5729,18 @@ $(function() {
                 $(this).toggleClass('ui-state-hover');
             })
                 .click(function(e) {
-                    var nav = $(this);
+                    var nav = $(this),
+                        index; // Added for AngularPrime
 
                     $this._hideNavigators();
 
                     if(nav.hasClass('pui-lightbox-nav-left')) {
-                        var index = $this.current == 0 ? $this.links.length - 1 : $this.current - 1;
+                        index = $this.current === 0 ? $this.links.length - 1 : $this.current - 1; // Changed for AngularPrime
 
                         $this.links.eq(index).trigger('click');
                     }
                     else {
-                        var index = $this.current == $this.links.length - 1 ? 0 : $this.current + 1;
+                        index = $this.current == $this.links.length - 1 ? 0 : $this.current + 1; // Changed for AngularPrime
 
                         $this.links.eq(index).trigger('click');
                     }
@@ -5726,7 +5769,7 @@ $(function() {
                     $this.caption.slideUp();
                 }
 
-                setTimeout(function() {
+                window.setTimeout(function() {
                     $this.imageDisplay.attr('src', link.attr('href'));
                     $this.current = link.index();
 
@@ -5761,7 +5804,7 @@ $(function() {
             image.css({
                 'width':imageWidth + 'px'
                 ,'height':imageHeight + 'px'
-            })
+            });
         },
 
         _setupInline: function() {
@@ -5786,8 +5829,8 @@ $(function() {
         _setupIframe: function() {
             var $this = this;
             this.links = this.element;
-            this.iframe = $('<iframe frameborder="0" style="width:' + this.options.iframeWidth + 'px;height:'
-                + this.options.iframeHeight + 'px;border:0 none; display: block;"></iframe>').appendTo(this.content);
+            this.iframe = $('<iframe frameborder="0" style="width:' + this.options.iframeWidth + 'px;height:' +
+                this.options.iframeHeight + 'px;border:0 none; display: block;"></iframe>').appendTo(this.content);
 
             if(this.options.iframeTitle) {
                 this.iframe.attr('title', this.options.iframeTitle);
@@ -5896,9 +5939,10 @@ $(function() {
             this.show();
         }
     });
-});;"use strict";
+});;/*globals angular $ console*/
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiMenu', function () {
     return {
@@ -5910,7 +5954,7 @@ angular.module('angular.prime').directive('puiMenu', function () {
                 options.popup = false;
                 if (options.trigger) {
                     var triggerElement = $(options.trigger);
-                    if (triggerElement != undefined) {
+                    if (triggerElement !== undefined) {
                         options.popup = true;
                         options.trigger = triggerElement;
                     } else {
@@ -5922,8 +5966,8 @@ angular.module('angular.prime').directive('puiMenu', function () {
                     throw new Error("ContextMenu can't be combined with the SlideMenu");
                 }
                 $(function() {
-                    var hasSubMenu = element.find("ul").length > 0;
-                    var hasH3Element = element.find("h3").length > 0;
+                    var hasSubMenu = element.find("ul").length > 0,
+                        hasH3Element = element.find("h3").length > 0;
 
                     if (hasSubMenu || ! hasH3Element) {
                         if (hasH3Element) {
@@ -5931,44 +5975,47 @@ angular.module('angular.prime').directive('puiMenu', function () {
                         }
                         if (options.isContextMenu) {
                             element.puicontextmenu({
-                                popup: options.popup
-                                , trigger: options.trigger
+                                popup: options.popup,
+                                trigger: options.trigger
                             });
 
                         } else {
                             if (options.isSlideMenu) {
                                 element.puislidemenu({
-                                    popup: options.popup
-                                    , trigger: options.trigger
+                                    popup: options.popup,
+                                    trigger: options.trigger
                                 });
 
                             } else {
                                 element.puitieredmenu({
-                                    popup: options.popup, trigger: options.trigger, autoDisplay: options.autoDisplay
+                                    popup: options.popup,
+                                    trigger: options.trigger,
+                                    autoDisplay: options.autoDisplay
                                 });
 
                             }
                         }
                     } else {
                         element.puimenu({
-                            popup: options.popup
-                            , trigger: options.trigger
+                            popup: options.popup,
+                            trigger: options.trigger
                         });
 
                     }
                 });
-            }
+            };
         }
-    }
-})
-;"use strict";
+    };
+});
 
+}());
+;/*jshint laxcomma:true*/
 /*globals $ PUI */
 /**
  * PrimeUI Menu widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puimenu", $.primeui.puibasemenu, {
 
         options: {
@@ -6108,7 +6155,7 @@ $(function() {
 
             if(this.options.autoDisplay === false) {
                 this.rootLinks = this.element.find('> .pui-menuitem > .pui-menuitem-link');
-                this.rootLinks.data('primeui-tieredmenu-rootlink', this.options.id).find('*').data('primeui-tieredmenu-rootlink', this.options.id)
+                this.rootLinks.data('primeui-tieredmenu-rootlink', this.options.id).find('*').data('primeui-tieredmenu-rootlink', this.options.id);
 
                 this.rootLinks.on('click.pui-menu', function(e) {
                     var link = $(this),
@@ -6357,8 +6404,8 @@ $(function() {
             this.element.addClass('pui-menu-list ui-helper-reset').
                 wrap('<div class="pui-menu pui-slidemenu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix"/>').
                 wrap('<div class="pui-slidemenu-wrapper" />').
-                after('<div class="pui-slidemenu-backward ui-widget-header ui-corner-all ui-helper-clearfix">\n\
-                    <span class="ui-icon ui-icon-triangle-1-w"></span>Back</div>').
+                after('<div class="pui-slidemenu-backward ui-widget-header ui-corner-all ui-helper-clearfix">' + // Changed for AngularPrime
+                    '<span class="ui-icon ui-icon-triangle-1-w"></span>Back</div>').
                 wrap('<div class="pui-slidemenu-content" />');
 
             this.element.parent().uniqueId();
@@ -6400,7 +6447,7 @@ $(function() {
                         submenu = link.next();
 
                     if(submenu.length == 1) {
-                        $this._forward(submenu)
+                        $this._forward(submenu);
                     }
                 });
 
@@ -6441,7 +6488,7 @@ $(function() {
             }, 500, 'easeInOutCirc', function() {
                 last.hide();
 
-                if(depth == 0) {
+                if(depth === 0) {
                     $this.backward.fadeOut('fast');
                 }
             });
@@ -6481,9 +6528,10 @@ $(function() {
     });
 
 });
-;"use strict";
+;/*globals angular $ console*/
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiMenubar', function () {
     return {
@@ -6493,24 +6541,25 @@ angular.module('angular.prime').directive('puiMenubar', function () {
 
                 var options = scope.$eval(attrs.puiMenu) || {};
                 if (element.find("h3").length > 0) {
-                    console.log("Warning: ")
+                    console.log("Warning: "); // TODO
                 }
                 element.puimenubar({
                     autoDisplay: options.autoDisplay
                 });
 
-            }
+            };
         }
-    }
-})
-;"use strict";
+    };
+});
 
-/*globals $ PUI */
+}());
+;/*globals $ PUI window*/
 /**
  * PrimeUI Menubar Widget
  */
 
 $(function() {
+    "use strict";  // Added for AngularPrime
 
     $.widget("primeui.puimenubar", $.primeui.puitieredmenu, {
 
@@ -6539,7 +6588,7 @@ $(function() {
             else {
                 submenuCSS.left = 0;
                 submenuCSS.top = menuitem.outerHeight();
-                menuitem.offset().top - win.scrollTop();
+                menuitem.offset().top - win.scrollTop(); // AngularPrime Question?
                 submenuOffsetTop = menuitem.offset().top + submenuCSS.top - win.scrollTop();
             }
 
@@ -6556,9 +6605,10 @@ $(function() {
 
 });
 
-;"use strict";
+;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiNotify', function () {
         return {
@@ -6566,7 +6616,9 @@ angular.module('angular.prime').directive('puiNotify', function () {
             compile: function (element, attrs) {
                 return function postLink (scope, element, attrs) {
                     // TODO check if no inline object created.
-                    var options = scope.$eval(attrs.puiNotify) || {};
+                    var options = scope.$eval(attrs.puiNotify) || {},
+                        userTrigger = true; // because we support user closable and programmatic.
+
                     if (!(typeof options.visible == 'boolean')) {
                         throw new Error('The options object ' + attrs.puiNotify + ' needs a boolean property visible');
                     }
@@ -6582,7 +6634,7 @@ angular.module('angular.prime').directive('puiNotify', function () {
                             easing: options.easing
                         });
                     });
-                    var userTrigger = true; // because we support user closable and programmatic.
+
                     scope.$watch(attrs.puiNotify + '.visible', function (value) {
                         if (value === true) {
                             $(function () {
@@ -6607,20 +6659,22 @@ angular.module('angular.prime').directive('puiNotify', function () {
                             userTrigger = true;
                         });
                     });
-                }
+                };
             }
-        }
+        };
 
     }
 
 );
-;"use strict";
-/*globals $ */
+
+}());
+;/*globals $ document PUI*/
 
 /**
  * PrimeFaces Notify Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puinotify", {
 
@@ -6695,23 +6749,23 @@ $(function() {
             this.content.html(content);
         }
     });
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiPanel', ['$interpolate', function ($interpolate) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
             return function postLink (scope, element, attrs) {
-                var options = scope.$eval(attrs.puiPanel) || {};
-
-                var withinPuiAccordion = false;
-                var withinPuiTabview = false;
+                var options = scope.$eval(attrs.puiPanel) || {},
+                    withinPuiAccordion = false,
+                    withinPuiTabview = false;
 
                 $(function () {
-                    withinPuiAccordion = element.parent().attr('pui-accordion') != undefined;
-                    withinPuiTabview = element.parent().attr('pui-tabview') != undefined;
+                    withinPuiAccordion = element.parent().attr('pui-accordion') !== undefined;
+                    withinPuiTabview = element.parent().attr('pui-tabview') !== undefined;
                 });
 
                 if (withinPuiAccordion) {
@@ -6731,7 +6785,7 @@ angular.module('angular.prime').directive('puiPanel', ['$interpolate', function 
                             if (angular.isFunction(part)) {
                                 titleWatches.push(part.exp);
                             }
-                        }, titleWatches)
+                        }, titleWatches);
                     }
 
                     $(function () {
@@ -6762,17 +6816,21 @@ angular.module('angular.prime').directive('puiPanel', ['$interpolate', function 
                     });
                 }
 
-            }
+            };
 
         }
-    }
-}]);;"use strict";
+    };
+}]);
+
+}());
+;/*jshint laxcomma:true*/
 /*globals $ */
 
 /**
  * PrimeUI Panel Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puipanel", {
 
@@ -6791,8 +6849,8 @@ $(function() {
 
             var title = this.element.attr('title');
             if(title) {
-                this.element.prepend('<div class="pui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all"><span class="ui-panel-title">'
-                        + title + "</span></div>")
+                this.element.prepend('<div class="pui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all"><span class="ui-panel-title">' +
+                        title + "</span></div>")
                     .removeAttr('title');
             }
 
@@ -6943,9 +7001,10 @@ $(function() {
             this.element.find('.ui-panel-title').html(title);
         }
     });
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiProgressbar', function () {
     return {
@@ -6963,17 +7022,17 @@ angular.module('angular.prime').directive('puiProgressbar', function () {
 
                 } else {
                     element.puiprogressbar({
-                        value: options.value
-                        ,labelTemplate: options.labelTemplate
-                        ,showLabel: options.showLabel
-                        ,easing: options.easing
-                        ,effectSpeed: options.effectSpeed
+                        value: options.value,
+                        labelTemplate: options.labelTemplate,
+                        showLabel: options.showLabel,
+                        easing: options.easing,
+                        effectSpeed: options.effectSpeed
                     });
 
                 }
 
                 function setNewValue(value) {
-                    if (value != null) {
+                    if (value !== null) {
                         element.puiprogressbar('setValue', value);
                     }
                 }
@@ -6995,13 +7054,15 @@ angular.module('angular.prime').directive('puiProgressbar', function () {
     };
 
 });
-;"use strict";
-/*globals $ */
+
+}());
+;/*globals $ */
 
 /**
  * PrimeUI progressbar widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiprogressbar", {
 
@@ -7089,9 +7150,10 @@ $(function() {
 
     });
 
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiRating', function () {
     return {
@@ -7109,8 +7171,8 @@ angular.module('angular.prime').directive('puiRating', function () {
                 options.stars = options.stars || 5;
 
                 element.puirating({
-                    cancel: options.cancel
-                    , stars: options.stars
+                    cancel: options.cancel,
+                    stars: options.stars
                 });
 
                 element.hide();
@@ -7118,7 +7180,7 @@ angular.module('angular.prime').directive('puiRating', function () {
 
                 // Specify how UI should be updated
                 ngModel.$render = function () {
-                    element.puirating('setValue', ngModel.$viewValue)
+                    element.puirating('setValue', ngModel.$viewValue);
                 };
 
 
@@ -7133,7 +7195,7 @@ angular.module('angular.prime').directive('puiRating', function () {
 
                 // Write data to the model
                 function read() {
-                    if (ngModel.$viewValue !== parseInt(element.val()))   {
+                    if (ngModel.$viewValue !== parseInt(element.val(), 10))   {
                         // Only set Angular model value when effective changed. Otherwise ng-change can be triggered to many times.
                         ngModel.$setViewValue(element.val());
                     }
@@ -7162,13 +7224,15 @@ angular.module('angular.prime').directive('puiRating', function () {
     };
 
 });
-;"use strict";
-/*globals $ */
+
+}());
+;/*globals $ */
 
 /**
  * PrimeUI rating widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puirating", {
 
@@ -7185,7 +7249,7 @@ $(function() {
             this.container.addClass('pui-rating');
 
             var inputVal = input.val(),
-                value = inputVal == '' ? null : parseInt(inputVal);
+                value = inputVal === '' ? null : parseInt(inputVal, 10);
 
             if(this.options.cancel) {
                 this.container.append('<div class="pui-rating-cancel"><a></a></div>');
@@ -7235,7 +7299,7 @@ $(function() {
         getValue: function() {
             var inputVal = this.element.val();
 
-            return inputVal == '' ? null : parseInt(inputVal);
+            return inputVal === '' ? null : parseInt(inputVal, 10);
         },
 
         setValue: function(value) {
@@ -7271,9 +7335,9 @@ $(function() {
         }
     });
 
-});;"use strict";
-
-/*globals angular $ */
+});;/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiSpinner', function () {
     return {
@@ -7285,8 +7349,16 @@ angular.module('angular.prime').directive('puiSpinner', function () {
             } // do nothing if no ng-model
             $(function () {
 
-                var options = scope.$eval(attrs.puiSpinner) || {};
+                var options = scope.$eval(attrs.puiSpinner) || {},
+                    helper = {
+                        read: function () {
+                            $(function () {
+                                scope.safeApply(function () {
+                                    ngModel.$setViewValue(element.val());
+                                });
 
+                            });
+                        }};
                 element.puispinner({
                     step: options.step,
                     prefix: options.prefix,
@@ -7294,16 +7366,6 @@ angular.module('angular.prime').directive('puiSpinner', function () {
                     min: options.min,
                     max: options.max
                 });
-
-                var helper = {
-                    read: function () {
-                        $(function () {
-                            scope.safeApply(function () {
-                                ngModel.$setViewValue(element.val());
-                            });
-
-                        })
-                    }};
 
                 // Listen for select events to enable binding
                 element.bind('puispinnerchange', function () {
@@ -7327,13 +7389,16 @@ angular.module('angular.prime').directive('puiSpinner', function () {
     };
 
 });
-;"use strict";
-/*globals $ */
+
+}());
+;/*jshint laxcomma:true*/
+/*globals $ window*/
 
 /**
  * PrimeUI spinner widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puispinner", {
 
@@ -7352,7 +7417,7 @@ $(function() {
             //this.downButton = this.wrapper.children('a.pui-spinner-down');
             this.options.step = this.options.step||1;
 
-            if(parseInt(this.options.step) === 0) {
+            if(parseInt(this.options.step, 10) === 0) {
                 this.options.precision = this.options.step.toString().split(/[,]|[.]/)[1].length;
             }
 
@@ -7373,10 +7438,10 @@ $(function() {
                 ,'aria-valuenow': this.value
             });
 
-            if(this.options.min != undefined)
+            if(this.options.min !== undefined)
                 input.attr('aria-valuemin', this.options.min);
 
-            if(this.options.max != undefined)
+            if(this.options.max !== undefined)
                 input.attr('aria-valuemax', this.options.max);
 
             if(input.prop('disabled'))
@@ -7398,10 +7463,10 @@ $(function() {
                     $(this).removeClass('ui-state-hover ui-state-active');
 
                     if($this.timer) {
-                        clearInterval($this.timer);
+                        window.clearInterval($this.timer);
                     }
                 }).mouseup(function() {
-                    clearInterval($this.timer);
+                    window.clearInterval($this.timer);
                     $(this).removeClass('ui-state-active').addClass('ui-state-hover');
                 }).mousedown(function(e) {
                     var element = $(this),
@@ -7464,8 +7529,8 @@ $(function() {
             var $this = this,
                 i = interval || 500;
 
-            clearTimeout(this.timer);
-            this.timer = setTimeout(function() {
+            window.clearTimeout(this.timer);
+            this.timer = window.setTimeout(function() {
                 $this._repeat(40, dir);
             }, i);
 
@@ -7484,13 +7549,13 @@ $(function() {
             if(this.options.precision)
                 newValue = parseFloat(this._toFixed(currentValue + step, this.options.precision));
             else
-                newValue = parseInt(currentValue + step);
+                newValue = parseInt(currentValue + step, 10);
 
-            if(this.options.min != undefined && newValue < this.options.min) {
+            if(this.options.min !== undefined && newValue < this.options.min) {
                 newValue = this.options.min;
             }
 
-            if(this.options.max != undefined && newValue > this.options.max) {
+            if(this.options.max !== undefined && newValue > this.options.max) {
                 newValue = this.options.max;
             }
 
@@ -7503,8 +7568,8 @@ $(function() {
         _updateValue: function() {
             var value = this.element.val();
 
-            if(value == '') {
-                if(this.options.min != undefined)
+            if(value === '') {
+                if(this.options.min !== undefined)
                     this.value = this.options.min;
                 else
                     this.value = 0;
@@ -7513,7 +7578,7 @@ $(function() {
                 if(this.options.step)
                     value = parseFloat(value);
                 else
-                    value = parseInt(value);
+                    value = parseInt(value, 10);
 
                 if(!isNaN(value)) {
                     this.value = value;
@@ -7524,8 +7589,8 @@ $(function() {
         _initValue: function() {
             var value = this.element.val();
 
-            if(value == '') {
-                if(this.options.min != undefined)
+            if(value === '') {
+                if(this.options.min !== undefined)
                     this.value = this.options.min;
                 else
                     this.value = 0;
@@ -7540,7 +7605,7 @@ $(function() {
                 if(this.options.step)
                     this.value = parseFloat(value);
                 else
-                    this.value = parseInt(value);
+                    this.value = parseInt(value, 10);
             }
         },
 
@@ -7579,9 +7644,9 @@ $(function() {
             this._unbindEvents();
         }
     });
-});;"use strict";
-
-/*globals angular $ */
+});;/*globals angular $ console*/
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCache', '$compile',
                                                     function ($http, $templateCache, $compile) {
@@ -7706,19 +7771,20 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
                     });
                 }
 
-            }
+            };
         }
-    }
+    };
 }]);
 
-;"use strict";
+}());
+;/*jshint laxcomma:true*/
 /*globals $ */
 
 /**
  * PrimeUI tabview widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puitabview", {
 
         options: {
@@ -7854,7 +7920,7 @@ $(function() {
         },
 
         _isLoaded: function(panel) {
-            return panel.data('loaded') == true;
+            return panel.data('loaded') === true;
         },
 
         disable: function(index) {
@@ -7866,9 +7932,10 @@ $(function() {
         }
 
     });
-});;"use strict";
+});;/*globals angular $ */
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiTooltip', ['$interpolate', function ($interpolate) {
     return {
@@ -7892,27 +7959,27 @@ angular.module('angular.prime').directive('puiTooltip', ['$interpolate', functio
 
                 var tooltipWatches = [];
 
-                if (options.content && options.content != '') {
+                if (options.content && options.content !== '') {
                     var parsedExpression = $interpolate(options.content);
                     options.content = scope.$eval(parsedExpression);
                     angular.forEach(parsedExpression.parts, function(part) {
                         if (angular.isFunction(part)) {
                             tooltipWatches.push(part.exp);
                         }
-                    }, tooltipWatches)
+                    }, tooltipWatches);
 
                     $(function () {
                         element.puitooltip({
-                            content: options.content
-                            ,showEvent: options.showEvent
-                            ,hideEvent: options.hideEvent
-                            ,showEffect: options.showEffect
-                            ,hideEffect: options.hideEffect
-                            ,showEffectSpeed: options.showEffectSpeed
-                            ,hideEffectSpeed: options.hideEffectSpeed
-                            ,my: options.my
-                            ,at: options.at
-                            ,showDelay: options.showDelay
+                            content: options.content,
+                            showEvent: options.showEvent,
+                            hideEvent: options.hideEvent,
+                            showEffect: options.showEffect,
+                            hideEffect: options.hideEffect,
+                            showEffectSpeed: options.showEffectSpeed,
+                            hideEffectSpeed: options.hideEffectSpeed,
+                            my: options.my,
+                            at: options.at,
+                            showDelay: options.showDelay
                         });
                     });
 
@@ -7925,14 +7992,20 @@ angular.module('angular.prime').directive('puiTooltip', ['$interpolate', functio
                     });
 
                 }
-            }
+            };
 
         }
-    }
-}]);;/**
+    };
+}]);
+
+}());
+;/*globals $ window document PUI*/
+
+/**
  * PrimeFaces Tooltip Widget
  */
 $(function() {
+    "use strict"; // Added for AnfularPrime
 
     $.widget("primeui.puitooltip", {
 
@@ -8038,14 +8111,14 @@ $(function() {
         show: function() {
             var $this = this;
 
-            this.timeout = setTimeout(function() {
+            this.timeout = window.setTimeout(function() {
                 $this._align();
                 $this.container.show($this.options.showEffect, {}, $this.options.showEffectSpeed);
             }, this.options.showDelay);
         },
 
         hide: function() {
-            clearTimeout(this.timeout);
+            window.learTimeout(this.timeout);
 
             this.container.hide(this.options.hideEffect, {}, this.options.hideEffectSpeed, function() {
                 $(this).css('z-index', '');

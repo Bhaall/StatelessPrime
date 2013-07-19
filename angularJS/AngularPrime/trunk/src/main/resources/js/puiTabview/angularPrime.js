@@ -1,6 +1,6 @@
-"use strict";
-
-/*globals angular $ */
+/*globals angular $ console*/
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCache', '$compile',
                                                     function ($http, $templateCache, $compile) {
@@ -125,8 +125,9 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
                     });
                 }
 
-            }
+            };
         }
-    }
+    };
 }]);
 
+}());

@@ -1,11 +1,10 @@
-"use strict";
-
-/*globals $ */
+/*globals $ PUI document*/
 
 /**
  * PrimeUI Datatable Widget
  */
 $(function() {
+    "use strict"; // added for AngularPrime
 
     $.widget("primeui.puidatatable", {
 
@@ -68,7 +67,7 @@ $(function() {
             if(this.options.paginator) {
                 this.options.paginator.paginate = function(state) {
                     $this.paginate();
-                }
+                };
 
                 this.options.paginator.totalRecords = this.options.paginator.totalRecords||this.data.length;
                 this.paginator = $('<div></div>').insertAfter(this.tableWrapper).puipaginator(this.options.paginator);

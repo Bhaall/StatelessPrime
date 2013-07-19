@@ -1,11 +1,10 @@
-"use strict";
-
 /*globals $ PUI window*/
 /**
  * PrimeUI Menubar Widget
  */
 
 $(function() {
+    "use strict";  // Added for AngularPrime
 
     $.widget("primeui.puimenubar", $.primeui.puitieredmenu, {
 
@@ -34,7 +33,7 @@ $(function() {
             else {
                 submenuCSS.left = 0;
                 submenuCSS.top = menuitem.outerHeight();
-                menuitem.offset().top - win.scrollTop();
+                menuitem.offset().top - win.scrollTop(); // AngularPrime Question?
                 submenuOffsetTop = menuitem.offset().top + submenuCSS.top - win.scrollTop();
             }
 

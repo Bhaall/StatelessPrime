@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiFieldset', function () {
     return {
@@ -13,9 +14,9 @@ angular.module('angular.prime').directive('puiFieldset', function () {
                     var toggleable = options.collapsed !== undefined;
                     options.toggleDuration = options.toggleDuration || 'normal';
                     element.puifieldset({
-                        toggleable: toggleable
-                        ,toggleDuration: options.toggleDuration
-                        ,collapsed: options.collapsed
+                        toggleable: toggleable,
+                        toggleDuration: options.toggleDuration,
+                        collapsed: options.collapsed
                     });
 
                     if (toggleable) {
@@ -39,17 +40,19 @@ angular.module('angular.prime').directive('puiFieldset', function () {
                     }
 
                 });
-            }
+            };
         }
-    }
-});;"use strict";
-/*globals $ */
+    };
+});
+
+}());
+;/*globals $ */
 
 /**
  * PrimeFaces Fieldset Widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puifieldset", {
 
         options: {
@@ -91,7 +94,7 @@ $(function() {
                 .on('mouseover.puifieldset', function() {$this.legend.addClass('ui-state-hover');})
                 .on('mouseout.puifieldset', function() {$this.legend.removeClass('ui-state-hover ui-state-active');})
                 .on('mousedown.puifieldset', function() {$this.legend.removeClass('ui-state-hover').addClass('ui-state-active');})
-                .on('mouseup.puifieldset', function() {$this.legend.removeClass('ui-state-active').addClass('ui-state-hover');})
+                .on('mouseup.puifieldset', function() {$this.legend.removeClass('ui-state-active').addClass('ui-state-hover');});
         },
 
         toggle: function(e) {

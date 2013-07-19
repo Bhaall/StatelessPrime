@@ -1,10 +1,11 @@
-"use strict";
-/*globals $ */
+/*globals $ window PUI document*/
+/*jshint laxcomma:true*/
 
 /**
  * PrimeUI autocomplete widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiautocomplete", {
 
@@ -151,20 +152,20 @@ $(function() {
             var $this = this;
 
             this.element.on('keyup.puiautocomplete', function(e) {
+                if(key == keyCode.UP ||
+                    key == keyCode.LEFT ||
+                    key == keyCode.DOWN ||
+                    key == keyCode.RIGHT ||
+                    key == keyCode.TAB ||
+                    key == keyCode.SHIFT ||
+                    key == keyCode.ENTER ||
+                    key == keyCode.NUMPAD_ENTER) {
+                    shouldSearch = false;
+                }
+
                 var keyCode = $.ui.keyCode,
                     key = e.which,
                     shouldSearch = true;
-
-                if(key == keyCode.UP
-                    || key == keyCode.LEFT
-                    || key == keyCode.DOWN
-                    || key == keyCode.RIGHT
-                    || key == keyCode.TAB
-                    || key == keyCode.SHIFT
-                    || key == keyCode.ENTER
-                    || key == keyCode.NUMPAD_ENTER) {
-                    shouldSearch = false;
-                }
 
                 if(shouldSearch) {
                     var value = $this.element.val();
@@ -175,10 +176,10 @@ $(function() {
 
                     if(value.length >= $this.options.minQueryLength) {
                         if($this.timeout) {
-                            clearTimeout($this.timeout);
+                            window.clearTimeout($this.timeout);
                         }
 
-                        $this.timeout = setTimeout(function() {
+                        $this.timeout = window.setTimeout(function() {
                                 $this.search(value);
                             },
                             $this.options.delay);

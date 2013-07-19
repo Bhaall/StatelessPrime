@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiFieldset', function () {
     return {
@@ -13,9 +14,9 @@ angular.module('angular.prime').directive('puiFieldset', function () {
                     var toggleable = options.collapsed !== undefined;
                     options.toggleDuration = options.toggleDuration || 'normal';
                     element.puifieldset({
-                        toggleable: toggleable
-                        ,toggleDuration: options.toggleDuration
-                        ,collapsed: options.collapsed
+                        toggleable: toggleable,
+                        toggleDuration: options.toggleDuration,
+                        collapsed: options.collapsed
                     });
 
                     if (toggleable) {
@@ -39,7 +40,9 @@ angular.module('angular.prime').directive('puiFieldset', function () {
                     }
 
                 });
-            }
+            };
         }
-    }
+    };
 });
+
+}());

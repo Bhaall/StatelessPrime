@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiDialog', function () {
         return {
@@ -65,10 +66,12 @@ angular.module('angular.prime').directive('puiDialog', function () {
                             scope[attrs.puiDialog].dlgVisible = false;
                         });
                     });
-                }
+                };
             }
-        }
+        };
 
     }
 
 );
+
+}());

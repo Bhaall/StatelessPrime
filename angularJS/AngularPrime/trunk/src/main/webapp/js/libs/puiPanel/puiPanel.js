@@ -1,20 +1,20 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiPanel', ['$interpolate', function ($interpolate) {
     return {
         restrict: 'A',
         compile: function (element, attrs) {
             return function postLink (scope, element, attrs) {
-                var options = scope.$eval(attrs.puiPanel) || {};
-
-                var withinPuiAccordion = false;
-                var withinPuiTabview = false;
+                var options = scope.$eval(attrs.puiPanel) || {},
+                    withinPuiAccordion = false,
+                    withinPuiTabview = false;
 
                 $(function () {
-                    withinPuiAccordion = element.parent().attr('pui-accordion') != undefined;
-                    withinPuiTabview = element.parent().attr('pui-tabview') != undefined;
+                    withinPuiAccordion = element.parent().attr('pui-accordion') !== undefined;
+                    withinPuiTabview = element.parent().attr('pui-tabview') !== undefined;
                 });
 
                 if (withinPuiAccordion) {
@@ -34,7 +34,7 @@ angular.module('angular.prime').directive('puiPanel', ['$interpolate', function 
                             if (angular.isFunction(part)) {
                                 titleWatches.push(part.exp);
                             }
-                        }, titleWatches)
+                        }, titleWatches);
                     }
 
                     $(function () {
@@ -65,17 +65,21 @@ angular.module('angular.prime').directive('puiPanel', ['$interpolate', function 
                     });
                 }
 
-            }
+            };
 
         }
-    }
-}]);;"use strict";
+    };
+}]);
+
+}());
+;/*jshint laxcomma:true*/
 /*globals $ */
 
 /**
  * PrimeUI Panel Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puipanel", {
 
@@ -94,8 +98,8 @@ $(function() {
 
             var title = this.element.attr('title');
             if(title) {
-                this.element.prepend('<div class="pui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all"><span class="ui-panel-title">'
-                        + title + "</span></div>")
+                this.element.prepend('<div class="pui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all"><span class="ui-panel-title">' +
+                        title + "</span></div>")
                     .removeAttr('title');
             }
 

@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiBreadcrumb', ['$compile',
                                                     function ($compile) {
@@ -9,29 +10,31 @@ angular.module('angular.prime').directive('puiBreadcrumb', ['$compile',
         compile: function (element, attrs) {
             return function postLink(scope, element, attrs) {
 
-                var options = scope.$eval(attrs.puiBreadcrumb) || {};
-                var dynamicBreadcrumb = angular.isArray(options) || angular.isArray(options.items);
-                var breadcrumbItems = [];
-                var initialCall = true;
+                var options = scope.$eval(attrs.puiBreadcrumb) || {} ,
+                    dynamicBreadcrumb = angular.isArray(options) || angular.isArray(options.items) ,
+                    breadcrumbItems = [] ,
+                    initialCall = true;
 
                 function renderBreadcrumb() {
-                    var htmlContents = '';
-                    var globalActionText = null;
+                    var htmlContents = '' ,
+                        globalActionText = null;
                     angular.forEach(breadcrumbItems, function (breadcrumbItem) {
-                        var actionText = breadcrumbItem.onclick;
-                        if (actionText === undefined && globalActionText != null) {
+                        var actionText = breadcrumbItem.onclick ,
+                            hasPlaceholder = actionText !== undefined && actionText.indexOf('{id}') > -1;
+
+                        if (actionText === undefined && globalActionText !== null) {
                             actionText = globalActionText;
                         }
                         if (breadcrumbItem.globalAction)  {
                             globalActionText = actionText;
                         }
-                        var hasPlaceholder = actionText != undefined && actionText.indexOf('{id}') > -1;
+
                         if (hasPlaceholder) {
                             actionText = actionText.replace('{id}', breadcrumbItem.id);
                         }
 
                         htmlContents = htmlContents + '<li id="' + breadcrumbItem.id + '"><a ';
-                        if (actionText != undefined) {
+                        if (actionText !== undefined) {
                             htmlContents = htmlContents + 'ng-click="' + actionText +'"';
                         }
                         htmlContents = htmlContents + '>' + breadcrumbItem.label + '</a></li>';
@@ -73,18 +76,19 @@ angular.module('angular.prime').directive('puiBreadcrumb', ['$compile',
 
                 }
 
-            }
+            };
         }
-    }
-}])
-;"use strict";
+    };
+}]);
 
-/*globals $ */
+}());
+;/*globals $ */
 
 /**
  * PrimeUI BreadCrumb Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puibreadcrumb", {
 

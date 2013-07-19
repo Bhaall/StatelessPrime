@@ -1,10 +1,11 @@
-"use strict";
+/*jshint laxcomma:true*/
 /*globals $ */
 
 /**
  * PrimeUI Panel Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puipanel", {
 
@@ -23,8 +24,8 @@ $(function() {
 
             var title = this.element.attr('title');
             if(title) {
-                this.element.prepend('<div class="pui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all"><span class="ui-panel-title">'
-                        + title + "</span></div>")
+                this.element.prepend('<div class="pui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all"><span class="ui-panel-title">' +
+                        title + "</span></div>")
                     .removeAttr('title');
             }
 

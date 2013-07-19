@@ -1,10 +1,10 @@
-"use strict";
 /*globals $ */
 
 /**
  * PrimeUI radiobutton widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     var checkedRadios = {};
 
@@ -44,7 +44,7 @@ $(function() {
                 if(!$this.isChecked()) {// Changed for angularPrime (changed visibility)
                         $this.element.trigger('click');
 
-                        if($.browser.msie && parseInt($.browser.version) < 9) {
+                        if($.browser.msie && parseInt($.browser.version, 10) < 9) {
                             $this.element.trigger('change');
                         }
                     }

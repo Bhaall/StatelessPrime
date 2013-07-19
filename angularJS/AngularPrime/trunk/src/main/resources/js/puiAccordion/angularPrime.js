@@ -1,8 +1,9 @@
-"use strict";
-
 /*globals angular $ console*/
 
-angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCache', '$compile',
+(function () {
+    "use strict";
+
+    angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCache', '$compile',
                                                   function ($http, $templateCache, $compile) {
     return {
         restrict: 'A',
@@ -10,12 +11,12 @@ angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCa
 
             return function postLink (scope, element, attrs) {
 
-                var options = scope.$eval(attrs.puiAccordion) || {};
-                var dynamicPanels = angular.isArray(options) || angular.isArray(options.urls);
-                var content = [];
-                var urls = [];
-                var remaining;
-                var initialCall = true;
+                var options = scope.$eval(attrs.puiAccordion) || {} ,
+                    dynamicPanels = angular.isArray(options) || angular.isArray(options.urls) ,
+                    content = [] ,
+                    urls = [] ,
+                    remaining ,
+                    initialCall = true;
 
                 function renderAccordion(panels) {
                     var htmlContent = '';
@@ -75,6 +76,8 @@ angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCa
 
 
                 } else {
+                    var scopedOptions = attrs.puiAccordion && attrs.puiAccordion.trim().charAt(0) !== '{';
+
                     options.activeIndex = options.activeIndex || 0;
                     $(function () {
                         element.puiaccordion({
@@ -83,7 +86,6 @@ angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCa
 
                     });
 
-                    var scopedOptions = attrs.puiAccordion && attrs.puiAccordion.trim().charAt(0) !== '{';
                     if (scopedOptions || options.callback) {
                         // Listen for change events to enable binding
                         element.bind('puiaccordionchange', function (eventData, idx) {
@@ -118,7 +120,8 @@ angular.module('angular.prime').directive('puiAccordion', ['$http', '$templateCa
                     var idx = (index !== undefined) ? index : element.puiaccordion('getActiveIndex');
                     scope[attrs.puiAccordion].activeIndex = idx;
                 }
-            }
-        }}
+            };
+        }};
 }]);
 
+}());

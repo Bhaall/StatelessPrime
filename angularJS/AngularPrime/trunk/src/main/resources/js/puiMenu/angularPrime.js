@@ -1,6 +1,7 @@
-"use strict";
+/*globals angular $ console*/
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiMenu', function () {
     return {
@@ -12,7 +13,7 @@ angular.module('angular.prime').directive('puiMenu', function () {
                 options.popup = false;
                 if (options.trigger) {
                     var triggerElement = $(options.trigger);
-                    if (triggerElement != undefined) {
+                    if (triggerElement !== undefined) {
                         options.popup = true;
                         options.trigger = triggerElement;
                     } else {
@@ -24,8 +25,8 @@ angular.module('angular.prime').directive('puiMenu', function () {
                     throw new Error("ContextMenu can't be combined with the SlideMenu");
                 }
                 $(function() {
-                    var hasSubMenu = element.find("ul").length > 0;
-                    var hasH3Element = element.find("h3").length > 0;
+                    var hasSubMenu = element.find("ul").length > 0,
+                        hasH3Element = element.find("h3").length > 0;
 
                     if (hasSubMenu || ! hasH3Element) {
                         if (hasH3Element) {
@@ -33,33 +34,37 @@ angular.module('angular.prime').directive('puiMenu', function () {
                         }
                         if (options.isContextMenu) {
                             element.puicontextmenu({
-                                popup: options.popup
-                                , trigger: options.trigger
+                                popup: options.popup,
+                                trigger: options.trigger
                             });
 
                         } else {
                             if (options.isSlideMenu) {
                                 element.puislidemenu({
-                                    popup: options.popup
-                                    , trigger: options.trigger
+                                    popup: options.popup,
+                                    trigger: options.trigger
                                 });
 
                             } else {
                                 element.puitieredmenu({
-                                    popup: options.popup, trigger: options.trigger, autoDisplay: options.autoDisplay
+                                    popup: options.popup,
+                                    trigger: options.trigger,
+                                    autoDisplay: options.autoDisplay
                                 });
 
                             }
                         }
                     } else {
                         element.puimenu({
-                            popup: options.popup
-                            , trigger: options.trigger
+                            popup: options.popup,
+                            trigger: options.trigger
                         });
 
                     }
                 });
-            }
+            };
         }
-    }
-})
+    };
+});
+
+}());

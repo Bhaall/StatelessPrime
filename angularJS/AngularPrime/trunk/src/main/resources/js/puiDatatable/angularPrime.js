@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiDatatable', function () {
     return {
@@ -50,25 +51,25 @@ angular.module('angular.prime').directive('puiDatatable', function () {
                 if (options.paginatorRows) {
                     paginator = {
                         rows: options.paginatorRows
-                    }
+                    };
                 }
 
                 $(function () {
 
                     element.puidatatable({
-                        caption: options.caption
-                        , datasource : data
-                        , columns: columns
-                        , selectionMode: selectionMode
-                        , rowSelect: options.rowSelect
-                        , paginator: paginator
+                        caption: options.caption ,
+                        datasource : data ,
+                        columns: columns ,
+                        selectionMode: selectionMode ,
+                        rowSelect: options.rowSelect ,
+                        paginator: paginator
                     });
 
                 });
 
-            }
+            };
         }
-    }
+    };
 });
 
 angular.module('angular.prime').directive('puiColumn', function () {
@@ -77,9 +78,9 @@ angular.module('angular.prime').directive('puiColumn', function () {
         priority: 5,
         compile: function (element, attrs) {
             return function postLink(scope, element, attrs) {
-                  var columns = element.parent().data('puiColumns')
-                      , options = scope.$eval(attrs.puiColumn) || {}
-                      , columnInfo = {};
+                  var columns = element.parent().data('puiColumns') ,
+                      options = scope.$eval(attrs.puiColumn) || {} ,
+                      columnInfo = {};
 
                 if (columns === undefined) {
                     columns = [];
@@ -99,7 +100,9 @@ angular.module('angular.prime').directive('puiColumn', function () {
                 }
                 columns.push(columnInfo);
                 element.parent().data('puiColumns', columns);
-            }
+            };
         }
-    }
+    };
 });
+
+}());

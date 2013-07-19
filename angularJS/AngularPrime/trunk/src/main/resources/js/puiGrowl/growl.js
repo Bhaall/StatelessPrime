@@ -1,11 +1,10 @@
-"use strict";
-/*globals $ */
+/*globals $ window document*/
 
 /**
  * PrimeFaces Growl Widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puigrowl", {
 
         options: {
@@ -79,7 +78,7 @@ $(function() {
                 $this._removeMessage(message);
 
                 if(!sticky) {
-                    clearTimeout(message.data('timeout'));
+                    window.clearTimeout(message.data('timeout'));
                 }
             });
 
@@ -91,7 +90,7 @@ $(function() {
         _setRemovalTimeout: function(message) {
             var $this = this;
 
-            var timeout = setTimeout(function() {
+            var timeout = window.setTimeout(function() {
                 $this._removeMessage(message);
             }, this.options.life);
 

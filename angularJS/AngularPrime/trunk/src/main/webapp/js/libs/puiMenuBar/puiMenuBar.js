@@ -1,6 +1,7 @@
-"use strict";
+/*globals angular $ console*/
 
-/*globals angular $ */
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiMenubar', function () {
     return {
@@ -10,24 +11,25 @@ angular.module('angular.prime').directive('puiMenubar', function () {
 
                 var options = scope.$eval(attrs.puiMenu) || {};
                 if (element.find("h3").length > 0) {
-                    console.log("Warning: ")
+                    console.log("Warning: "); // TODO
                 }
                 element.puimenubar({
                     autoDisplay: options.autoDisplay
                 });
 
-            }
+            };
         }
-    }
-})
-;"use strict";
+    };
+});
 
-/*globals $ PUI */
+}());
+;/*globals $ PUI window*/
 /**
  * PrimeUI Menubar Widget
  */
 
 $(function() {
+    "use strict";  // Added for AngularPrime
 
     $.widget("primeui.puimenubar", $.primeui.puitieredmenu, {
 
@@ -56,7 +58,7 @@ $(function() {
             else {
                 submenuCSS.left = 0;
                 submenuCSS.top = menuitem.outerHeight();
-                menuitem.offset().top - win.scrollTop();
+                menuitem.offset().top - win.scrollTop(); // AngularPrime Question?
                 submenuOffsetTop = menuitem.offset().top + submenuCSS.top - win.scrollTop();
             }
 

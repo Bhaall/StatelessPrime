@@ -1,23 +1,22 @@
-"use strict";
-
 /*globals angular $ */
 
-angular.module('angular.prime').directive('puiLightbox', ['$compile',
-            function ($compile) {
+(function () {
+    "use strict";
 
-                return {
+angular.module('angular.prime').directive('puiLightbox', ['$compile', function ($compile) {
+    return {
         restrict: 'A',
         priority: 5,
         compile: function (element, attrs) {
 
             return function postLink (scope, element, attrs) {
-                var options = scope.$eval(attrs.puiLightbox) || {};
+                var options = scope.$eval(attrs.puiLightbox) || {},
+                    dynamicList = angular.isArray(options) || angular.isArray(options.items),
+                    items = [],
+                    initialCall = true;
+
                 // TODO check if iframeWidth or iframeWidth the directive is placed on a <a>-tag
                 options.iframe = 'A' === element[0].nodeName;
-
-                var dynamicList = angular.isArray(options) || angular.isArray(options.items);
-                var items = [];
-                var initialCall = true;
 
                 function renderLightbox() {
                     var htmlContent = '';
@@ -32,9 +31,9 @@ angular.module('angular.prime').directive('puiLightbox', ['$compile',
                             element.puilightbox('destroy', {});
                         }
                         element.puilightbox({
-                            iframe: options.iframe
-                            , iframeWidth: options.iframeWidth
-                            , iframeHeight: options.iframeHeight
+                            iframe: options.iframe,
+                            iframeWidth: options.iframeWidth,
+                            iframeHeight: options.iframeHeight
                         });
                         initialCall = false;
 
@@ -58,9 +57,9 @@ angular.module('angular.prime').directive('puiLightbox', ['$compile',
                 } else {
                     $(function () {
                         element.puilightbox({
-                            iframe: options.iframe
-                            , iframeWidth: options.iframeWidth
-                            , iframeHeight: options.iframeHeight
+                            iframe: options.iframe,
+                            iframeWidth: options.iframeWidth,
+                            iframeHeight: options.iframeHeight
                         });
                     });
                 }
@@ -76,7 +75,7 @@ angular.module('angular.prime').directive('puiLightbox', ['$compile',
         compile: function (element, attrs) {
             var lightboxItemType = function() {
                 var items = element.parent().children('[pui-lightbox-item]');
-                if (items.length == 0) {
+                if (items.length === 0) {
                     // This is the case for the ng-repeat situation
                 } else {
                     if (items.length > 1) {
@@ -127,3 +126,5 @@ angular.module('angular.prime').directive('puiLightbox', ['$compile',
         }
     };
 });
+
+}());

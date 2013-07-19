@@ -1,10 +1,10 @@
-"use strict";
 /*globals $ */
 
 /**
  * PrimeUI progressbar widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiprogressbar", {
 

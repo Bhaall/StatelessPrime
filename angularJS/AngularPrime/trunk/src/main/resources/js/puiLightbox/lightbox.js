@@ -1,10 +1,11 @@
-"use strict";
-/*globals $ */
+/*jshint laxcomma:true*/
+/*globals $ document window PUI*/
 
 /**
  * PrimeUI Lightbox Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puilightbox", {
 
@@ -134,17 +135,18 @@ $(function() {
                 $(this).toggleClass('ui-state-hover');
             })
                 .click(function(e) {
-                    var nav = $(this);
+                    var nav = $(this),
+                        index; // Added for AngularPrime
 
                     $this._hideNavigators();
 
                     if(nav.hasClass('pui-lightbox-nav-left')) {
-                        var index = $this.current == 0 ? $this.links.length - 1 : $this.current - 1;
+                        index = $this.current === 0 ? $this.links.length - 1 : $this.current - 1; // Changed for AngularPrime
 
                         $this.links.eq(index).trigger('click');
                     }
                     else {
-                        var index = $this.current == $this.links.length - 1 ? 0 : $this.current + 1;
+                        index = $this.current == $this.links.length - 1 ? 0 : $this.current + 1; // Changed for AngularPrime
 
                         $this.links.eq(index).trigger('click');
                     }
@@ -173,7 +175,7 @@ $(function() {
                     $this.caption.slideUp();
                 }
 
-                setTimeout(function() {
+                window.setTimeout(function() {
                     $this.imageDisplay.attr('src', link.attr('href'));
                     $this.current = link.index();
 
@@ -208,7 +210,7 @@ $(function() {
             image.css({
                 'width':imageWidth + 'px'
                 ,'height':imageHeight + 'px'
-            })
+            });
         },
 
         _setupInline: function() {
@@ -233,8 +235,8 @@ $(function() {
         _setupIframe: function() {
             var $this = this;
             this.links = this.element;
-            this.iframe = $('<iframe frameborder="0" style="width:' + this.options.iframeWidth + 'px;height:'
-                + this.options.iframeHeight + 'px;border:0 none; display: block;"></iframe>').appendTo(this.content);
+            this.iframe = $('<iframe frameborder="0" style="width:' + this.options.iframeWidth + 'px;height:' +
+                this.options.iframeHeight + 'px;border:0 none; display: block;"></iframe>').appendTo(this.content);
 
             if(this.options.iframeTitle) {
                 this.iframe.attr('title', this.options.iframeTitle);

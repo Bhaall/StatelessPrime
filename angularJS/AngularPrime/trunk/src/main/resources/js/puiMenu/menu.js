@@ -1,11 +1,10 @@
-"use strict";
-
+/*jshint laxcomma:true*/
 /*globals $ PUI */
 /**
  * PrimeUI Menu widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puimenu", $.primeui.puibasemenu, {
 
         options: {
@@ -145,7 +144,7 @@ $(function() {
 
             if(this.options.autoDisplay === false) {
                 this.rootLinks = this.element.find('> .pui-menuitem > .pui-menuitem-link');
-                this.rootLinks.data('primeui-tieredmenu-rootlink', this.options.id).find('*').data('primeui-tieredmenu-rootlink', this.options.id)
+                this.rootLinks.data('primeui-tieredmenu-rootlink', this.options.id).find('*').data('primeui-tieredmenu-rootlink', this.options.id);
 
                 this.rootLinks.on('click.pui-menu', function(e) {
                     var link = $(this),
@@ -394,8 +393,8 @@ $(function() {
             this.element.addClass('pui-menu-list ui-helper-reset').
                 wrap('<div class="pui-menu pui-slidemenu ui-widget ui-widget-content ui-corner-all ui-helper-clearfix"/>').
                 wrap('<div class="pui-slidemenu-wrapper" />').
-                after('<div class="pui-slidemenu-backward ui-widget-header ui-corner-all ui-helper-clearfix">\n\
-                    <span class="ui-icon ui-icon-triangle-1-w"></span>Back</div>').
+                after('<div class="pui-slidemenu-backward ui-widget-header ui-corner-all ui-helper-clearfix">' + // Changed for AngularPrime
+                    '<span class="ui-icon ui-icon-triangle-1-w"></span>Back</div>').
                 wrap('<div class="pui-slidemenu-content" />');
 
             this.element.parent().uniqueId();
@@ -437,7 +436,7 @@ $(function() {
                         submenu = link.next();
 
                     if(submenu.length == 1) {
-                        $this._forward(submenu)
+                        $this._forward(submenu);
                     }
                 });
 
@@ -478,7 +477,7 @@ $(function() {
             }, 500, 'easeInOutCirc', function() {
                 last.hide();
 
-                if(depth == 0) {
+                if(depth === 0) {
                     $this.backward.fadeOut('fast');
                 }
             });

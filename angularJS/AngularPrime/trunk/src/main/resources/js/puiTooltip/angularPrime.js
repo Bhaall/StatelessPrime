@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiTooltip', ['$interpolate', function ($interpolate) {
     return {
@@ -24,27 +25,27 @@ angular.module('angular.prime').directive('puiTooltip', ['$interpolate', functio
 
                 var tooltipWatches = [];
 
-                if (options.content && options.content != '') {
+                if (options.content && options.content !== '') {
                     var parsedExpression = $interpolate(options.content);
                     options.content = scope.$eval(parsedExpression);
                     angular.forEach(parsedExpression.parts, function(part) {
                         if (angular.isFunction(part)) {
                             tooltipWatches.push(part.exp);
                         }
-                    }, tooltipWatches)
+                    }, tooltipWatches);
 
                     $(function () {
                         element.puitooltip({
-                            content: options.content
-                            ,showEvent: options.showEvent
-                            ,hideEvent: options.hideEvent
-                            ,showEffect: options.showEffect
-                            ,hideEffect: options.hideEffect
-                            ,showEffectSpeed: options.showEffectSpeed
-                            ,hideEffectSpeed: options.hideEffectSpeed
-                            ,my: options.my
-                            ,at: options.at
-                            ,showDelay: options.showDelay
+                            content: options.content,
+                            showEvent: options.showEvent,
+                            hideEvent: options.hideEvent,
+                            showEffect: options.showEffect,
+                            hideEffect: options.hideEffect,
+                            showEffectSpeed: options.showEffectSpeed,
+                            hideEffectSpeed: options.hideEffectSpeed,
+                            my: options.my,
+                            at: options.at,
+                            showDelay: options.showDelay
                         });
                     });
 
@@ -57,8 +58,10 @@ angular.module('angular.prime').directive('puiTooltip', ['$interpolate', functio
                     });
 
                 }
-            }
+            };
 
         }
-    }
+    };
 }]);
+
+}());

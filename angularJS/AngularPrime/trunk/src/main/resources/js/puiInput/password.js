@@ -1,10 +1,10 @@
-"use strict";
-/*globals $ */
+/*globals $ window PUI*/
 
 /**
  * PrimeUI password widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puipassword", {
 
@@ -57,7 +57,7 @@ $(function() {
                         label = null,
                         meterPos = null;
 
-                    if(value.length == 0) {
+                    if(value.length === 0) {
                         label = $this.options.promptLabel;
                         meterPos = '0px 0px';
                     }

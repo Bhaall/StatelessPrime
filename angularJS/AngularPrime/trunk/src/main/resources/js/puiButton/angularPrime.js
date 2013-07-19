@@ -1,14 +1,15 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiButton', ['$interpolate', function ($interpolate) {
         return {
             restrict: 'A',
             compile: function (element, attrs) {
                 return function postLink (scope, element, attrs) {
-                    var titleWatches = [];
-                    var parsedExpression = $interpolate(element.text());
+                    var titleWatches = [] ,
+                        parsedExpression = $interpolate(element.text());
                     element.text(scope.$eval(parsedExpression));
                     angular.forEach(parsedExpression.parts, function (part) {
                         if (angular.isFunction(part)) {
@@ -47,10 +48,12 @@ angular.module('angular.prime').directive('puiButton', ['$interpolate', function
                         });
                     });
 
-                }
+                };
             }
 
-        }
+        };
     }]
 
 );
+
+}());

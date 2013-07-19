@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').factory('puiInput.helper', function () {
 
@@ -21,7 +22,7 @@ angular.module('angular.prime').factory('puiInput.helper', function () {
 
         }
         return contents;
-    }
+    };
 
     puiInputHelper.defineLabel = function(id, label, prefix) {
         var contents = '';
@@ -32,7 +33,8 @@ angular.module('angular.prime').factory('puiInput.helper', function () {
         contents += '</label>';
 
         return contents;
-    }
+    };
+
     return puiInputHelper;
 });
 
@@ -62,11 +64,11 @@ angular.module('angular.prime').directive('puiInput', function () {
                     if (attrs.type === 'password') {
                         options.inline = (options.inline !== undefined) ? options.inline : false;
                         element.puipassword({
-                            inline: options.inline
-                            , promptLabel: options.promptLabel || 'Please enter a password'
-                            , weakLabel: options.weakLabel || 'Weak'
-                            , goodLabel: options.goodLabel || 'Medium'
-                            , strongLabel: options.strongLabel || 'Strong'
+                            inline: options.inline,
+                            promptLabel: options.promptLabel || 'Please enter a password',
+                            weakLabel: options.weakLabel || 'Weak',
+                            goodLabel: options.goodLabel || 'Medium',
+                            strongLabel: options.strongLabel || 'Strong'
                         });
                         password = true;
                     }
@@ -95,15 +97,15 @@ angular.module('angular.prime').directive('puiInput', function () {
 
                     options.autoResize = (options.autoResize !== undefined) ? options.autoResize : false;
                     element.puiinputtextarea({
-                        autoResize: options.autoResize
-                        , autoComplete: autoComplete
-                        , scrollHeight: options.scrollHeight || 150
-                        , completeSource: completeSourceMethod
-                        , minQueryLength: options.minQueryLength || 3
-                        , queryDelay: options.queryDelay || 700
-                        , counter: $(options.display)
-                        , counterTemplate: options.template
-                        , maxlength: options.maxLength
+                        autoResize: options.autoResize,
+                        autoComplete: autoComplete,
+                        scrollHeight: options.scrollHeight || 150,
+                        completeSource: completeSourceMethod,
+                        minQueryLength: options.minQueryLength || 3,
+                        queryDelay: options.queryDelay || 700,
+                        counter: $(options.display),
+                        counterTemplate: options.template,
+                        maxlength: options.maxLength
                     });
 
                     if (options.display) {
@@ -233,11 +235,11 @@ angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 
         compile: function (element, attrs) {
 
             return function postLink(scope, element, attrs) {
-                var id = attrs.id
-                    , label = ''
-                    , contents = '<input type="checkbox" pui-input '
-                    , handledAttributes = 'id ngModel puiInput ngShow ngHide puiCheckbox'.split(' ')
-                    , attrsToRemove = 'id ngModel puiInput'.split(' ');
+                var id = attrs.id,
+                    label = '',
+                    contents = '<input type="checkbox" pui-input ',
+                    handledAttributes = 'id ngModel puiInput ngShow ngHide puiCheckbox'.split(' '),
+                    attrsToRemove = 'id ngModel puiInput'.split(' ');
 
                 try {
                     $parse(attrs.puiCheckbox); // see if it is a valid AngularExpression
@@ -260,9 +262,9 @@ angular.module('angular.prime').directive('puiCheckbox', ['$compile', '$parse', 
 
                 $compile(element.contents())(scope);
 
-            }
+            };
         }
-    }
+    };
 }]);
 
 angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse', 'puiInput.helper', 'angular.prime.config',
@@ -274,11 +276,11 @@ angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse
         compile: function (element, attrs) {
 
             return function postLink(scope, element, attrs) {
-                var id = attrs.id
-                    , label = ''
-                    , contents = '<input type="radio" pui-input '
-                    , handledAttributes = 'id ngModel puiInput ngShow ngHide puiRadiobutton name value'.split(' ')
-                    , attrsToRemove = 'id ngModel puiInput'.split(' ');
+                var id = attrs.id,
+                    label = '',
+                    contents = '<input type="radio" pui-input ',
+                    handledAttributes = 'id ngModel puiInput ngShow ngHide puiRadiobutton name value'.split(' '),
+                    attrsToRemove = 'id ngModel puiInput'.split(' ');
 
                 try {
                     $parse(attrs.puiRadiobutton); // see if it is a valid AngularExpression
@@ -302,16 +304,20 @@ angular.module('angular.prime').directive('puiRadiobutton', ['$compile', '$parse
 
                 $compile(element.contents())(scope);
 
-            }
+            };
         }
-    }
-}]);;"use strict";
-/*globals $ */
+    };
+}]);
+
+}());
+
+;/*globals $ */
 
 /**
  * PrimeUI checkbox widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puicheckbox", {
 
@@ -458,13 +464,13 @@ $(function() {
         }
     });
 
-});;"use strict";
-/*globals $ */
+});;/*globals $ */
 
 /**
  * PrimeUI inputtext widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiinputtext", {
 
@@ -543,13 +549,14 @@ $(function() {
 
     });
 
-});;"use strict";
-/*globals $ */
+});;/*jshint laxcomma:true*/
+/*globals $ document PUI window _self*/
 
 /**
  * PrimeUI inputtextarea widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiinputtextarea", {
 
@@ -668,7 +675,7 @@ $(function() {
                                 $this._clearTimeout($this.timeout);
                             }
 
-                            $this.timeout = setTimeout(function() {
+                            $this.timeout = window.setTimeout(function() {
                                 $this.search(query);
                             }, $this.options.queryDelay);
 
@@ -685,7 +692,7 @@ $(function() {
                         case keyCode.LEFT:
                             if(overlayVisible) {
                                 var highlightedItem = $this.items.filter('.ui-state-highlight'),
-                                    prev = highlightedItem.length == 0 ? $this.items.eq(0) : highlightedItem.prev();
+                                    prev = highlightedItem.length === 0 ? $this.items.eq(0) : highlightedItem.prev();
 
                                 if(prev.length == 1) {
                                     highlightedItem.removeClass('ui-state-highlight');
@@ -707,7 +714,7 @@ $(function() {
                         case keyCode.RIGHT:
                             if(overlayVisible) {
                                 var highlightedItem = $this.items.filter('.ui-state-highlight'),
-                                    next = highlightedItem.length == 0 ? _self.items.eq(0) : highlightedItem.next();
+                                    next = highlightedItem.length === 0 ? _self.items.eq(0) : highlightedItem.next();
 
                                 if(next.length == 1) {
                                     highlightedItem.removeClass('ui-state-highlight');
@@ -817,7 +824,7 @@ $(function() {
 
         _clearTimeout: function() {
             if(this.timeout) {
-                clearTimeout(this.timeout);
+                window.clearTimeout(this.timeout);
             }
 
             this.timeout = null;
@@ -905,13 +912,13 @@ $(function() {
         }
     });
 
-});;"use strict";
-/*globals $ */
+});;/*globals $ window PUI*/
 
 /**
  * PrimeUI password widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puipassword", {
 
@@ -964,7 +971,7 @@ $(function() {
                         label = null,
                         meterPos = null;
 
-                    if(value.length == 0) {
+                    if(value.length === 0) {
                         label = $this.options.promptLabel;
                         meterPos = '0px 0px';
                     }
@@ -1064,13 +1071,13 @@ $(function() {
         }
     });
 
-});;"use strict";
-/*globals $ */
+});;/*globals $ */
 
 /**
  * PrimeUI radiobutton widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     var checkedRadios = {};
 
@@ -1110,7 +1117,7 @@ $(function() {
                 if(!$this.isChecked()) {// Changed for angularPrime (changed visibility)
                         $this.element.trigger('click');
 
-                        if($.browser.msie && parseInt($.browser.version) < 9) {
+                        if($.browser.msie && parseInt($.browser.version, 10) < 9) {
                             $this.element.trigger('change');
                         }
                     }

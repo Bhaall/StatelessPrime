@@ -1,11 +1,10 @@
-"use strict";
 /*globals $ */
 
 /**
  * PrimeFaces Fieldset Widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puifieldset", {
 
         options: {
@@ -47,7 +46,7 @@ $(function() {
                 .on('mouseover.puifieldset', function() {$this.legend.addClass('ui-state-hover');})
                 .on('mouseout.puifieldset', function() {$this.legend.removeClass('ui-state-hover ui-state-active');})
                 .on('mousedown.puifieldset', function() {$this.legend.removeClass('ui-state-hover').addClass('ui-state-active');})
-                .on('mouseup.puifieldset', function() {$this.legend.removeClass('ui-state-active').addClass('ui-state-hover');})
+                .on('mouseup.puifieldset', function() {$this.legend.removeClass('ui-state-active').addClass('ui-state-hover');});
         },
 
         toggle: function(e) {

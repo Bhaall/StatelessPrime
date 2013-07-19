@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiNotify', function () {
         return {
@@ -8,7 +9,9 @@ angular.module('angular.prime').directive('puiNotify', function () {
             compile: function (element, attrs) {
                 return function postLink (scope, element, attrs) {
                     // TODO check if no inline object created.
-                    var options = scope.$eval(attrs.puiNotify) || {};
+                    var options = scope.$eval(attrs.puiNotify) || {},
+                        userTrigger = true; // because we support user closable and programmatic.
+
                     if (!(typeof options.visible == 'boolean')) {
                         throw new Error('The options object ' + attrs.puiNotify + ' needs a boolean property visible');
                     }
@@ -24,7 +27,7 @@ angular.module('angular.prime').directive('puiNotify', function () {
                             easing: options.easing
                         });
                     });
-                    var userTrigger = true; // because we support user closable and programmatic.
+
                     scope.$watch(attrs.puiNotify + '.visible', function (value) {
                         if (value === true) {
                             $(function () {
@@ -49,20 +52,22 @@ angular.module('angular.prime').directive('puiNotify', function () {
                             userTrigger = true;
                         });
                     });
-                }
+                };
             }
-        }
+        };
 
     }
 
 );
-;"use strict";
-/*globals $ */
+
+}());
+;/*globals $ document PUI*/
 
 /**
  * PrimeFaces Notify Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puinotify", {
 

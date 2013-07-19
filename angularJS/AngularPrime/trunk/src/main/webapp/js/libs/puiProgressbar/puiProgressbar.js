@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiProgressbar', function () {
     return {
@@ -18,17 +19,17 @@ angular.module('angular.prime').directive('puiProgressbar', function () {
 
                 } else {
                     element.puiprogressbar({
-                        value: options.value
-                        ,labelTemplate: options.labelTemplate
-                        ,showLabel: options.showLabel
-                        ,easing: options.easing
-                        ,effectSpeed: options.effectSpeed
+                        value: options.value,
+                        labelTemplate: options.labelTemplate,
+                        showLabel: options.showLabel,
+                        easing: options.easing,
+                        effectSpeed: options.effectSpeed
                     });
 
                 }
 
                 function setNewValue(value) {
-                    if (value != null) {
+                    if (value !== null) {
                         element.puiprogressbar('setValue', value);
                     }
                 }
@@ -50,13 +51,15 @@ angular.module('angular.prime').directive('puiProgressbar', function () {
     };
 
 });
-;"use strict";
-/*globals $ */
+
+}());
+;/*globals $ */
 
 /**
  * PrimeUI progressbar widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puiprogressbar", {
 

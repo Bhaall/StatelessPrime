@@ -1,11 +1,11 @@
-"use strict";
+/*jshint laxcomma:true*/
 /*globals $ */
 
 /**
  * PrimeUI tabview widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puitabview", {
 
         options: {
@@ -141,7 +141,7 @@ $(function() {
         },
 
         _isLoaded: function(panel) {
-            return panel.data('loaded') == true;
+            return panel.data('loaded') === true;
         },
 
         disable: function(index) {

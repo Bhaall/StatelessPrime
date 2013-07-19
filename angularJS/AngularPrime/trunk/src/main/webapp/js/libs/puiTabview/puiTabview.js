@@ -1,6 +1,6 @@
-"use strict";
-
-/*globals angular $ */
+/*globals angular $ console*/
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCache', '$compile',
                                                     function ($http, $templateCache, $compile) {
@@ -125,19 +125,20 @@ angular.module('angular.prime').directive('puiTabview', ['$http', '$templateCach
                     });
                 }
 
-            }
+            };
         }
-    }
+    };
 }]);
 
-;"use strict";
+}());
+;/*jshint laxcomma:true*/
 /*globals $ */
 
 /**
  * PrimeUI tabview widget
  */
 $(function() {
-
+    "use strict"; // Added for AngularPrime
     $.widget("primeui.puitabview", {
 
         options: {
@@ -273,7 +274,7 @@ $(function() {
         },
 
         _isLoaded: function(panel) {
-            return panel.data('loaded') == true;
+            return panel.data('loaded') === true;
         },
 
         disable: function(index) {

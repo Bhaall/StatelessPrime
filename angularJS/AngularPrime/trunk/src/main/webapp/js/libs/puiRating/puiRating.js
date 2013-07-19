@@ -1,6 +1,7 @@
-"use strict";
-
 /*globals angular $ */
+
+(function () {
+    "use strict";
 
 angular.module('angular.prime').directive('puiRating', function () {
     return {
@@ -18,8 +19,8 @@ angular.module('angular.prime').directive('puiRating', function () {
                 options.stars = options.stars || 5;
 
                 element.puirating({
-                    cancel: options.cancel
-                    , stars: options.stars
+                    cancel: options.cancel,
+                    stars: options.stars
                 });
 
                 element.hide();
@@ -27,7 +28,7 @@ angular.module('angular.prime').directive('puiRating', function () {
 
                 // Specify how UI should be updated
                 ngModel.$render = function () {
-                    element.puirating('setValue', ngModel.$viewValue)
+                    element.puirating('setValue', ngModel.$viewValue);
                 };
 
 
@@ -42,7 +43,7 @@ angular.module('angular.prime').directive('puiRating', function () {
 
                 // Write data to the model
                 function read() {
-                    if (ngModel.$viewValue !== parseInt(element.val()))   {
+                    if (ngModel.$viewValue !== parseInt(element.val(), 10))   {
                         // Only set Angular model value when effective changed. Otherwise ng-change can be triggered to many times.
                         ngModel.$setViewValue(element.val());
                     }
@@ -71,13 +72,15 @@ angular.module('angular.prime').directive('puiRating', function () {
     };
 
 });
-;"use strict";
-/*globals $ */
+
+}());
+;/*globals $ */
 
 /**
  * PrimeUI rating widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puirating", {
 
@@ -94,7 +97,7 @@ $(function() {
             this.container.addClass('pui-rating');
 
             var inputVal = input.val(),
-                value = inputVal == '' ? null : parseInt(inputVal);
+                value = inputVal === '' ? null : parseInt(inputVal, 10);
 
             if(this.options.cancel) {
                 this.container.append('<div class="pui-rating-cancel"><a></a></div>');
@@ -144,7 +147,7 @@ $(function() {
         getValue: function() {
             var inputVal = this.element.val();
 
-            return inputVal == '' ? null : parseInt(inputVal);
+            return inputVal === '' ? null : parseInt(inputVal, 10);
         },
 
         setValue: function(value) {

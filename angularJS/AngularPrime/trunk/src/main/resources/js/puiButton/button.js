@@ -1,10 +1,11 @@
-"use strict";
+/*jshint laxcomma:true*/
 /*globals $ */
 
 /**
  * PrimeFaces Button Widget
  */
 $(function() {
+    "use strict"; // Added for AngularPrime
 
     $.widget("primeui.puibutton", {
 
