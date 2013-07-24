@@ -3,7 +3,7 @@
 (function () {
     "use strict";
 
-angular.module('angular.prime').directive('puiDatatable', function () {
+angular.module('angular.prime').directive('puiDatatable', [ '$log', function ($log) {
     return {
         restrict: 'A',
         priority: 5,
@@ -44,8 +44,60 @@ angular.module('angular.prime').directive('puiDatatable', function () {
                     }
                 }
 
-                if (options.rowSelect) {
+                if (options.selectionMode) {
+                    selectionMode = options.selectionMode;
+                }
+
+                if (options.rowSelect && selectionMode === null) {
                     selectionMode = 'single';
+                }
+
+                if (options.selectedData) {
+
+                    if (selectionMode === null) {
+                        selectionMode = 'multiple';
+                    }
+
+                    element.bind('puidatatablerowselect', function (eventData, idx) {
+                        $(function () {
+                            var data = element.puidatatable('getData');
+                            scope.safeApply(function () {
+                                var rowIndex = data.indexOf(idx),
+                                    index = options.selectedData.indexOf(rowIndex);
+                                if (index === -1) {
+                                    options.selectedData.push(rowIndex);
+                                }
+
+
+                            });
+
+
+                        });
+                    });
+
+                    element.bind('puidatatablerowunselect', function (eventData, idx) {
+                        $(function () {
+                            var data = element.puidatatable('getData');
+                            scope.safeApply(function () {
+                                var rowIndex = data.indexOf(idx),
+                                    index = options.selectedData.indexOf(rowIndex);
+                                if (index !== -1) {
+                                    options.selectedData.splice(index, 1);
+                                }
+
+                            });
+
+                        });
+                    });
+
+                    element.bind('puidatatableunselectallrows', function (eventData, idx) {
+                        $(function () {
+                            scope.safeApply(function () {
+                                options.selectedData = [];
+                            });
+                        });
+                    });
+
                 }
 
                 if (options.paginatorRows) {
@@ -54,23 +106,62 @@ angular.module('angular.prime').directive('puiDatatable', function () {
                     };
                 }
 
+                if (options.selectedData) {
+                    scope.$watch(attrs.puiDatatable + '.selectedData', function (x) {
+                        $(function () {
+                            element.puidatatable('unselectAllRows', true);
+                            if (selectionMode === 'single' && x.length === 2) {
+                                x = x.splice(1,1);  // assume the last added one (now 2 elements) is the one we need
+                                options.selectedData = x;
+                            }
+                            angular.forEach(x, function (row) {
+                                element.puidatatable('selectRowByIndex', row);
+                            });
+                        });
+                    }, true);
+                }
+
                 $(function () {
 
                     element.puidatatable({
-                        caption: options.caption ,
-                        datasource : data ,
-                        columns: columns ,
-                        selectionMode: selectionMode ,
-                        rowSelect: options.rowSelect ,
+                        caption: options.caption,
+                        datasource : data,
+                        columns: columns,
+                        selectionMode: selectionMode,
+                        rowSelect: options.rowSelect,
+                        rowUnselect: options.rowUnselect,
                         paginator: paginator
                     });
 
                 });
 
+                if (options.selectedPage !== undefined) {
+                    if (options.paginatorRows !== undefined) {
+                        $(function () {
+                            var paginator = element.puidatatable('getPaginator');
+
+                            paginator.bind('puipaginatorpaginate', function (eventData, pageState) {
+                                scope.safeApply(function () {
+                                    options.selectedPage = pageState.page;
+                                });
+
+                            });
+
+                            scope.$watch(attrs.puiDatatable + '.selectedPage', function (selectedPage) {
+                                $(function () {
+                                    paginator.puipaginator('setPage', parseInt(selectedPage, 10));
+                                });
+                            });
+                        });
+                    } else {
+                        $log.warn('selectedPage option specified but no value for paginatorRows option defined');
+                    }
+                }
+
             };
         }
     };
-});
+}]);
 
 angular.module('angular.prime').directive('puiColumn', function () {
     return {
@@ -379,7 +470,7 @@ $(function() {
 
                 //unselect a selected row if metakey is on
                 if(selected && metaKey) {
-                    this.unselectRow(row);
+                    this.unselectRow(row, false);  // Changed for AngularPrime
                 }
                 else {
                     //unselect previous selection if this is single selection or multiple one with no keys
@@ -387,7 +478,7 @@ $(function() {
                         this.unselectAllRows();
                     }
 
-                    this.selectRow(row);
+                    this.selectRow(row, false);  // Changed for AngularPrime
                 }
 
                 PUI.clearSelection();
@@ -402,9 +493,14 @@ $(function() {
             return this.options.selectionMode === 'multiple';
         },
 
-        unselectAllRows: function() {
+        unselectAllRows: function(silent) { // Changed for AngularPrime
             this.tbody.children('tr.ui-state-highlight').removeClass('ui-state-highlight').attr('aria-selected', false);
             this.selection = [];
+
+            // added for AngularPrime
+            if(!silent) {
+                this._trigger('unselectAllRows');
+            }
         },
 
         unselectRow: function(row, silent) {
@@ -449,6 +545,19 @@ $(function() {
             var index = row.index();
 
             return this.options.paginator ? this.getFirst() + index : index;
+        },
+
+        // Added for AngularPrime
+        selectRowByIndex: function(rowIndex) {
+            this.selectRow($( this.tbody[0].children[rowIndex] ), true);
+        },
+
+        getData: function() {
+            return this.data;
+        },
+
+        getPaginator: function() {
+            return this.paginator;
         }
     });
 });;/*globals $ */
@@ -698,14 +807,14 @@ $(function() {
 
         _setOption: function(key, value) {
             if(key === 'page') {
-                this._setPage(value);
+                this.setPage(value);  // Changed for AngularPrime
             }
             else {
                 $.Widget.prototype._setOption.apply(this, arguments);
             }
         },
 
-        _setPage: function(p) {
+        setPage: function(p) {  // Changed for AngularPrime
             var pc = this.getPageCount();
 
             if(p >= 0 && p < pc && this.options.page !== p) {

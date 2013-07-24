@@ -245,14 +245,14 @@ $(function() {
 
         _setOption: function(key, value) {
             if(key === 'page') {
-                this._setPage(value);
+                this.setPage(value);  // Changed for AngularPrime
             }
             else {
                 $.Widget.prototype._setOption.apply(this, arguments);
             }
         },
 
-        _setPage: function(p) {
+        setPage: function(p) {  // Changed for AngularPrime
             var pc = this.getPageCount();
 
             if(p >= 0 && p < pc && this.options.page !== p) {

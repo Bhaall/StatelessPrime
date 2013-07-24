@@ -271,7 +271,7 @@ $(function() {
 
                 //unselect a selected row if metakey is on
                 if(selected && metaKey) {
-                    this.unselectRow(row);
+                    this.unselectRow(row, false);  // Changed for AngularPrime
                 }
                 else {
                     //unselect previous selection if this is single selection or multiple one with no keys
@@ -279,7 +279,7 @@ $(function() {
                         this.unselectAllRows();
                     }
 
-                    this.selectRow(row);
+                    this.selectRow(row, false);  // Changed for AngularPrime
                 }
 
                 PUI.clearSelection();
@@ -294,9 +294,14 @@ $(function() {
             return this.options.selectionMode === 'multiple';
         },
 
-        unselectAllRows: function() {
+        unselectAllRows: function(silent) { // Changed for AngularPrime
             this.tbody.children('tr.ui-state-highlight').removeClass('ui-state-highlight').attr('aria-selected', false);
             this.selection = [];
+
+            // added for AngularPrime
+            if(!silent) {
+                this._trigger('unselectAllRows');
+            }
         },
 
         unselectRow: function(row, silent) {
@@ -341,6 +346,19 @@ $(function() {
             var index = row.index();
 
             return this.options.paginator ? this.getFirst() + index : index;
+        },
+
+        // Added for AngularPrime
+        selectRowByIndex: function(rowIndex) {
+            this.selectRow($( this.tbody[0].children[rowIndex] ), true);
+        },
+
+        getData: function() {
+            return this.data;
+        },
+
+        getPaginator: function() {
+            return this.paginator;
         }
     });
 });

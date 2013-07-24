@@ -176,7 +176,55 @@ function DatatableController($scope, Widgets, puiGrowl) {
         , rowSelect: function(event, data) {
             puiGrowl.showInfoMessage('Row selection', 'Selected a '+data.color+ ' '+data.brand+ ' of '+data.year +' (id = '+data.vin+')');
         }
-    }
+    };
+
+    $scope.multiSelectTableData = {
+        tableData : $scope.fixedData
+        , selectionMode : 'multiple'
+        , rowSelect: function(event, data) {
+            puiGrowl.showInfoMessage('Row selection', 'Selected a '+data.color+ ' '+data.brand+ ' of '+data.year +' (id = '+data.vin+')');
+        }
+        , rowUnselect: function(event, data) {
+            puiGrowl.showInfoMessage('Row deselection', 'deselected the '+data.color+ ' '+data.brand+ ' of '+data.year +' (id = '+data.vin+')');
+        }
+    };
+
+    $scope.progSelectTableData = {
+        tableData : $scope.fixedData
+        , selectedData : []
+    };
+
+    $scope.rowIndex = null;
+
+    $scope.selectDataRow = function() {
+        var rowIdx = parseInt($scope.rowIndex, 10);
+        if (isNaN(rowIdx)) {
+            return;
+        }
+        var index = $scope.progSelectTableData.selectedData.indexOf(rowIdx);
+        if (index === -1) {
+            $scope.progSelectTableData.selectedData.push(rowIdx);
+        }
+    };
+
+    $scope.unselectDataRow = function() {
+        var rowIdx = parseInt($scope.rowIndex, 10);
+        if (isNaN(rowIdx)) {
+            return;
+        }
+        var index = $scope.progSelectTableData.selectedData.indexOf(rowIdx);
+        if (index !== -1) {
+            $scope.progSelectTableData.selectedData.splice(index, 1);
+        }
+
+    };
+
+    $scope.progPaginatedData = {
+        tableData : $scope.fixedData
+        , paginatorRows : 4
+        , selectedPage: 0
+    };
+
 }
 
 function DialogController($scope, Widgets) {

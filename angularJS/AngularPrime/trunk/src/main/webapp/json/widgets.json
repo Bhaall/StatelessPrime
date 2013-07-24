@@ -199,6 +199,18 @@
             {
                 "label": "captions",
                 "path": "puiDatatable/captions"
+            },
+            {
+                "label": "multiselect",
+                "path": "puiDatatable/multiSelection"
+            },
+            {
+                "label": "progselect",
+                "path": "puiDatatable/progSelection"
+            },
+            {
+                "label": "progpagination",
+                "path": "puiDatatable/progPagination"
             }
         ]
     },
