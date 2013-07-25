@@ -22,6 +22,8 @@
 
     }]);
 
+    angular.module('angular.prime').value('version', "v0.4");
+
 }());
 ;"use strict";
 /*globals $ window document*/

@@ -10,8 +10,6 @@
 
 var demo = angular.module('demo', ['angular.prime', 'demo.services']);
 
-demo.value('version', "v0.4-SNAPSHOT");
-
 demo.config(['$routeProvider', 'ConfigurationProvider', function($routeProvider, ConfigurationProvider) {
     ConfigurationProvider.loadData();
 
