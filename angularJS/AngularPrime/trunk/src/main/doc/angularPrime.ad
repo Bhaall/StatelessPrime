@@ -8,10 +8,5 @@ Rudy De Busscher <rdebusscher@gmail.com>
 == Widgets
 
 include::input.adi[]
-=== Input
-
-The input html element can be styled by using the +pui-input+ directive.
-
-// End include
 
 == Themes
