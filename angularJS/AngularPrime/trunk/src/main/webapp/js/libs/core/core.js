@@ -22,7 +22,7 @@
 
     }]);
 
-    angular.module('angular.prime').value('version', "v0.4");
+    angular.module('angular.prime').value('version', "v0.5");
 
 }());
 ;"use strict";

@@ -26,7 +26,7 @@
 	<artifactId>angularprime</artifactId>
 	<name>Angular Prime Development project</name>
 	<packaging>war</packaging>
-	<version>0.4</version>
+	<version>0.5</version>
 
     <pluginRepositories>
         <pluginRepository>
@@ -205,6 +205,52 @@
                 <angular-version>1.1.5</angular-version>
             </properties>
 
+        </profile>
+        <profile>
+            <id>documentation</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.agilejava.docbkx</groupId>
+                        <artifactId>docbkx-maven-plugin</artifactId>
+                        <version>2.0.14</version>
+                        <executions>
+                            <execution>
+                                <id>render-pdf</id>
+                                <goals>
+                                    <goal>generate-pdf</goal>
+                                </goals>
+                                <phase>process-resources</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <sourceDirectory>${basedir}/target/docs</sourceDirectory>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctor-maven-plugin</artifactId>
+                        <version>0.1.3.1</version>
+                        <executions>
+                            <execution>
+                                <id>render-asciidoc</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>process-asciidoc</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <sourceDirectory>src/main/doc</sourceDirectory>
+                            <outputDirectory>target/docs</outputDirectory>
+                            <backend>docbook</backend>
+                            <doctype>book</doctype>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
         </profile>
 	</profiles>
 

@@ -1,0 +1,14 @@
+AngularPrime
+===========
+Rudy De Busscher <rdebusscher@gmail.com>
+0.4 25/07/2013
+
+== Introduction
+
+== Widgets
+
+include::input.adi[]
+
+include::panel.adi[]
+
+== Themes
