@@ -1,9 +1,13 @@
 AngularPrime
 ===========
 Rudy De Busscher <rdebusscher@gmail.com>
-0.4 25/07/2013
+v0.5, 25/07/2013
 
 == Introduction
+
+== Setup
+
+include::setup.adi[]
 
 == Widgets
 

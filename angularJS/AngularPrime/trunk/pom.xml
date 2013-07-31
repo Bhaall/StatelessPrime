@@ -214,6 +214,14 @@
                         <groupId>com.agilejava.docbkx</groupId>
                         <artifactId>docbkx-maven-plugin</artifactId>
                         <version>2.0.14</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>net.sf.xslthl</groupId>
+                                <artifactId>xslthl</artifactId>
+                                <version>2.1.0</version>
+                                <scope>runtime</scope>
+                            </dependency>
+                        </dependencies>
                         <executions>
                             <execution>
                                 <id>render-pdf</id>
@@ -225,6 +233,13 @@
                         </executions>
                         <configuration>
                             <sourceDirectory>${basedir}/target/docs</sourceDirectory>
+                            <highlightSource>1</highlightSource>
+                            <foCustomization>${basedir}/src/main/doc/docbook-stylesheet.xsl</foCustomization>
+                            <useExtensions>1</useExtensions>
+                            <linenumberingExtension>1</linenumberingExtension>
+                            <linenumberingEveryNth>5</linenumberingEveryNth>
+                            <linenumberingSeparator>§</linenumberingSeparator>
+                            <linenumberingWidth>2</linenumberingWidth>
                         </configuration>
                     </plugin>
 
