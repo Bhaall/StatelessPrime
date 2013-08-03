@@ -117,12 +117,12 @@
 					<plugin>
 						<groupId>be.rubus.web.statelessprime</groupId>
 						<artifactId>angular-directives-maven-plugin</artifactId>
-						<version>0.1</version>
+						<version>0.2</version>
 						<executions>
 							<execution>
 								<id>optimize</id>
 								<goals>
-									<goal>optimize</goal>
+									<goal>generate-optimize-resources</goal>
 								</goals>
 							</execution>
 						</executions>
