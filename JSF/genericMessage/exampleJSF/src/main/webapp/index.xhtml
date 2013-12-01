@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Conference registration</title>
+    <h:outputStylesheet library="bootstrap" name="bootstrap.css" />
+</h:head>
+
+<h:body>
+    <h1>Registration</h1>
+    <h:form id="frm" styleClass="container">
+        <p:messages id="msg" autoUpdate="true"/>
+        <div class="row">
+        <p:dataTable value="#{registrationView.allPersons}" var="person" id="attendees" styleClass="col-md-8">
+            <p:column headerText="First name">#{person.firstName}</p:column>
+            <p:column headerText="Last name">#{person.lastName}</p:column>
+        </p:dataTable>
+        </div>
+        <div class="row">
+            <p:commandButton value="New" update=":frm:addPanel @this" disabled="#{registrationView.addPanelVisible}"
+                             actionListener="#{registrationView.setAddPanelVisible()}" styleClass="col-md-1" icon="ui-icon-plus"/>
+        </div>
+        <div class="row">
+        <h:panelGroup layout="vertical" id="addPanel" styleClass="col-md-8">
+            <p:panel rendered="#{registrationView.addPanelVisible}" header="add Attendee">
+                <p:outputLabel value="First name" for="firstName"/> : <p:inputText id="firstName" value="#{registrationView.firstName}" required="true"/> <br/>
+                <p:outputLabel value="Last name" for="lastName"/> : <p:inputText id="lastName" value="#{registrationView.lastName}" required="true"/> <br/>
+                <p:commandButton value="save" actionListener="#{registrationView.addPerson}" update=":frm" icon="ui-icon-disk" validateClient="true"/>
+
+            </p:panel>
+        </h:panelGroup>
+        </div>
+    </h:form>
+</h:body>
+
+</html>
